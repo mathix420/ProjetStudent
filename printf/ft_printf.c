@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/06 16:32:28 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/06 17:41:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_treat(char arg, int kwargs)
 	char	fcts[] = {'c', 's', 'p', 'b', 'f', '%', 'd', 'i', 'o', 'u', 'x', 'X'};
 
 	i = -1;
-	
+	kwargs = 1;
 	while (++i < 12)
 		if (fcts[i] == arg)
 			ft_putstr("OK");

@@ -123,8 +123,8 @@ export MAIL='agissing@student.42.fr'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias 42FileChecker='bash ~/42FileChecker/42FileChecker.sh'
-alias clean='rm *~ | rm a.out | rm -rf a.out.dSYM | clear'
-alias gflag="gcc -Wall -Werror -Wextra "
+alias clean="find . \( -name '*~' -type f -or -name '#*#' -type f -or -name 'a.out' -type f -or -name 'a.out.dSYM' -type d \) | xargs rm -rf"
+alias gff="gcc -Wall -Werror -Wextra "
 alias mf-gen="python3 ~/42-utilities/mf-gen.py"
 alias proto-list="python3 ~/42-utilities/proto-list.py"
 
