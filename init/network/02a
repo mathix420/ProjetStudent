@@ -1,0 +1,2 @@
+#!/bin/sh
+ifconfig en0 | grep -o 'broadcast .*' | grep -o '[[:digit:]]\+[.][[:digit:]]\+[.][[:digit:]]\+[.][[:digit:]]\+'
