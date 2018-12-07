@@ -6,31 +6,14 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/06 19:25:36 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 12:24:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include <unistd.h>
+#include "libft.h"
 
-#include <stdio.h>
-
-void	ft_putd(int d);
-void	ft_puthh(char nb);
-void	ft_puth(short nb);
-void	ft_putl(long nb);
-void	ft_putll(long long nb);
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
-{
-	while (*str)
-		write(1, str++, 1);
-}
+void	ft_diouxx(long long n, char *data);
 
 int		ft_countparam(const char *str)
 {
@@ -76,23 +59,14 @@ int		main(int c, char **v)
 	ft_printf("Test %iL%s %d %d %s %dede");
 	ft_printf("\n\nnb param %d\n", ft_countparam("Test %iL%s %d %d %s %dede"));
 	printf("\n\nnb param %d\n", ft_countparam("Test %iL%s %d %d %s %dede"));
-	while (c-- > 1)
+/*	ft_putnbr_base(atoi(v[1]), atoi(v[2]), "0123456789abcdef");*/
+	while (c-- > 2)
 	{
-		printf("\nNB : %d, flag : hh\n", atoi(v[c]));
-		ft_puthh(atoll(v[c]));
-		printf("\n%hhi\n", atoll(v[c]));
-		printf("\nflag : h\n");
-		ft_puth(atoll(v[c]));
-		printf("\n%hi\n", atoll(v[c]));
-		printf("\nno flag\n");
-		ft_putd(atoll(v[c]));
-		printf("\n%i\n", atoll(v[c]));
-		printf("\nflag : l\n");
-		ft_putl(atoll(v[c]));
-		printf("\n%li\n", atoll(v[c]));
-		printf("\nflag : ll\n");
-		ft_putll(atoll(v[c]));
-		printf("\n%lli\n", atoll(v[c]));
+		printf("\nNB : %d, flag : %s\n", atoi(v[c]), v[1]);
+		ft_diouxx(atoll(v[c]), v[1]);
+		ft_putchar('\n');
+		printf(v[1], atoll(v[c]));
+		printf("\n");
 	}
 	return (0);
 }

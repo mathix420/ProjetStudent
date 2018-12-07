@@ -127,5 +127,6 @@ alias clean="find . \( -name '*~' -type f -or -name '#*#' -type f -or -name 'a.o
 alias gff="gcc -Wall -Werror -Wextra "
 alias mf-gen="python3 ~/42-utilities/mf-gen.py"
 alias proto-list="python3 ~/42-utilities/proto-list.py"
+alias addlibft="cp -r ~/42/libft ."
 
 alias auto_sav="rm -rf ~/goinfre/ProjetStudent__github && gcl https://github.com/mathix420/ProjetStudent.git ~/goinfre/ProjetStudent__github && cd ~/goinfre/ProjetStudent__github/ && yes | git rm -rf * && cp -r ~/42/ProjetStudent/* . && cp ~/.zshrc . && cp ~/.emacs . && find . -type f | grep '/\#\w*\#' | xargs rm && find . -type f | grep '~$' | xargs rm && find ./* -type d | grep .git | xargs rm -rf && git add *  && git add .emacs && git add .zshrc&& git commit -m 'Auto commit $( date )' && git push origin master && cd ~/ && rm -rf ~/goinfre/ProjetStudent__github && echo '\n\e[32mAll done!'"
