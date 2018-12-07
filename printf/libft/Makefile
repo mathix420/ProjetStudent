@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2018/12/07 13:35:37 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/07 13:55:47 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -110,4 +110,4 @@ clean:
 fclean: clean
 		@/bin/rm -f $(NAME)
 
-re: clean all
+re: fclean all

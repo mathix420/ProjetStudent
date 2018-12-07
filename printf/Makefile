@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/07 13:33:32 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/07 13:55:23 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,4 +58,4 @@ fclean: clean
 		@/bin/rm -f $(NAME)
 		@echo "Cleaning done!"
 
-re: clean all
+re: fclean all

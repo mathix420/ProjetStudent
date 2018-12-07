@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 13:29:59 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 13:49:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int		ft_printf(const char * restrict format, ...)
 	va_end(valist);
 	return (0); // TODO
 }
-
-#include "stdlib.h"
 
 int		main(int c, char **v)
 {
