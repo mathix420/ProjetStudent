@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/07 13:55:23 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/07 20:00:53 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,11 @@ INC = includes \
 		libft
 
 SDIR = srcs
-_SRC = convert.c \
-		ft_printf.c 
+_SRC = bitop.c \
+		convert.c \
+		ft_printf.c \
+		parsing.c \
+		utils.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 OBJ = $(SRC:.c=.o)
