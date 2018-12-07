@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 15:08:12 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 16:51:47 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,13 @@ int		ft_printf(const char * restrict format, ...)
 int		main(int c, char **v)
 {
 	if (c > 1 && v[1])
-		printf("OUT :: %u\n", ft_getinfos(v[1])->data);
+	{
+		while (*(v[1]))
+		{
+			if (*(v[1])++ == '%')
+				printf("OUT :: %x\n", ft_getinfos(v[1])->data);
+		}
+	}
 	return (0);
 }
 
