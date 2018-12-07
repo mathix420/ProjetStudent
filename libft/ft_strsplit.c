@@ -6,7 +6,7 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:05:02 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/22 17:46:19 by agissing         ###   ########.fr       */
+/*   Updated: 2018/11/09 14:39:52 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,14 @@ static char	**ft_split(char **tab, char c, size_t l, const char *str)
 		while (str[i] == c && str[i])
 			i++;
 		save = i;
-		while (str[i] != c && str[i++])
+		while (str[i] != c && str[i])
+		{
+			i++;
 			l++;
-		if (!(tab[n] = ft_strsub(str, save, l)))
+		}
+		if (!(tab[n] = malloc(sizeof(char) * (l + 1))))
 			return (NULL);
+		tab[n] = ft_strsub(str, save, l);
 		n++;
 		l = 0;
 	}

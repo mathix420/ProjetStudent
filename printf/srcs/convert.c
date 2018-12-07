@@ -6,16 +6,15 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:24:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 12:00:27 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 13:30:19 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putchar(char c);
-void	ft_putstr(char *str);
+#include "ft_printf.h"
 
-void		ft_putnb(long long nbr, int base, char *b)
+void		ft_putnb(long long nbr, uint64_t base, char *b)
 {
-	unsigned long long	i;
+	uint64_t	i;
 
 	(nbr < 0 && (i = -nbr)) ? ft_putchar('-') :
 		(i = nbr);
@@ -57,7 +56,6 @@ void		ft_diouxx(long long n, char *data)
 {
 	void	(*p[5]) (long long nb, int base, char *b);
 	int		i;
-	int		base;
 
 	i = 0;
 	p[0] = ft_putd;
