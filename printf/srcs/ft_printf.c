@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 13:49:32 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 15:08:12 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		ft_countparam(const char *str)
 				str++;
 	return (nb);
 }
+
+infos_t	*ft_getinfos(char *input);
 
 int		ft_treat(char *arg, int kwargs)
 {
@@ -54,18 +56,8 @@ int		ft_printf(const char * restrict format, ...)
 
 int		main(int c, char **v)
 {
-	ft_printf("Test %iL%s %d %d %s %dede");
-	ft_printf("\n\nnb param %d\n", ft_countparam("Test %iL%s %d %d %s %dede"));
-	printf("\n\nnb param %d\n", ft_countparam("Test %iL%s %d %d %s %dede"));
-/*	ft_putnbr_base(atoi(v[1]), atoi(v[2]), "0123456789abcdef");*/
-	while (c-- > 2)
-	{
-		printf("\nNB : %d, flag : %s\n", atoi(v[c]), v[1]);
-		ft_diouxx(atoll(v[c]), v[1]);
-		ft_putchar('\n');
-		printf(v[1], atoll(v[c]));
-		printf("\n");
-	}
+	if (c > 1 && v[1])
+		printf("OUT :: %u\n", ft_getinfos(v[1])->data);
 	return (0);
 }
 

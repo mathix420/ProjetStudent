@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 12:34:31 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/07 14:43:52 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define FT_PRINTF_H
 
 # include "libft.h"
+
+typedef struct	infos_s
+{
+	unsigned int	minlength;
+	unsigned int	precision;
+	unsigned int	data;
+}				infos_t;
 
 /* ------------------------ DEBUG ------------------------ */
 
