@@ -6,14 +6,12 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 16:51:47 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/08 12:40:56 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
 #include "ft_printf.h"
-
-void	ft_diouxx(long long n, char *data);
+#include <stdarg.h>
 
 int		ft_countparam(const char *str)
 {
@@ -27,43 +25,44 @@ int		ft_countparam(const char *str)
 	return (nb);
 }
 
-infos_t	*ft_getinfos(char *input);
-
-int		ft_treat(char *arg, int kwargs)
+void	ft_treat(t_infos *i, va_list vl)
 {
-	ft_putstr("OK");
-	arg = "";
-	kwargs = 0;
-	return (0);
+	va_arg(vl, int);
+	(0x4 << 27 & i->data && 0x300 & i->data) ? char : 0;
+	(0x4 << 27 & i->data && 0xf0 & i->data) ? unsigned char : 0;
+	(0x8 << 27 & i->data && 0x300 & i->data) ? short : 0;
+	(0x8 << 27 & i->data && 0xf0 & i->data) ? unsigned short : 0;
+	(0x2 << 27 & i->data && 0x300 & i->data) ? long : 0;
+	(0x2 << 27 & i->data && 0xf0 & i->data) ? unsigned long : 0;
+	(0x1 << 27 & i->data && 0x300 & i->data) ? long long : 0;
+	(0x1 << 27 & i->data && 0xf0 & i->data) ? unsigned long long : 0;
 }
 
-int		ft_printf(const char * restrict format, ...)
+int		ft_printf(const char *restrict format, ...)
 {
-	va_list	valist;
-	int		nb_args;
-	char	*str;
+	uint32_t	count;
+	t_infos		*infos;
+	va_list		valist;
+	int			nb_args;
+	char		*str;
 
 	nb_args = ft_countparam(format);
 	str = (char *)format;
 	va_start(valist, format);
+	count = 0;
 	// Travail ici :: va_arg(valist, int);
 	while (*str)
-		(*str == '%' && str++ >= 0) ? ft_treat(str++, va_arg(valist, int)) :
-			ft_putchar(*str++);
+		if (*str++ == '%' && (infos = ft_getinfos(str)) && !(infos->data & 1))
+		{
+			ft_treat(infos, valist);
+			free(infos);
+		}
 	va_end(valist);
-	return (0); // TODO
+	return (count);
 }
 
 int		main(int c, char **v)
 {
-	if (c > 1 && v[1])
-	{
-		while (*(v[1]))
-		{
-			if (*(v[1])++ == '%')
-				printf("OUT :: %x\n", ft_getinfos(v[1])->data);
-		}
-	}
+	ft_printf("OUT :: %s\n", "test");
 	return (0);
 }
-

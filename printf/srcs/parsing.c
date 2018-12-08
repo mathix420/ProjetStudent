@@ -6,13 +6,13 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 19:34:47 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/08 11:26:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_getprefix(char **in, infos_t *infos)
+void	ft_getprefix(char **in, t_infos *infos)
 {
 	infos->data &= ~12;
 	if (ft_isdigit(**in))
@@ -29,7 +29,7 @@ void	ft_getprefix(char **in, infos_t *infos)
 			infos->minlength = infos->minlength * 10 + **in - '0';
 }
 
-void	ft_getflags(char **in, infos_t *i)
+void	ft_getflags(char **in, t_infos *i)
 {
 	while (**in && ft_is_printf_flag(**in))
 	{
@@ -41,7 +41,7 @@ void	ft_getflags(char **in, infos_t *i)
 	}
 }
 
-void	ft_getconv(char **in, infos_t *i)
+void	ft_getconv(char **in, t_infos *i)
 {
 	while (**in && ft_is_printf_conv(**in))
 	{
@@ -51,7 +51,7 @@ void	ft_getconv(char **in, infos_t *i)
 	}
 }
 
-void	ft_getoptions(char **in, infos_t *i)
+void	ft_getoptions(char **in, t_infos *i)
 {
 	if (ft_is_printf_arg(**in))
 	{
@@ -70,11 +70,11 @@ void	ft_getoptions(char **in, infos_t *i)
 		ft_place(&(i->data), 0);
 }
 
-infos_t	*ft_getinfos(char *input)
+t_infos	*ft_getinfos(char *input)
 {
-	infos_t		*infos;
+	t_infos		*infos;
 
-	if (!(infos = malloc(sizeof(infos_t))))
+	if (!(infos = malloc(sizeof(t_infos))))
 		return (NULL);
 	ft_getflags(&input, infos);
 	ft_getprefix(&input, infos);
@@ -82,7 +82,3 @@ infos_t	*ft_getinfos(char *input)
 	ft_getoptions(&input, infos);
 	return (infos);
 }
-
-/*
-** Need to test if ft_getinfos returns (NULL || infos->data & 1 != 0) There is an error !
-*/
