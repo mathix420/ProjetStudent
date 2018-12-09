@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/08 17:26:55 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/09 14:35:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,4 @@ int		ft_printf(const char *restrict format, ...)
 	va_end(valist);
 	return (count);
 }
+
