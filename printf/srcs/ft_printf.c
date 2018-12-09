@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/08 15:25:08 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/08 17:26:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ void	ft_treat(t_infos *i, va_list vl)
 	char	*b;
 	int		base;
 
-	base = ft_get_base(i, &b);
+	base = ft_get_base(i, &b); 
 	if (0x1 << 28 & i->data && 0x300 & i->data)
-		ft_putnb((char)va_arg(vl, uint64_t), 10, b);
+		ft_putnb((char)va_arg(vl, uint64_t), base, b);
 	else if (0x2 << 28 & i->data && 0x300 & i->data)
-		ft_putnb((short)va_arg(vl, uint64_t), 10, b);
+		ft_putnb((short)va_arg(vl, uint64_t), base, b);
 	else if (0x8 << 28 & i->data && 0x300 & i->data)
-		ft_putnb(va_arg(vl, long), 10, b);
+		ft_putnb(va_arg(vl, long), base, b);
 	else if (0x4 << 28 & i->data && 0x300 & i->data)
-		ft_putnb(va_arg(vl, long long), 10, b);
+		ft_putnb(va_arg(vl, long long), base, b);
 	else if (0x1 << 28 & i->data && 0xf0 & i->data)
-		ft_putunb((char)va_arg(vl, uint64_t), base, b);
+		ft_putunb((unsigned char)va_arg(vl, uint64_t), base, b);
 	else if (0x2 << 28 & i->data && 0xf0 & i->data)
-		ft_putunb((short)va_arg(vl, uint64_t), base, b);
+		ft_putunb((unsigned short)va_arg(vl, uint64_t), base, b);
 	else if (0x8 << 28 & i->data && 0xf0 & i->data)
 		ft_putunb(va_arg(vl, unsigned long), base, b);
 	else if (0x4 << 28 & i->data && 0xf0 & i->data)
 		ft_putunb(va_arg(vl, unsigned long long), base, b);
 	else if (0x300 & i->data)
-		ft_putnb(va_arg(vl, int), 10, b);
+		ft_putnb(va_arg(vl, int), base, b);
 	else if (0xf0 & i->data)
 		ft_putunb(va_arg(vl, unsigned), base, b);
 }
@@ -78,24 +78,16 @@ int		ft_printf(const char *restrict format, ...)
 	va_start(valist, format);
 	count = 0;
 	while (*str)
-		if (*str++ == '%' && (infos = ft_getinfos(str)) && !(infos->data & 1))
+		if (*str != '%')
+			ft_putchar(*str++);
+		else if (*str++ == '%' && (infos = ft_getinfos(&str)) &&
+				!(infos->data & 1))
 		{
-			printf("\n==%x==\n", infos->data);
 			ft_treat(infos, valist);
+			infos->data = 0;
 			free(infos);
+			str++;
 		}
 	va_end(valist);
 	return (count);
-}
-
-int		main(void)
-{
-	char		*tx;
-	uint64_t	nb;
-
-	tx = " ft_printf\n%p real printf\n";
-	nb = 9525555555655555555;
-	ft_printf(tx, nb);
-	printf(tx, nb);
-	return (0);
 }

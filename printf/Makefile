@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/07 20:00:53 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/08 17:05:07 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,18 @@
 #####                              FILES VARS                              #####
 ################################################################################
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 
-INC = includes \
-		libft
+INC = includes
 
 SDIR = srcs
 _SRC = bitop.c \
 		convert.c \
 		ft_printf.c \
 		parsing.c \
-		utils.c
+		utils.c \
+		basics/ft_putchar.c \
+		basics/ft_isdigit.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 OBJ = $(SRC:.c=.o)
@@ -34,8 +35,7 @@ OBJ = $(SRC:.c=.o)
 ################################################################################
 
 CC = gcc
-OPTS = $(foreach d, $(INC), -I$d)
-CFLAGS = -Wall -Wextra -Werror $(OPTS)
+CFLAGS = -Wall -Wextra -Werror -I$(INC)
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -45,19 +45,16 @@ CFLAGS = -Wall -Wextra -Werror $(OPTS)
 
 all: $(NAME)
 
-$(NAME):	$(OBJ)
-		@make -C libft
+$(NAME): $(OBJ)
 		@ar -rv $(NAME) $(OBJ)
 		@ranlib $(NAME)
 		@echo "Compilation done!"
 
 clean:
-		@make clean -C libft
 		@/bin/rm -f $(OBJ)
 		@echo "*.o cleaned!"
 
 fclean: clean
-		@make fclean -C libft
 		@/bin/rm -f $(NAME)
 		@echo "Cleaning done!"
 

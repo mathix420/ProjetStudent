@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/08 11:26:45 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/08 16:08:44 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,15 @@ void	ft_getoptions(char **in, t_infos *i)
 		ft_place(&(i->data), 0);
 }
 
-t_infos	*ft_getinfos(char *input)
+t_infos	*ft_getinfos(char **input)
 {
 	t_infos		*infos;
 
 	if (!(infos = malloc(sizeof(t_infos))))
 		return (NULL);
-	ft_getflags(&input, infos);
-	ft_getprefix(&input, infos);
-	ft_getconv(&input, infos);
-	ft_getoptions(&input, infos);
+	ft_getflags(input, infos);
+	ft_getprefix(input, infos);
+	ft_getconv(input, infos);
+	ft_getoptions(input, infos);
 	return (infos);
 }

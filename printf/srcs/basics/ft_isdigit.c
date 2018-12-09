@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 11:38:05 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/09 19:11:38 by agissing         ###   ########.fr       */
+/*   Created: 2018/11/08 15:20:16 by agissing          #+#    #+#             */
+/*   Updated: 2018/12/08 17:05:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+int		ft_isdigit(int c)
 {
-	unsigned int	size;
-	char			*out;
-
-	if (!s || !f)
-		return (NULL);
-	if (!(out = ft_strnew(ft_strlen(s))))
-		return (NULL);
-	size = 0;
-	while (s[size])
-	{
-		out[size] = (*f)(size, s[size]);
-		size++;
-	}
-	out[size] = '\0';
-	return (out);
+	return (c >= '0' && c <= '9');
 }
