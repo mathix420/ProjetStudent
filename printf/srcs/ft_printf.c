@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/09 14:35:17 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/09 18:47:25 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		ft_get_base(t_infos *i, char **b)
 	return (10);
 }
 
-void	ft_treat(t_infos *i, va_list vl)
+void	ft_dioux(t_infos *i, va_list vl)
 {
 	char	*b;
 	int		base;
@@ -65,6 +65,26 @@ void	ft_treat(t_infos *i, va_list vl)
 		ft_putunb(va_arg(vl, unsigned), base, b);
 }
 
+#define CONV_B (uint64_t)(0xf8 << 24)
+#define L_CONV (uint64_t)(0x8 << 28)
+
+void	ft_fcsp(t_infos *i, va_list vl)
+{
+	if (i->data & 1 << 10 && (!(CONV_B & i->data) || i->data & 1 << 31))
+		ft_put_double(va_arg(vl, double), (i->data & 4) ? i->precision : 6);
+	else if (i->data & 1 << 10 && i->data & 1 << 27)
+		ft_put_ldouble(va_arg(vl, long double), (i->data & 4) ? i->precision : 6);
+	else if (i->data & 1 << 11)
+	{
+		ft_putstr("0x");
+		ft_putunb((unsigned long)va_arg(vl, void*), 16, "0123456789abcdef");
+	}
+	else if (i->data & 1 << 12)
+		ft_putstr(va_arg(vl, char *));
+	else if (i->data & 1 << 13)
+		ft_putchar(va_arg(vl, int));
+}
+
 int		ft_printf(const char *restrict format, ...)
 {
 	uint32_t	count;
@@ -83,7 +103,8 @@ int		ft_printf(const char *restrict format, ...)
 		else if (*str++ == '%' && (infos = ft_getinfos(&str)) &&
 				!(infos->data & 1))
 		{
-			ft_treat(infos, valist);
+			ft_dioux(infos, valist);
+			ft_fcsp(infos, valist);
 			infos->data = 0;
 			free(infos);
 			str++;
@@ -91,4 +112,3 @@ int		ft_printf(const char *restrict format, ...)
 	va_end(valist);
 	return (count);
 }
-

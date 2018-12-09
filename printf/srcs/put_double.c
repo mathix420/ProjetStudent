@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   put_double.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/08 17:10:46 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/09 18:42:00 by agissing         ###   ########.fr       */
+/*   Created: 2018/12/09 16:05:27 by agissing          #+#    #+#             */
+/*   Updated: 2018/12/09 17:24:31 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "ft_printf.h"
 
-int		main(void)
+void	ft_put_double(double nb, int precision)
 {
-	char		nb;
-	long double	dd;
+	ft_put_ldouble(nb, precision);
+}
 
-	dd = -9999912.0599999999999999999999999;
-	nb = 95;
-	ft_printf("ft_printf\t %hhx %d %p\n", nb, nb, &dd);
-	printf("printf   \t %hhx %d %p\n", nb, nb, &dd);
-	return (0);
+void	ft_put_ldouble(long double nb, int precision)
+{
+	ft_putnb((int)nb, 10, "0123456789");
+	ft_putchar('.');
+	nb = (nb < 0) ? -nb : nb;
+	while (precision-- > 0)
+	{
+		nb -= (int)nb;
+		ft_putnb((int)(nb *= 10), 10, "0123456789");
+	}
 }
