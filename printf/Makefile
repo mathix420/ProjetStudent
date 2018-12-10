@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/09 18:12:30 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/10 11:26:32 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = includes
 
 SDIR = srcs
 _SRC = bitop.c \
-		convert.c \
+		numbers.c \
 		ft_printf.c \
 		parsing.c \
 		utils.c \

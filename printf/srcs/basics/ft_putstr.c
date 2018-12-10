@@ -6,14 +6,18 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:36:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/09 18:13:19 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/10 12:22:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putstr(char const *s)
+int		ft_putstr(char const *s)
 {
+	int		i;
+
+	i = 0;
 	while (*s)
-		write(1, s++, 1);
+		i += ft_putchar(*s++);
+	return (i);
 }
