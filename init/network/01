@@ -1,2 +1,2 @@
 #!/bin/sh
-ifconfig | grep -o '^\w*:' | tr -d ':'
+ifconfig -l
