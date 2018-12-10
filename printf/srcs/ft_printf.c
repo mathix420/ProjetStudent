@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/10 12:35:50 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:53:29 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int		ft_fill(t_infos *i, unsigned int count)
 {
-//	printf("{%x}", i->data);
 	if (i->data & 8 && count < i->minlength)
 		while (count < i->minlength)
 			count += ft_putchar(' ');
@@ -72,13 +71,16 @@ int		ft_fcsp(t_infos *i, va_list vl)
 
 	count = 0;
 	if (i->data & 1 << 10 && (!(CONV_B & i->data) || i->data & 1 << 31))
-		count += ft_put_double(va_arg(vl, double), (i->data & 4) ? i->precision : 6);
+		count += ft_put_double(va_arg(vl, double), (i->data & 4) ?
+							i->precision : 6);
 	else if (i->data & 1 << 10 && i->data & 1 << 27)
-		count += ft_put_ldouble(va_arg(vl, long double), (i->data & 4) ? i->precision : 6);
+		count += ft_put_ldouble(va_arg(vl, long double),
+								(i->data & 4) ? i->precision : 6);
 	else if (i->data & 1 << 11)
 	{
 		count += ft_putstr("0x");
-		count += ft_putunb((unsigned long)va_arg(vl, void*), 16, "0123456789abcdef");
+		count += ft_putunb((unsigned long)va_arg(vl, void*),
+						   16, "0123456789abcdef");
 	}
 	else if (i->data & 1 << 12)
 		count += ft_putstr(va_arg(vl, char *));

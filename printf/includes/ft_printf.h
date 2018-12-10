@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/10 11:32:21 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/10 14:53:42 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_infos
 	unsigned int	minlength;
 	unsigned int	precision;
 	unsigned int	data;
+	char			*out;
 }				t_infos;
 
 int				ft_putchar(char c);
