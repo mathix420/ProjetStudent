@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 17:51:22 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/11 17:54:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ int		ft_printf(const char *restrict format, ...)
 			count += ft_fill(i, ft_dioux(i, vl, 0, 0) + ft_fcsp(i, vl, 0));
 			ft_dioux(i, valist, 0, 1);
 			ft_fcsp(i, valist, 1);
-			i->data = 0;
-			free(i);
+			!(i->data = 0) ? free(i) : 0;
 			str++;
 		}
+	va_end(vl);
 	va_end(valist);
 	return (count);
 }
