@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 14:55:14 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/10 14:56:22 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/11 15:58:51 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,14 @@ int		ft_putstr(char const *s)
 int		ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+int		ft_strlen(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (*str++)
+		i++;
+	return (i);
 }
