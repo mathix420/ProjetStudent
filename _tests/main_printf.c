@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 17:10:46 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 17:06:25 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/11 17:47:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int		main(void)
 	char		nb;
 	long double	dd;
 
-	dd = 1.4;
+	dd = 16888565288.36645645;
 	nb = 9;
-	printf(" = %d\n", ft_printf("dede%Lf %10s", dd, "tete")); //precision .0
-	printf(" = %d\n", printf("dada%Lf %10s", dd, "tete"));
+	printf(" = %d\n", ft_printf("dede%.30Lf %10s %5d %-5%", dd, "tete", 1));
+	printf(" = %d\n", printf("dada%.30Lf %10s %5d %-5%", dd, "tete", 1));
 	return (0);
 }
