@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 17:54:21 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/11 18:27:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int		ft_dioux(t_infos *i, va_list vl, int count, int d)
 		count += ft_putnb(va_arg(vl, int), base, b, d);
 	else if (0xf0 & i->data)
 		count += ft_putunb(va_arg(vl, unsigned), base, b, d);
-	return (count);
+	return (count +  ft_fcsp(i, vl, d));
 }
 
 int		ft_fcsp(t_infos *i, va_list vl, int d)
 {
-	int	count;
+	int		count;
 
 	count = 0;
 	if (i->data & 1 << 10 && (!((0xf8 << 24) & i->data) || i->data & 1 << 31))
@@ -75,7 +75,7 @@ int		ft_fcsp(t_infos *i, va_list vl, int d)
 								(i->data & 4) ? i->precision : 6, d);
 	else if (i->data & 1 << 11)
 	{
-		count += d ? ft_putstr("0x") : 1;
+		count += d ? ft_putstr("0x") : 2;
 		count += ft_putunb((unsigned long)va_arg(vl, void*),
 						16, "0123456789abcdef", d);
 	}
@@ -84,7 +84,15 @@ int		ft_fcsp(t_infos *i, va_list vl, int d)
 			ft_strlen(va_arg(vl, char *));
 	else if (i->data & 1 << 13)
 		count += d ? ft_putchar(va_arg(vl, int)) : 1;
-	return (count);
+	return (count + );
+}
+
+int		ft_more(t_infos *i, va_list vl, int d)
+{
+	int		count;
+
+	count = 0;
+	if ()
 }
 
 int		ft_printf(const char *restrict format, ...)
@@ -102,10 +110,9 @@ int		ft_printf(const char *restrict format, ...)
 	while (*str)
 		if (*str != '%')
 			count += ft_putchar(*str++);
-		else if (*str++ == '%' && (i = ft_getinfos(&str)) &&
-				!(i->data & 1))
+		else if (*str++ == '%' && (i = ft_getinfos(&str)) && !(i->data & 1))
 		{
-			count += ft_fill(i, ft_dioux(i, vl, 0, 0) + ft_fcsp(i, vl, 0));
+			count += ft_fill(i, ft_dioux(i, vl, 0, 0));
 			ft_dioux(i, valist, 0, 1);
 			ft_fcsp(i, valist, 1);
 			!(i->data = 0) ? free(i) : 0;
