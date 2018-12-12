@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 17:10:46 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 18:14:30 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/12 17:24:31 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		main(void)
 
 	dd = 16888565288.36645645;
 	nb = 9;
-	printf(" = %d\n", ft_printf("% 5%", nb));
-	printf(" = %d\n", printf("% 5%", nb));
+	// erreur %-10#x
+	printf("= %d\n", ft_printf("%10x", nb));
+	printf("= %d\n", printf("%10x", nb));
 	return (0);
 }
