@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:24:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/12 17:57:42 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/12 19:29:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,16 @@ int		ft_putunb(unsigned long long nbr, uint64_t base, char *b, int d)
 	else
 		count += d ? ft_putchar(b[nbr % base]) : 1;
 	return (count);
+}
+
+int		ft_putsign(long long nbr, uint64_t base, char *b, int d, t_infos *i)
+{
+	int		count;
+
+	count = 0;
+	if (M_PLUS & i->data && nbr > 0 && base == 10)
+		count += d ? ft_putchar('+') : 1;
+	else if (M_SPC & i->data && nbr > 0 && base == 10)
+		count += d ? ft_putchar(' ') : 1;
+	return (count + ft_putnb(nbr, base, b, d));
 }

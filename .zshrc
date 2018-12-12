@@ -26,6 +26,7 @@ echo "
 /_/  /_/_/ |_/_/ /_//_/___/_/|_|  \\__/\\__/_/ /_/_/_/
                                                     
 "
+python3 -c "import subprocess; subprocess.Popen(['/bin/zsh', '-c', 'say \"hello mathix\"'])"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"

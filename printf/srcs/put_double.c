@@ -6,23 +6,23 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 16:05:27 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 16:00:43 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/12 19:14:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_put_double(double nb, int precision, int d)
+int		ft_put_double(double nb, int precision, int d, t_infos *i)
 {
-	return (ft_put_ldouble(nb, precision, d));
+	return (ft_put_ldouble(nb, precision, d, i));
 }
 
-int		ft_put_ldouble(long double nb, int precision, int d)
+int		ft_put_ldouble(long double nb, int precision, int d, t_infos *i)
 {
 	int		count;
 
 	count = 0;
-	count += ft_putnb((long long)nb, 10, "0123456789", d);
+	count += ft_putsign((long long)nb, 10, "0123456789", d, i);
 	count += d ? ft_putchar('.') : 1;
 	nb = (nb < 0) ? -nb - (long long)nb : nb - (long long)nb;
 	while (precision-- > 0)
