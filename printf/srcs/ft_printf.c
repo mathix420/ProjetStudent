@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 18:27:46 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/12 13:28:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int		ft_fill(t_infos *i, unsigned int count)
 {
+	count += ((1 << 25) & i->data && (0x3 << 4) & i->data) ? 2 :
+		((1 << 24) & i->data) != 0;
 	if (i->data & 8 && count < i->minlength)
 		while (count < i->minlength)
 			count += ft_putchar(' ');
