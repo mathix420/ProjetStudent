@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 18:17:11 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/13 14:29:29 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 void	ft_getprefix(char **in, t_infos *infos)
 {
-	infos->data &= ~12;
 	if (ft_isdigit(**in))
 		infos->data |= 8;
-	else if (**in == '.' && *(*in)++)
+	while (ft_isdigit(**in))
+		infos->minlength = infos->minlength * 10 +
+			*(*in)++ - '0';
+	if (**in == '.' && *(*in)++ == '.')
 		infos->data |= 4;
-	infos->precision = 0;
-	infos->minlength = 0;
-	while (((!infos->precision && !infos->minlength) || *(*in)++) &&
-		infos->data & 12 && ft_isdigit(**in))
-		if (infos->data & 4)
-			infos->precision = infos->precision * 10 + **in - '0';
-		else
-			infos->minlength = infos->minlength * 10 + **in - '0';
+	while (ft_isdigit(**in))
+		infos->precision = infos->precision * 10 +
+			*(*in)++ - '0';
 }
 
 void	ft_getflags(char **in, t_infos *i)
@@ -77,6 +74,8 @@ t_infos	*ft_getinfos(char **input)
 	if (!(infos = malloc(sizeof(t_infos))))
 		return (NULL);
 	ft_getflags(input, infos);
+	infos->precision = 0;
+	infos->minlength = 0;
 	ft_getprefix(input, infos);
 	ft_getconv(input, infos);
 	ft_getoptions(input, infos);

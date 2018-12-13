@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/12 19:39:52 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/13 14:41:51 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,24 @@
 
 int		ft_fill(t_infos *i, unsigned int count, int disp)
 {
+	int		cc;
+
+	cc = i->precision;
 	count += (M_HASH & i->data && M_HEXS & i->data) ? 2 :
 		(M_HASH & i->data && M_OCT & i->data);
-	if ((M_HASH + M_ZERO + M_LEFT) & i->data && (M_ZERO + M_LEFT) & i->data && disp)
+	if ((M_HASH + M_ZERO + M_LEFT) & i->data &&
+		(M_ZERO + M_LEFT) & i->data && disp)
 		ft_more(i, count);
+	cc -= count;
+	count = (M_PRES & i->data && M_DIOUX & i->data) ? i->precision : count;
 	while (i->data & M_MIN_SIZE && count < i->minlength)
 		if ((M_LEFT & i->data) ? !disp : disp)
 			count += ft_putchar(
-				(M_ZERO & i->data && !(M_LEFT & i->data)) ? '0' : ' ');
+				(M_ZERO & i->data && !((M_LEFT + M_PRES) & i->data)) ? 48 : 32);
 		else
 			count += 1;
+	while (M_DIOUX & i->data && M_PRES & i->data && cc-- > 0)
+		count += disp ? ft_putchar(48) : 1;
 	if (M_HASH & i->data && !((M_ZERO + M_LEFT) & i->data) && disp)
 		ft_more(i, count);
 	return (count);
@@ -49,16 +57,14 @@ int		ft_fcsp(t_infos *i, va_list vl, int d)
 	count = 0;
 	if (i->data & M_DBL && (!((0xf8 << 24) & i->data) || i->data & 1 << 31))
 		count += ft_put_double(va_arg(vl, double), (i->data & 4) ?
-							   i->precision : 6, d, i);
+							i->precision : 6, d, i);
 	else if (i->data & M_DBL && i->data & MF_UL)
 		count += ft_put_ldouble(va_arg(vl, long double),
 								(i->data & 4) ? i->precision : 6, d, i);
 	else if (i->data & M_PTR)
-	{
-		count += d ? ft_putstr("0x") : 2;
-		count += ft_putunb((unsigned long)va_arg(vl, void*),
-						16, "0123456789abcdef", d);
-	}
+		count += (d ? ft_putstr("0x") : 2) +
+			ft_putunb((unsigned long)va_arg(vl, void*),
+				16, "0123456789abcdef", d);
 	else if (i->data & M_STR)
 		count += d ? ft_putstr(va_arg(vl, char *)) :
 			ft_strlen(va_arg(vl, char *));
@@ -98,32 +104,29 @@ int		ft_dioux(t_infos *i, va_list vl, int count, int d)
 
 int		ft_printf(const char *restrict format, ...)
 {
-	uint32_t	count, dd;
+	uint32_t	count[2];
+	va_list		valist[2];
 	t_infos		*i;
-	va_list		valist;
-	va_list		vl;
-	char		*str;
+	char		*s;
 
-	str = (char *)format;
-	va_start(valist, format);
-	va_copy(vl, valist);
-	count = 0;
-	while (*str)
-		if (*str != '%')
-			count += ft_putchar(*str++);
-		else if (*str++ == '%' && (i = ft_getinfos(&str)) && !(i->data & M_ERROR))
+	s = (char *)format;
+	va_start(valist[0], format);
+	va_copy(valist[1], valist[0]);
+	count[0] = 0;
+	while (*s)
+		if (*s != '%')
+			count[0] += ft_putchar(*s++);
+		else if (*s++ == '%' && (i = ft_getinfos(&s)) && !(i->data & M_ERROR))
 		{
-			dd = ft_dioux(i, vl, 0, 0);
-//			printf("+++'%d''%d'++\n", dd, i->minlength);
-			count += ft_fill(i, dd, 1); // si - alors disp == 0
-			ft_dioux(i, valist, 0, 1);
-//			printf("+++'%d''%d'++\n", dd, i->minlength);
-			ft_fill(i, dd, (M_LEFT) & 0); // si - alors disp == 1
+			count[1] = ft_dioux(i, valist[1], 0, 0);
+			count[0] += ft_fill(i, count[1], 1);
+			ft_dioux(i, valist[0], 0, 1);
+			ft_fill(i, count[1], 0);
 			!(i->data = 0) ? free(i) : 0;
-			str++;
+			s++;
 		}
-	va_end(vl);
-	va_end(valist);
-	return (count);
+	(i->data & M_ERROR) ? free(i) : 0;
+	va_end(valist[1]);
+	va_end(valist[0]);
+	return (count[0]);
 }
- 

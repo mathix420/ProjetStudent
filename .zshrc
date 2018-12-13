@@ -129,4 +129,5 @@ alias gff="gcc -Wall -Werror -Wextra "
 alias mf-gen="python3 ~/42-utilities/mf-gen.py"
 alias proto-list="python3 ~/42-utilities/proto-list.py"
 alias addlibft="mkdir libft 2>> /dev/null | cp ~/42/ProjetStudent/libft/* ./libft/"
+alias check='find . -name "*" -type f | xargs grep -o "\w\+[.]c" | grep -o "\w\+[.]c[:]\w\+[.]c"'
 alias sav="rm -rf ~/goinfre/ProjetStudent__github; gcl https://github.com/mathix420/ProjetStudent.git ~/goinfre/ProjetStudent__github; cd ~/goinfre/ProjetStudent__github/; yes | git rm -rf * && cp -r ~/42/ProjetStudent/* .; cp ~/.zshrc .; cp ~/.emacs .; cp -r ~/Config .; find ./* -type d | grep .git | xargs rm -rf; find . -type f -name Makefile -exec dirname {} \; | xargs -I{} make -C {} fclean; clean; git add *; git add .emacs && git add .zshrc; git commit -m 'Auto commit $( date )'; git push origin master && cd ~/; rm -rf ~/goinfre/ProjetStudent__github; echo '\n\e[32mAll done!'"

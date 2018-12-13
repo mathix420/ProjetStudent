@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/12 19:35:10 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/13 14:54:53 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define M_CSP (7 << 11)
 # define M_HEXS (3 << 4)
-# define M_DIOUX (31 << 4)
+# define M_DIOUX (0x3f << 4)
 # define M_OUX (0xf0)
 # define M_INT (3 << 8)
 
@@ -83,10 +83,8 @@ int				ft_putsign(long long nbr, uint64_t base, char *b, int d,
 						t_infos *i);
 int				ft_putnb(long long nbr, uint64_t base, char *b, int d);
 int				ft_putunb(uint64_t nbr, uint64_t base, char *b, int d);
-int				ft_put_ldouble(long double nb,
-							int precision, int d, t_infos *i);
-int				ft_put_double(double nb,
-							int precision, int d, t_infos *i);
+int				ft_put_ldouble(long double nb, int p, int d, t_infos *i);
+int				ft_put_double(double nb, int p, int d, t_infos *i);
 
 int				ft_printf(const char *restrict format, ...);
 
