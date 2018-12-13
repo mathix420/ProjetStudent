@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 14:55:14 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/11 18:08:40 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/13 22:14:27 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,21 @@ int		ft_putchar(char c)
 	return (1);
 }
 
-int		ft_putstr(char const *s)
+int		ft_putpstr(char *str, t_infos *i, int disp)
+{
+	int		count;
+	int		d;
+
+	if (!(M_PRES & i->data))
+		return (disp ? ft_putstr(str) : ft_strlen(str));
+	count = i->precision;
+	d = 0;
+	while (*str++ && count-- > 0)
+		d += disp ? ft_putchar(*(str - 1)) : 1;
+	return (d);
+}
+
+int		ft_putstr(char *s)
 {
 	int		i;
 
