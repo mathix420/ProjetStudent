@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/09 16:05:27 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/13 16:03:12 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/14 18:17:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_put_ldouble(long double nb, int precision, int d, t_infos *i)
 	count = 0;
 	i->bn = 10;
 	i->bs = "0123456789";
-	count += ft_putsign((long long)nb, d, i);
+	count += ft_putsign((long long)nb, d, i, count);
 	count += d ? ft_putchar('.') : 1;
 	nb = (nb < 0) ? -nb - (long long)nb : nb - (long long)nb;
 	while (precision-- > 0)

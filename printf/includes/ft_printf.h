@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/13 20:02:52 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/14 19:00:14 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void			ft_capinod(uint32_t *bytes, int pos);
 void			ft_place(uint32_t *bytes, int pos);
 t_infos			*ft_getinfos(char **input);
 
-void			ft_more(t_infos *i, unsigned count);
-int				ft_putsign(long long nbr, int d, t_infos *i);
+int				ft_more(t_infos *i, unsigned count, int d);
+int				ft_putsign(long long nbr, int d, t_infos *i, int count);
+int				ft_putusign(unsigned long long nb, int d, t_infos *i, int c);
 int				ft_putnb(long long nbr, uint64_t base, char *b, int d);
 int				ft_putunb(uint64_t nbr, t_infos *i, int d);
 int				ft_put_ldouble(long double nb, int p, int d, t_infos *i);

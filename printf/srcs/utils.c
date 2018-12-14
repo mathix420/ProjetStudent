@@ -6,17 +6,22 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 15:33:26 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/13 12:38:02 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/14 18:59:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_more(t_infos *i, unsigned count)
+int		ft_more(t_infos *i, unsigned count, int d)
 {
+	char	c;
+
+	c = M_UHEX & i->data ? 'X' : 'x';
 	if (M_HASH & i->data && M_HEXS & i->data)
-		count += ft_putchar(48) + ft_putchar(M_UHEX & i->data ? 'X' : 'x');
-	count += (M_HASH & i->data && M_OCT & i->data) ? ft_putchar(48) : 0;
+		count += d ? ft_putchar(48) + ft_putchar(c) : 2;
+	if (M_HASH & i->data && M_OCT & i->data)
+		d ? ft_putchar(48) : 1;
+	return (count);
 }
 
 int		ft_is_printf_flag(char c)

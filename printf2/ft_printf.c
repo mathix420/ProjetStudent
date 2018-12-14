@@ -5,22 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/14 19:24:22 by agissing         ###   ########.fr       */
+/*   Created: 2018/12/14 14:41:13 by agissing          #+#    #+#             */
+/*   Updated: 2018/12/14 14:50:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdarg.h>
 
-int		ft_fill(t_infos *i, unsigned int count, int disp)
+void    ft_more(t_infos *i, unsigned count)
 {
+    if (M_HASH & i->data && M_HEXS & i->data)
+        count += ft_putchar(48) + ft_putchar(M_UHEX & i->data ? 'X' : 'x');
+    count += (M_HASH & i->data && M_OCT & i->data) ? ft_putchar(48) : 0;
+}
+
+int		ft_fill(t_infos *i, unsigned count)
+{	
+	if ((M_HASH + M_ZERO + M_LEFT) & i->data &&
+		(M_ZERO + M_LEFT) & i->data && disp)
+		ft_more(i, count);
 	while (i->data & M_MIN_SIZE && count < i->minlength)
 		if ((M_LEFT & i->data) ? !disp : disp)
 			count += ft_putchar(
 				(M_ZERO & i->data && !((M_LEFT + M_PRES) & i->data)) ? 48 : 32);
 		else
 			count += 1;
+	if (M_HASH & i->data && !((M_ZERO + M_LEFT) & i->data) && disp)
+		ft_more(i, count);
 	return (count);
 }
 
@@ -65,15 +77,14 @@ int		ft_fcsp(t_infos *i, va_list vl, int d)
 int		ft_dioux(t_infos *i, va_list vl, int c, int d)
 {
 	ft_get_base(i);
-	c += ft_more(i, c, d);
 	if (MF_HH & i->data && M_INT & i->data)
-		c += ft_putsign((char)va_arg(vl, uint64_t), d, i, c);
+		c += ft_putsign((char)va_arg(vl, uint64_t), d, i);
 	else if (MF_H & i->data && M_INT & i->data)
-		c += ft_putsign((short)va_arg(vl, uint64_t), d, i, c);
+		c += ft_putsign((short)va_arg(vl, uint64_t), d, i);
 	else if (MF_L & i->data && M_INT & i->data)
-		c += ft_putsign(va_arg(vl, long), d, i, c);
+		c += ft_putsign(va_arg(vl, long), d, i);
 	else if (MF_LL & i->data && M_INT & i->data)
-		c += ft_putsign(va_arg(vl, long long), d, i, c);
+		c += ft_putsign(va_arg(vl, long long), d, i);
 	else if (MF_HH & i->data && M_OUX & i->data)
 		c += ft_putusign((uint8_t)va_arg(vl, uint64_t), d, i, c);
 	else if (MF_H & i->data && M_OUX & i->data)
@@ -83,7 +94,7 @@ int		ft_dioux(t_infos *i, va_list vl, int c, int d)
 	else if (MF_LL & i->data && M_OUX & i->data)
 		c += ft_putusign(va_arg(vl, unsigned long long), d, i, c);
 	else if (M_INT & i->data)
-		c += ft_putsign(va_arg(vl, int), d, i, c);
+		c += ft_putsign(va_arg(vl, int), d, i);
 	else if (M_OUX & i->data)
 		c += ft_putusign(va_arg(vl, unsigned), d, i, c);
 	return (c + ft_fcsp(i, vl, d));
@@ -106,13 +117,12 @@ int		ft_printf(const char *restrict format, ...)
 			count[0] += ft_putchar(*s++);
 		else if (*s++ == '%' && (i = ft_getinfos(&s)) && !(i->data & M_ERROR))
 		{
-			count[1] = ft_dioux(i, valist[1], 0, M_LEFT & i->data);
-			ft_fill(i, count[1], !(M_LEFT & i->data));
-			ft_dioux(i, valist[0], 0, !(M_LEFT & i->data));
-//			printf("=1'%d'\n", count[1]);
-			count[0] += ft_fill(i, count[1], M_LEFT & i->data);
+			count[1] = ft_dioux(i, valist[1], 0, 0);
+			count[0] += ft_fill(i, count[1], 1);
+			ft_dioux(i, valist[0], 0, 1);
+			ft_fill(i, count[1], 0);
+			!(i->data = 0) ? free(i) : 0;
 			s++;
-			free(i);
 		}
 	(i && i->data & M_ERROR) ? free(i) : 0;
 	va_end(valist[1]);

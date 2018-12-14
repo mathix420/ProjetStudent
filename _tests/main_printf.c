@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 17:10:46 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/13 22:14:45 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/14 19:25:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		main(void)
 //	ft_printf("%U\\n", 4294967295);
 //	ft_printf("%S\\n", L"ݗݜशব");
 ft_printf("%s%s\\n", "test", "test");*/
-	printf("=%d\n", ft_printf("%150.500s", "-42"));
-	printf("=%d\n", printf("%150.500s", "-42"));
+	printf("=%d\n", ft_printf("%# 10x", 4200));
+	printf("=%d\n", printf("%# 10x", 4200));
 	return (0);
 }
