@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 16:03:27 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 22:41:49 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int		ft_fill(t_infos *i, unsigned int count, int disp)
 {
+	if (!(M_MIN_SIZE & i->data) && M_DIX & i->data &&
+		M_ZERO & i->data && !(M_LEFT & i->data))
+		return (count);
 	while (i->data & M_MIN_SIZE && count < i->minlength)
 		if ((M_LEFT & i->data) ? !disp : disp)
 			count += ft_putchar(
@@ -23,24 +26,8 @@ int		ft_fill(t_infos *i, unsigned int count, int disp)
 	return (count);
 }
 
-void	ft_get_base(t_infos *i)
-{
-	if (M_UHEX & i->data && (i->bs = "0123456789ABCDEF"))
-		i->bn = 16;
-	else if (M_LHEX & i->data && (i->bs = "0123456789abcdef"))
-		i->bn = 16;
-	else if (M_OCT & i->data && (i->bs = "01234567"))
-		i->bn = 8;
-	else
-	{
-		i->bn = 10;
-		i->bs = "0123456789";
-	}
-}
-
 int		ft_treat(t_infos *i, va_list vl, int c, int d)
 {
-	ft_get_base(i);
 	if (M_HEXS & i->data)
 		c += ft_puthex(i, ft_uconv(i, va_arg(vl, uint64_t)), d);
 	else if (M_OCT & i->data)
@@ -61,6 +48,10 @@ int		ft_treat(t_infos *i, va_list vl, int c, int d)
 	else if (i->data & M_DBL && i->data & MF_UL)
 		c += ft_put_ldouble(va_arg(vl, long double),
 							(i->data & 4) ? i->precision : 6, d, i);
+	else if (i->data & M_PRCT)
+		c += ft_putpercent(i, d);
+	else if (i->data & M_BIN)
+		c += ft_putbin(i, ft_uconv(i, va_arg(vl, int64_t)), d);
 	return (c);
 }
 
@@ -85,6 +76,7 @@ int		ft_printf(const char *restrict format, ...)
 			ft_fill(i, count[1], !(M_LEFT & i->data));
 			ft_treat(i, valist[0], 0, !(M_LEFT & i->data));
 			count[0] += ft_fill(i, count[1], M_LEFT & i->data);
+			ft_fill(i, count[1], M_LEFT & i->data);
 			s++;
 			free(i);
 		}

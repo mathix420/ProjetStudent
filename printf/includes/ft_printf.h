@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 17:05:45 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 22:37:14 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define M_PTR (1 << 11)
 # define M_STR (1 << 12)
 # define M_CHR (1 << 13)
+# define M_PRCT (1 << 14)
+# define M_BIN (1 << 15)
 
 # define MF_ALL (0xf8 << 24)
 # define MF_UL (1 << 27)
@@ -49,6 +51,8 @@
 # define M_LEFT (1 << 24)
 # define M_PLUS (1 << 23)
 # define M_SPC (1 << 22)
+
+# define M_DIX (M_INT + M_HEXS)
 
 /*
 ** ------------------------ DEBUG ------------------------
@@ -80,10 +84,12 @@ int64_t			ft_conv(t_infos *i, int64_t nbr);
 
 int				ft_puthex(t_infos *i, uint64_t nbr, int d);
 int				ft_putoct(t_infos *i, uint64_t nbr, int d);
+int				ft_putbin(t_infos *i, uint64_t nbr, int d);
 int				ft_putdi(t_infos *i, int64_t nbr, int d);
 int				ft_putuns(t_infos *i, uint64_t nbr, int d);
 int				ft_putstring(t_infos *i, char *str, int d);
 int				ft_putptr(t_infos *i, void *addr, int d);
+int				ft_putpercent(t_infos *i, int d);
 
 int				ft_is_printf_arg(char c);
 int				ft_is_printf_conv(char c);
@@ -91,6 +97,8 @@ int				ft_is_printf_flag(char c);
 void			ft_capin(uint32_t *bytes, int pos);
 void			ft_capinod(uint32_t *bytes, int pos);
 void			ft_place(uint32_t *bytes, int pos);
+void			ft_remove(uint32_t *bytes, int pos);
+
 t_infos			*ft_getinfos(char **input);
 
 int				ft_more(t_infos *i, unsigned count, int d);

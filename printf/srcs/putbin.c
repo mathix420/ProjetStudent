@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   puthex.c                                           :+:      :+:    :+:   */
+/*   putbin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 13:26:25 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 20:56:06 by agissing         ###   ########.fr       */
+/*   Created: 2018/12/15 22:37:00 by agissing          #+#    #+#             */
+/*   Updated: 2018/12/15 22:42:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_puthex(t_infos *i, uint64_t nbr, int d)
+int		ft_putbin(t_infos *i, uint64_t nbr, int d)
 {
 	unsigned	count;
 	unsigned	nb;
 	int			p;
 
-	i->bs = (M_UHEX & i->data) ? "0123456789ABCDEFX" : "0123456789abcdefx";
-	i->bn = 16;
+	i->bs = "01";
+	i->bn = 2;
 	count = 0;
 	p = (nbr == 0 && (M_PRES & i->data) && i->precision == 0);
 	if (M_HASH & i->data && nbr > 0)
-		count += d ? ft_putchar(48) + ft_putchar(i->bs[16]) : 2;
+		count += d ? ft_putchar('0') + ft_putchar('b') : 2;
 	((M_PRES + M_ZERO) & i->data) ? nb = ft_putunb(nbr, i, 0) : 0;
 	if (M_PRES & i->data && nb < i->precision)
 		while (nb++ < i->precision)

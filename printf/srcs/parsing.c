@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 16:22:30 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 22:27:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	ft_getprefix(char **in, t_infos *infos)
 		infos->minlength = infos->minlength * 10 +
 			*(*in)++ - '0';
 	if (**in == '.' && *(*in)++ == '.')
+	{
 		infos->data |= 4;
+		infos->precision = 0;
+	}
 	while (ft_isdigit(**in))
 		infos->precision = infos->precision * 10 +
 			*(*in)++ - '0';
@@ -40,18 +43,20 @@ void	ft_getflags(char **in, t_infos *i)
 
 void	ft_getconv(char **in, t_infos *i)
 {
-	while (**in && ft_is_printf_conv(**in))
-	{
-		(**in == 'l') ? ft_capinod(&(i->data), 31) : 0;
-		(**in == 'h') ? ft_capinod(&(i->data), 29) : 0;
-		(*(*in)++ == 'L') ? ft_capin(&(i->data), 27) : 0;
-	}
+	(ft_is_printf_conv(**in)) ? i->data &= ~MF_ALL : 0;
+	(**in == 'l' && (*(*in)++ || 1)) ? ft_capinod(&(i->data), 31) : 0;
+	(**in == 'l' && (*(*in)++ || 1)) ? ft_capinod(&(i->data), 31) : 0;
+	(**in == 'h' && (*(*in)++ || 1)) ? ft_capinod(&(i->data), 29) : 0;
+	(**in == 'h' && (*(*in)++ || 1)) ? ft_capinod(&(i->data), 29) : 0;
+	(**in == 'L' && (*(*in)++ || 1)) ? ft_capin(&(i->data), 27) : 0;
 }
 
 void	ft_getoptions(char **in, t_infos *i)
 {
 	if (ft_is_printf_arg(**in))
 	{
+		(**in == 'b') ? ft_place(&(i->data), 14) : 0;
+		(**in == '%') ? ft_place(&(i->data), 14) : 0;
 		(**in == 'c') ? ft_place(&(i->data), 13) : 0;
 		(**in == 's') ? ft_place(&(i->data), 12) : 0;
 		(**in == 'p') ? ft_place(&(i->data), 11) : 0;
@@ -73,11 +78,17 @@ t_infos	*ft_getinfos(char **input)
 
 	if (!(infos = malloc(sizeof(t_infos))))
 		return (NULL);
-	ft_getflags(input, infos);
 	infos->precision = 0;
 	infos->minlength = 0;
-	ft_getprefix(input, infos);
-	ft_getconv(input, infos);
+	while (ft_is_printf_flag(**input) || ft_is_printf_conv(**input) ||
+		**input == '.' || ft_isdigit(**input))
+	{
+		ft_getflags(input, infos);
+		ft_getprefix(input, infos);
+		ft_getconv(input, infos);
+	}
 	ft_getoptions(input, infos);
+	if (M_SPC & infos->data && M_ZERO & infos->data)
+		infos->data &= ~M_ZERO;
 	return (infos);
 }
