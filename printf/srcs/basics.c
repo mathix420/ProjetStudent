@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 14:55:14 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/14 17:04:16 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 15:08:20 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int		ft_putstr(char *s)
 	int		i;
 
 	i = 0;
-	if (!s)
-		return (ft_putstr("(null)"));
 	while (*s)
 		i += ft_putchar(*s++);
 	return (i);

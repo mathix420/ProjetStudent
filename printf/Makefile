@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/10 14:56:46 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/15 15:30:49 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,14 @@ _SRC = bitop.c \
 		parsing.c \
 		utils.c \
 		put_double.c \
-		basics.c
+		basics.c \
+		convert.c \
+		puthex.c \
+		putoct.c \
+		putdi.c \
+		putuns.c \
+		putstring.c \
+		putptr.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 OBJ = $(SRC:.c=.o)

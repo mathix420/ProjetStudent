@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/14 19:00:14 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 15:30:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 # define M_CSP (7 << 11)
 # define M_HEXS (3 << 4)
@@ -72,6 +73,16 @@ int				ft_putstr(char *str);
 int				ft_strlen(char *str);
 int				ft_isdigit(int c);
 int				ft_putpstr(char *s, t_infos *i, int disp);
+
+uint64_t		ft_uconv(t_infos *i, uint64_t nbr);
+int64_t			ft_conv(t_infos *i, int64_t nbr);
+
+int				ft_puthex(t_infos *i, uint64_t nbr, int d);
+int				ft_putoct(t_infos *i, uint64_t nbr, int d);
+int				ft_putdi(t_infos *i, int64_t nbr, int d);
+int				ft_putuns(t_infos *i, uint64_t nbr, int d);
+int				ft_putstring(t_infos *i, char *str, int d);
+int				ft_putptr(t_infos *i, void *addr, int d);
 
 int				ft_is_printf_arg(char c);
 int				ft_is_printf_conv(char c);

@@ -6,12 +6,11 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/14 19:24:22 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 15:32:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdarg.h>
 
 int		ft_fill(t_infos *i, unsigned int count, int disp)
 {
@@ -52,40 +51,26 @@ int		ft_fcsp(t_infos *i, va_list vl, int d)
 	else if (i->data & M_DBL && i->data & MF_UL)
 		count += ft_put_ldouble(va_arg(vl, long double),
 								(i->data & 4) ? i->precision : 6, d, i);
-	else if (i->data & M_PTR)
-		count += (d ? ft_putstr("0x") : 2) +
-			ft_putunb((unsigned long)va_arg(vl, void*), i, d);
-	else if (i->data & M_STR)
-		count += ft_putpstr(va_arg(vl, char *), i, d);
-	else if (i->data & M_CHR)
-		count += d ? ft_putchar(va_arg(vl, int)) : 1;
 	return (count);
 }
 
 int		ft_dioux(t_infos *i, va_list vl, int c, int d)
 {
 	ft_get_base(i);
-	c += ft_more(i, c, d);
-	if (MF_HH & i->data && M_INT & i->data)
-		c += ft_putsign((char)va_arg(vl, uint64_t), d, i, c);
-	else if (MF_H & i->data && M_INT & i->data)
-		c += ft_putsign((short)va_arg(vl, uint64_t), d, i, c);
-	else if (MF_L & i->data && M_INT & i->data)
-		c += ft_putsign(va_arg(vl, long), d, i, c);
-	else if (MF_LL & i->data && M_INT & i->data)
-		c += ft_putsign(va_arg(vl, long long), d, i, c);
-	else if (MF_HH & i->data && M_OUX & i->data)
-		c += ft_putusign((uint8_t)va_arg(vl, uint64_t), d, i, c);
-	else if (MF_H & i->data && M_OUX & i->data)
-		c += ft_putusign((uint16_t)va_arg(vl, uint64_t), d, i, c);
-	else if (MF_L & i->data && M_OUX & i->data)
-		c += ft_putusign(va_arg(vl, unsigned long), d, i, c);
-	else if (MF_LL & i->data && M_OUX & i->data)
-		c += ft_putusign(va_arg(vl, unsigned long long), d, i, c);
+	if (M_HEXS & i->data)
+		c += ft_puthex(i, ft_uconv(i, va_arg(vl, uint64_t)), d);
+	else if (M_OCT & i->data)
+		c += ft_putoct(i, ft_uconv(i, va_arg(vl, uint64_t)), d);
 	else if (M_INT & i->data)
-		c += ft_putsign(va_arg(vl, int), d, i, c);
-	else if (M_OUX & i->data)
-		c += ft_putusign(va_arg(vl, unsigned), d, i, c);
+		c += ft_putdi(i, ft_conv(i, va_arg(vl, int64_t)), d);
+	else if (M_UNSI & i->data)
+		c += ft_putuns(i, ft_uconv(i, va_arg(vl, int64_t)), d);
+	else if (M_CHR & i->data)
+		c += d ? ft_putchar(va_arg(vl, int)) : 1;
+	else if (i->data & M_STR)
+		c += ft_putstring(i, va_arg(vl, char *), d);
+	else if (i->data & M_PTR)
+		c += ft_putptr(i, va_arg(vl, void *), d);
 	return (c + ft_fcsp(i, vl, d));
 }
 
