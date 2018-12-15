@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/13 14:29:29 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 16:22:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	ft_getflags(char **in, t_infos *i)
 {
 	while (**in && ft_is_printf_flag(**in))
 	{
-		(**in == '#') ? ft_capin(&(i->data), 26) : 0;
-		(**in == '0') ? ft_capin(&(i->data), 25) : 0;
-		(**in == '-') ? ft_capin(&(i->data), 24) : 0;
-		(**in == '+') ? ft_capin(&(i->data), 23) : 0;
-		(*(*in)++ == ' ') ? ft_capin(&(i->data), 22) : 0;
+		(**in == '#') ? ft_place(&(i->data), 26) : 0;
+		(**in == '0') ? ft_place(&(i->data), 25) : 0;
+		(**in == '-') ? ft_place(&(i->data), 24) : 0;
+		(**in == '+') ? ft_place(&(i->data), 23) : 0;
+		(*(*in)++ == ' ') ? ft_place(&(i->data), 22) : 0;
 	}
 }
 

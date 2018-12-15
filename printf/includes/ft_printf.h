@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 15:30:32 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 17:05:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define M_STR (1 << 12)
 # define M_CHR (1 << 13)
 
+# define MF_ALL (0xf8 << 24)
 # define MF_UL (1 << 27)
 # define MF_HH (1 << 28)
 # define MF_H (1 << 29)
@@ -93,12 +94,9 @@ void			ft_place(uint32_t *bytes, int pos);
 t_infos			*ft_getinfos(char **input);
 
 int				ft_more(t_infos *i, unsigned count, int d);
-int				ft_putsign(long long nbr, int d, t_infos *i, int count);
-int				ft_putusign(unsigned long long nb, int d, t_infos *i, int c);
 int				ft_putnb(long long nbr, uint64_t base, char *b, int d);
 int				ft_putunb(uint64_t nbr, t_infos *i, int d);
 int				ft_put_ldouble(long double nb, int p, int d, t_infos *i);
-int				ft_put_double(double nb, int p, int d, t_infos *i);
 
 int				ft_printf(const char *restrict format, ...);
 

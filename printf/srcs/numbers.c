@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 18:24:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 14:33:52 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 17:05:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +42,4 @@ int		ft_putunb(unsigned long long nbr, t_infos *i, int d)
 	else
 		count += d ? ft_putchar(i->bs[nbr % i->bn]) : 1;
 	return (count);
-}
-
-int		ft_putsign(long long nb, int d, t_infos *i, int count)
-{
-	int		cc;
-
-	if (M_PLUS & i->data && nb > 0 && i->bn == 10)
-		count += d ? ft_putchar('+') : 1;
-	if (nb < 0 && i->bn == 10)
-		count += d ? ft_putchar('-') : 1;
-	if (!(M_PLUS & i->data) && M_SPC & i->data && nb > 0 && i->bn == 10)
-		count += d ? ft_putchar(' ') : 1;
-	cc = i->precision - ft_putnb(nb, i->bn, i->bs, 0);
-	while (M_DIOUX & i->data && M_PRES & i->data && cc-- > 0)
-		count += d ? ft_putchar(48) : 1;
-	return (count + ft_putnb(nb, i->bn, i->bs, d));
-}
-
-
-int		ft_putusign(unsigned long long nb, int d, t_infos *i, int c)
-{
-	int		cc;
-
-	if (M_PLUS & i->data && nb > 0 && i->bn == 10)
-		c += d ? ft_putchar('+') : 1;
-	if (!(M_PLUS & i->data) && M_SPC & i->data && nb > 0 && i->bn == 10)
-		c += d ? ft_putchar(' ') : 1;
-	cc = i->precision - ft_putunb(nb, i, 0);
-	while (M_DIOUX & i->data && M_PRES & i->data && cc-- > 0)
-		c += d ? ft_putchar(48) : 1;
-	return (c + ft_putunb(nb, i, d));
 }

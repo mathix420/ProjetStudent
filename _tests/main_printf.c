@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 17:10:46 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 15:28:53 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 17:03:10 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(void)
 	int		i;
 
 	i = 0;
-	printf("=%d\n", ft_printf("%30p  test", &i));
-	printf("=%d\n", printf("%30p  test", &i));
+	printf("=%d\n", ft_printf("%+20.d  test", 1));
+	printf("=%d\n", printf("%+20.d  test", 1));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 15:32:32 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/15 16:03:27 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,7 @@ void	ft_get_base(t_infos *i)
 	}
 }
 
-int		ft_fcsp(t_infos *i, va_list vl, int d)
-{
-	int		count;
-
-	count = 0;
-	i->bs = "0123456789abcdef";
-	i->bn = 16;
-	if (i->data & M_DBL && (!((0xf8 << 24) & i->data) || i->data & 1 << 31))
-		count += ft_put_double(va_arg(vl, double), (i->data & 4) ?
-							i->precision : 6, d, i);
-	else if (i->data & M_DBL && i->data & MF_UL)
-		count += ft_put_ldouble(va_arg(vl, long double),
-								(i->data & 4) ? i->precision : 6, d, i);
-	return (count);
-}
-
-int		ft_dioux(t_infos *i, va_list vl, int c, int d)
+int		ft_treat(t_infos *i, va_list vl, int c, int d)
 {
 	ft_get_base(i);
 	if (M_HEXS & i->data)
@@ -71,7 +55,13 @@ int		ft_dioux(t_infos *i, va_list vl, int c, int d)
 		c += ft_putstring(i, va_arg(vl, char *), d);
 	else if (i->data & M_PTR)
 		c += ft_putptr(i, va_arg(vl, void *), d);
-	return (c + ft_fcsp(i, vl, d));
+	else if (i->data & M_DBL && (!(MF_ALL & i->data) || i->data & MF_L))
+		c += ft_put_ldouble(va_arg(vl, double),
+						(i->data & 4) ? i->precision : 6, d, i);
+	else if (i->data & M_DBL && i->data & MF_UL)
+		c += ft_put_ldouble(va_arg(vl, long double),
+							(i->data & 4) ? i->precision : 6, d, i);
+	return (c);
 }
 
 int		ft_printf(const char *restrict format, ...)
@@ -91,10 +81,9 @@ int		ft_printf(const char *restrict format, ...)
 			count[0] += ft_putchar(*s++);
 		else if (*s++ == '%' && (i = ft_getinfos(&s)) && !(i->data & M_ERROR))
 		{
-			count[1] = ft_dioux(i, valist[1], 0, M_LEFT & i->data);
+			count[1] = ft_treat(i, valist[1], 0, M_LEFT & i->data);
 			ft_fill(i, count[1], !(M_LEFT & i->data));
-			ft_dioux(i, valist[0], 0, !(M_LEFT & i->data));
-//			printf("=1'%d'\n", count[1]);
+			ft_treat(i, valist[0], 0, !(M_LEFT & i->data));
 			count[0] += ft_fill(i, count[1], M_LEFT & i->data);
 			s++;
 			free(i);
