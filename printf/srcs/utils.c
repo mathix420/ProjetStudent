@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 15:33:26 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/14 18:59:37 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 15:45:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_more(t_infos *i, unsigned count, int d)
 int		ft_is_printf_flag(char c)
 {
 	return (c == '#' || c == '0' || c == '-' || c == '+' ||
-			c == ' ' || c == '%');
+			c == ' ');
 }
 
 int		ft_is_printf_conv(char c)
@@ -38,5 +38,16 @@ int		ft_is_printf_conv(char c)
 int		ft_is_printf_arg(char c)
 {
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' ||
-			c == 'o' || c == 'u' || c == 'x' || c == 'X' || c == 'f');
+			c == 'o' || c == 'u' || c == 'x' || c == 'X' || c == 'f' ||
+			c == '%' || c == 'b' || c == 'B' || c == 'U' || c == 'z');
+}
+
+void	ft_free(t_infos **i)
+{
+	(*i)->bs = NULL;
+	(*i)->data = 0;
+	(*i)->precision = 0;
+	(*i)->minlength = 0;
+	(*i)->bn = 0;
+	free(*i);
 }

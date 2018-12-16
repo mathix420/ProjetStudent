@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 22:37:14 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 16:31:08 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 # define M_CHR (1 << 13)
 # define M_PRCT (1 << 14)
 # define M_BIN (1 << 15)
+# define M_BOOL (1 << 16)
+# define M_UNI (1 << 17)
+# define M_ZBS (1 << 18)
 
 # define MF_ALL (0xf8 << 24)
 # define MF_UL (1 << 27)
@@ -85,6 +88,7 @@ int64_t			ft_conv(t_infos *i, int64_t nbr);
 int				ft_puthex(t_infos *i, uint64_t nbr, int d);
 int				ft_putoct(t_infos *i, uint64_t nbr, int d);
 int				ft_putbin(t_infos *i, uint64_t nbr, int d);
+int				ft_putb32(t_infos *i, uint64_t nbr, int d);
 int				ft_putdi(t_infos *i, int64_t nbr, int d);
 int				ft_putuns(t_infos *i, uint64_t nbr, int d);
 int				ft_putstring(t_infos *i, char *str, int d);
@@ -98,8 +102,9 @@ void			ft_capin(uint32_t *bytes, int pos);
 void			ft_capinod(uint32_t *bytes, int pos);
 void			ft_place(uint32_t *bytes, int pos);
 void			ft_remove(uint32_t *bytes, int pos);
+void			ft_free(t_infos **i);
 
-t_infos			*ft_getinfos(char **input);
+t_infos			*ft_getinfos(char **input, t_infos **oldi);
 
 int				ft_more(t_infos *i, unsigned count, int d);
 int				ft_putnb(long long nbr, uint64_t base, char *b, int d);

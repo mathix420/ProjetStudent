@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 22:27:38 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 15:44:56 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	ft_getoptions(char **in, t_infos *i)
 {
 	if (ft_is_printf_arg(**in))
 	{
-		(**in == 'b') ? ft_place(&(i->data), 14) : 0;
+		(**in == 'z') ? ft_place(&(i->data), 18) : 0;
+		(**in == 'U') ? ft_place(&(i->data), 17) : 0;
+		(**in == 'B') ? ft_place(&(i->data), 16) : 0;
+		(**in == 'b') ? ft_place(&(i->data), 15) : 0;
 		(**in == '%') ? ft_place(&(i->data), 14) : 0;
 		(**in == 'c') ? ft_place(&(i->data), 13) : 0;
 		(**in == 's') ? ft_place(&(i->data), 12) : 0;
@@ -72,12 +75,15 @@ void	ft_getoptions(char **in, t_infos *i)
 		ft_place(&(i->data), 0);
 }
 
-t_infos	*ft_getinfos(char **input)
+t_infos	*ft_getinfos(char **input, t_infos **oldi)
 {
 	t_infos		*infos;
 
+	if (oldi && *oldi)
+		ft_free(oldi);
 	if (!(infos = malloc(sizeof(t_infos))))
 		return (NULL);
+	infos->data = 0;
 	infos->precision = 0;
 	infos->minlength = 0;
 	while (ft_is_printf_flag(**input) || ft_is_printf_conv(**input) ||
@@ -90,5 +96,6 @@ t_infos	*ft_getinfos(char **input)
 	ft_getoptions(input, infos);
 	if (M_SPC & infos->data && M_ZERO & infos->data)
 		infos->data &= ~M_ZERO;
+	*oldi = infos;
 	return (infos);
 }

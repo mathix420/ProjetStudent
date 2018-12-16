@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 22:41:49 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 16:21:16 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ int		ft_fill(t_infos *i, unsigned int count, int disp)
 		else
 			count += 1;
 	return (count);
+}
+
+int		ft_bonus(t_infos *i, va_list vl, int c, int d)
+{
+	if (i->data & M_BIN)
+		c += ft_putbin(i, ft_uconv(i, va_arg(vl, int64_t)), d);
+	else if (i->data & M_ZBS)
+		c += ft_putb32(i, ft_uconv(i, va_arg(vl, uint64_t)), d);
+/*	else if (i->data & M_BOOL)
+	c += ft_bool(i, ft_conv(i, va_arg(vl, int64_t)), d);*/
+	return (c);
 }
 
 int		ft_treat(t_infos *i, va_list vl, int c, int d)
@@ -50,9 +61,7 @@ int		ft_treat(t_infos *i, va_list vl, int c, int d)
 							(i->data & 4) ? i->precision : 6, d, i);
 	else if (i->data & M_PRCT)
 		c += ft_putpercent(i, d);
-	else if (i->data & M_BIN)
-		c += ft_putbin(i, ft_uconv(i, va_arg(vl, int64_t)), d);
-	return (c);
+	return (!c ? ft_bonus(i, vl, c, d) : c);
 }
 
 int		ft_printf(const char *restrict format, ...)
@@ -70,17 +79,15 @@ int		ft_printf(const char *restrict format, ...)
 	while (*s)
 		if (*s != '%')
 			count[0] += ft_putchar(*s++);
-		else if (*s++ == '%' && (i = ft_getinfos(&s)) && !(i->data & M_ERROR))
+		else if (*s++ == '%' && (ft_getinfos(&s, &i)) && !(i->data & M_ERROR))
 		{
 			count[1] = ft_treat(i, valist[1], 0, M_LEFT & i->data);
 			ft_fill(i, count[1], !(M_LEFT & i->data));
 			ft_treat(i, valist[0], 0, !(M_LEFT & i->data));
 			count[0] += ft_fill(i, count[1], M_LEFT & i->data);
-			ft_fill(i, count[1], M_LEFT & i->data);
 			s++;
-			free(i);
 		}
-	(i && i->data & M_ERROR) ? free(i) : 0;
+	(i) ? ft_free(&i) : 0;
 	va_end(valist[1]);
 	va_end(valist[0]);
 	return (count[0]);
