@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/16 15:59:54 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/16 18:05:11 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ _SRC = bitop.c \
 		putptr.c \
 		putpercent.c \
 		putbin.c \
-		putbase32.c
+		putbase32.c \
+		buffer_utils.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 OBJ = $(SRC:.c=.o)

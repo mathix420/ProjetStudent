@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstring.c                                        :+:      :+:    :+:   */
+/*   buffer_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 14:59:15 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 17:53:05 by agissing         ###   ########.fr       */
+/*   Created: 2018/12/16 18:01:16 by agissing          #+#    #+#             */
+/*   Updated: 2018/12/16 18:01:33 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putstring(t_infos *i, char *str, int d)
+void	ft_putbuff(t_infos *i)
 {
-	int		cpy;
+	write(1, &i->buf, i->id);
+	i->id = 0;
+}
+
+int		ft_add(t_infos *i, char c)
+{
+	(i->id == BUFSIZE_PF) ? ft_putbuff(i) : 0;
+	i->buf[i->id++] = c;
+	return (1);
+}
+
+int		ft_addstr(t_infos *i, char *str)
+{
 	int		count;
 
-	if (!str)
-		return (ft_putstring(i, "(null)", d));
-	if (!(M_PRES & i->data))
-		return (d ? ft_addstr(i, str) : ft_strlen(str));
-	cpy = i->precision;
 	count = 0;
-	while (*str++ && cpy-- > 0)
-		count += d ? ft_add(i, *(str - 1)) : 1;
+	while (*str)
+		count += ft_add(i, *str++);
 	return (count);
 }

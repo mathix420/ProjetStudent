@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 12:19:20 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 16:31:08 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 18:12:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,27 @@
 ** -------------------------------------------------------
 */
 
+# define BUFSIZE_PF 5000
+
 typedef struct	s_infos
 {
 	unsigned int	minlength;
 	unsigned int	precision;
 	unsigned int	data;
+	unsigned int	id;
 	char			*bs;
+	char			buf[BUFSIZE_PF];
 	uint64_t		bn;
 }				t_infos;
 
-int				ft_putchar(char c);
-int				ft_putstr(char *str);
+void			ft_putbuff(t_infos *i);
+int				ft_add(t_infos *i, char c);
+int				ft_addstr(t_infos *i, char *str);
+
 int				ft_strlen(char *str);
 int				ft_isdigit(int c);
 int				ft_putpstr(char *s, t_infos *i, int disp);
+void			ft_bzero(void *s, size_t n);
 
 uint64_t		ft_uconv(t_infos *i, uint64_t nbr);
 int64_t			ft_conv(t_infos *i, int64_t nbr);
@@ -104,10 +111,10 @@ void			ft_place(uint32_t *bytes, int pos);
 void			ft_remove(uint32_t *bytes, int pos);
 void			ft_free(t_infos **i);
 
-t_infos			*ft_getinfos(char **input, t_infos **oldi);
+t_infos			*ft_getinfos(char **input, t_infos *oldi);
 
 int				ft_more(t_infos *i, unsigned count, int d);
-int				ft_putnb(long long nbr, uint64_t base, char *b, int d);
+int				ft_putnb(long long nbr, t_infos *i, int d);
 int				ft_putunb(uint64_t nbr, t_infos *i, int d);
 int				ft_put_ldouble(long double nb, int p, int d, t_infos *i);
 

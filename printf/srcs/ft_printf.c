@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 16:21:16 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 18:12:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_fill(t_infos *i, unsigned int count, int disp)
 		return (count);
 	while (i->data & M_MIN_SIZE && count < i->minlength)
 		if ((M_LEFT & i->data) ? !disp : disp)
-			count += ft_putchar(
+			count += ft_add(i,
 				(M_ZERO & i->data && !((M_LEFT + M_PRES) & i->data)) ? 48 : 32);
 		else
 			count += 1;
@@ -48,7 +48,7 @@ int		ft_treat(t_infos *i, va_list vl, int c, int d)
 	else if (M_UNSI & i->data)
 		c += ft_putuns(i, ft_uconv(i, va_arg(vl, int64_t)), d);
 	else if (M_CHR & i->data)
-		c += d ? ft_putchar(va_arg(vl, int)) : 1;
+		c += d ? ft_add(i, va_arg(vl, int)) : 1;
 	else if (i->data & M_STR)
 		c += ft_putstring(i, va_arg(vl, char *), d);
 	else if (i->data & M_PTR)
@@ -68,26 +68,26 @@ int		ft_printf(const char *restrict format, ...)
 {
 	uint32_t	count[2];
 	va_list		valist[2];
-	t_infos		*i;
+	t_infos		i;
 	char		*s;
 
+	ft_bzero(&i, sizeof(t_infos));
 	s = (char *)format;
-	i = NULL;
 	va_start(valist[0], format);
 	va_copy(valist[1], valist[0]);
 	count[0] = 0;
 	while (*s)
 		if (*s != '%')
-			count[0] += ft_putchar(*s++);
-		else if (*s++ == '%' && (ft_getinfos(&s, &i)) && !(i->data & M_ERROR))
+			count[0] += ft_add(&i, *s++);
+		else if (*s++ == '%' && (ft_getinfos(&s, &i)) && !(i.data & M_ERROR))
 		{
-			count[1] = ft_treat(i, valist[1], 0, M_LEFT & i->data);
-			ft_fill(i, count[1], !(M_LEFT & i->data));
-			ft_treat(i, valist[0], 0, !(M_LEFT & i->data));
-			count[0] += ft_fill(i, count[1], M_LEFT & i->data);
+			count[1] = ft_treat(&i, valist[1], 0, M_LEFT & i.data);
+			ft_fill(&i, count[1], !(M_LEFT & i.data));
+			ft_treat(&i, valist[0], 0, !(M_LEFT & i.data));
+			count[0] += ft_fill(&i, count[1], M_LEFT & i.data);
 			s++;
 		}
-	(i) ? ft_free(&i) : 0;
+	ft_putbuff(&i);
 	va_end(valist[1]);
 	va_end(valist[0]);
 	return (count[0]);

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 22:37:00 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 22:42:06 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 17:54:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int		ft_putbin(t_infos *i, uint64_t nbr, int d)
 	count = 0;
 	p = (nbr == 0 && (M_PRES & i->data) && i->precision == 0);
 	if (M_HASH & i->data && nbr > 0)
-		count += d ? ft_putchar('0') + ft_putchar('b') : 2;
+		count += d ? ft_add(i, '0') + ft_add(i, 'b') : 2;
 	((M_PRES + M_ZERO) & i->data) ? nb = ft_putunb(nbr, i, 0) : 0;
 	if (M_PRES & i->data && nb < i->precision)
 		while (nb++ < i->precision)
-			count += d ? ft_putchar(48) : 1;
+			count += d ? ft_add(i, 48) : 1;
 	if (M_MIN_SIZE & i->data && M_ZERO & i->data && !(M_LEFT & i->data))
 		while (count < i->minlength - nb)
-			count += d ? ft_putchar(48) : 1;
+			count += d ? ft_add(i, 48) : 1;
 	return (count + (!p ? ft_putunb(nbr, i, d) : 0));
 }

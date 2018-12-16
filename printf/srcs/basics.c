@@ -6,27 +6,11 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 14:55:14 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/15 15:08:20 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 18:12:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		ft_putchar(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
-int		ft_putstr(char *s)
-{
-	int		i;
-
-	i = 0;
-	while (*s)
-		i += ft_putchar(*s++);
-	return (i);
-}
 
 int		ft_isdigit(int c)
 {
@@ -49,10 +33,24 @@ int		ft_putpstr(char *str, t_infos *i, int disp)
 	int		d;
 
 	if (!(M_PRES & i->data))
-		return (disp ? ft_putstr(str) : ft_strlen(str));
+		return (disp ? ft_addstr(i, str) : ft_strlen(str));
 	count = i->precision;
 	d = 0;
 	while (*str++ && count-- > 0)
-		d += disp ? ft_putchar(*(str - 1)) : 1;
+		d += disp ? ft_add(i, *(str - 1)) : 1;
 	return (d);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*str;
+
+	str = s;
+	while (n)
+	{
+		*str = 0;
+		str++;
+		n--;
+	}
+	s = str;
 }
