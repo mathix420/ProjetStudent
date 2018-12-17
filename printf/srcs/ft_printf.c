@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 12:31:49 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 18:12:07 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 20:49:02 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_fill(t_infos *i, unsigned int count, int disp)
 	while (i->data & M_MIN_SIZE && count < i->minlength)
 		if ((M_LEFT & i->data) ? !disp : disp)
 			count += ft_add(i,
-				(M_ZERO & i->data && !((M_LEFT + M_PRES) & i->data)) ? 48 : 32);
+				M_ZERO & i->data && !((M_LEFT + M_PRES) & i->data) ? 48 : 32);
 		else
 			count += 1;
 	return (count);
@@ -32,8 +32,8 @@ int		ft_bonus(t_infos *i, va_list vl, int c, int d)
 		c += ft_putbin(i, ft_uconv(i, va_arg(vl, int64_t)), d);
 	else if (i->data & M_ZBS)
 		c += ft_putb32(i, ft_uconv(i, va_arg(vl, uint64_t)), d);
-/*	else if (i->data & M_BOOL)
-	c += ft_bool(i, ft_conv(i, va_arg(vl, int64_t)), d);*/
+	else if (i->data & M_BOOL)
+		c += ft_putbool(i, ft_conv(i, va_arg(vl, int64_t)), d);
 	return (c);
 }
 

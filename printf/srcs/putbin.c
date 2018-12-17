@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 22:37:00 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 17:54:09 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 19:23:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_putbin(t_infos *i, uint64_t nbr, int d)
 		while (nb++ < i->precision)
 			count += d ? ft_add(i, 48) : 1;
 	if (M_MIN_SIZE & i->data && M_ZERO & i->data && !(M_LEFT & i->data))
-		while (count < i->minlength - nb)
+		while (count + nb < i->minlength)
 			count += d ? ft_add(i, 48) : 1;
 	return (count + (!p ? ft_putunb(nbr, i, d) : 0));
 }

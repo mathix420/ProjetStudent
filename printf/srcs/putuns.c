@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 14:46:33 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 17:51:38 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 20:33:54 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int		ft_putuns(t_infos *i, uint64_t nbr, int d)
 	if (M_PRES & i->data && (n = ft_putunb(nbr, i, 0)) < i->precision)
 		while (n++ < i->precision)
 			count += d ? ft_add(i, 48) : 1;
-	return (count + ft_putunb(nbr, i, d));
+	return (count + ((!nbr && M_PRES & i->data && !(i->precision)) ? 0 :
+					ft_putunb(nbr, i, d)));
 }

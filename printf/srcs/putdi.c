@@ -6,11 +6,12 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/15 14:32:11 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 17:59:28 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 19:53:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 int		ft_putdi(t_infos *i, int64_t nbr, int d)
 {
@@ -33,7 +34,7 @@ int		ft_putdi(t_infos *i, int64_t nbr, int d)
 		while (n++ < i->precision)
 			count += d ? ft_add(i, 48) : 1;
 	if (M_MIN_SIZE & i->data && M_ZERO & i->data && !(M_LEFT & i->data))
-		while (count < i->minlength - n)
+		while (count + n < i->minlength)
 			count += d ? ft_add(i, 48) : 1;
 	return (count + ((!p) ? ft_putnb(nbr, i, d) : 0));
 }

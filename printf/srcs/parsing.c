@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:34:29 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 18:04:21 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 20:05:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,8 @@ void	ft_getoptions(char **in, t_infos *i)
 		ft_place(&(i->data), 0);
 }
 
-t_infos	*ft_getinfos(char **input, t_infos *oldi)
+t_infos	*ft_getinfos(char **input, t_infos *infos)
 {
-	t_infos		*infos;
-
-	infos = oldi;
 	infos->data = 0;
 	infos->precision = 0;
 	infos->minlength = 0;
@@ -91,8 +88,7 @@ t_infos	*ft_getinfos(char **input, t_infos *oldi)
 		ft_getconv(input, infos);
 	}
 	ft_getoptions(input, infos);
-	if (M_SPC & infos->data && M_ZERO & infos->data)
+	if (M_DIOUX & infos->data && M_PRES & infos->data && M_ZERO & infos->data)
 		infos->data &= ~M_ZERO;
-	oldi = infos;
 	return (infos);
 }

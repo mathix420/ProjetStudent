@@ -6,13 +6,20 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 15:54:22 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/16 16:24:30 by agissing         ###   ########.fr       */
+/*   Updated: 2018/12/16 19:03:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putbool(t_infos *i, uint64_t nbr)
+int		ft_putbool(t_infos *i, uint64_t nbr, int d)
 {
-	return (i && nbr ? 0 : 0);
+	int		count;
+
+	count = 0;
+	if (nbr)
+		count += d ? ft_addstr(i, "True") : 1;
+	else
+		count += d ? ft_addstr(i, "False") : 1;
+	return (count);
 }

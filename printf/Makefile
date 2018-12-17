@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/07 13:12:35 by agissing          #+#    #+#              #
-#    Updated: 2018/12/16 18:05:11 by agissing         ###   ########.fr        #
+#    Updated: 2018/12/16 20:21:54 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ _SRC = bitop.c \
 		putpercent.c \
 		putbin.c \
 		putbase32.c \
-		buffer_utils.c
+		buffer_utils.c \
+		putbool.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
 OBJ = $(SRC:.c=.o)
@@ -46,7 +47,7 @@ OBJ = $(SRC:.c=.o)
 ################################################################################
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -I$(INC)
+CFLAGS = -Wall -Wextra -Werror -I$(INC)
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
