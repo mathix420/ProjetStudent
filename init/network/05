@@ -1,2 +1,2 @@
 #!/bin/sh
-ping -c 1 slash16.org | grep "from" | grep -o "\d\+.\d\+\d\+.\d\+\d\+.\d\+"
+nslookup slash16.org | grep Server | cut -d '	' -f3
