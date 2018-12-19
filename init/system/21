@@ -1,2 +1,2 @@
 #!/bin/sh
-find /nome -type d | grep -o "\w\+" | head -n-1
+find /home -type d | grep -o "\w\+$" | head -n-1

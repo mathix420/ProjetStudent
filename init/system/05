@@ -1,2 +1,2 @@
 #!/bin/sh
-ssh status
+sudo /etc/init.d/ssh status

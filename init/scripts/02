@@ -1,4 +1,3 @@
 #!/bin/sh
-su
 pkill -KILL -u test
 deluser test

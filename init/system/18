@@ -1,2 +1,2 @@
 #!/bin/sh
-service ssh stop
+sudo /etc/init.d/ssh stop
