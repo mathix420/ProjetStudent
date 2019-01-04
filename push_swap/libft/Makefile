@@ -6,20 +6,15 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/01/04 14:18:20 by agissing         ###   ########.fr        #
+#    Updated: 2018/11/19 17:29:47 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-################################################################################
-#####                              FILES VARS                              #####
-################################################################################
-
 NAME = libft.a
 
-INC = .
+FLAGS = -Wall -Werror -Wextra
 
-SDIR = .
-_SRC =	ft_memset.c 	\
+SRC =	ft_memset.c 	\
 		ft_bzero.c		\
 		ft_memcpy.c		\
 		ft_memccpy.c	\
@@ -79,36 +74,83 @@ _SRC =	ft_memset.c 	\
 		ft_lstmap.c		\
 		ft_nblen.c		\
 		ft_strrev.c		\
-		ft_lstlen.c		\
-		get_next_line.c
-SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
+		ft_lstlen.c
 
-OBJ = $(SRC:.c=.o)
+OBJECTS =	ft_memset.o		\
+			ft_bzero.o		\
+			ft_memcpy.o		\
+			ft_memccpy.o	\
+			ft_memmove.o	\
+			ft_memchr.o		\
+			ft_memcmp.o		\
+			ft_strlen.o		\
+			ft_strdup.o		\
+			ft_strcpy.o		\
+			ft_strncpy.o	\
+			ft_strcat.o		\
+			ft_strncat.o	\
+			ft_strlcat.o	\
+			ft_strchr.o		\
+			ft_strrchr.o	\
+			ft_strstr.o		\
+			ft_strnstr.o	\
+			ft_strcmp.o		\
+			ft_strncmp.o	\
+			ft_atoi.o		\
+			ft_isalpha.o	\
+			ft_isdigit.o	\
+			ft_isalnum.o	\
+			ft_isascii.o	\
+			ft_isprint.o	\
+			ft_toupper.o	\
+			ft_tolower.o	\
+			ft_memalloc.o	\
+			ft_memdel.o		\
+			ft_strnew.o		\
+			ft_strdel.o		\
+			ft_strclr.o		\
+			ft_striter.o	\
+			ft_striteri.o	\
+			ft_strmap.o		\
+			ft_strmapi.o	\
+			ft_strequ.o		\
+			ft_strnequ.o	\
+			ft_strsub.o		\
+			ft_strjoin.o	\
+			ft_strtrim.o	\
+			ft_strsplit.o	\
+			ft_itoa.o		\
+			ft_putchar.o	\
+			ft_putstr.o		\
+			ft_putendl.o	\
+			ft_putnbr.o		\
+			ft_putchar_fd.o	\
+			ft_putstr_fd.o	\
+			ft_putendl_fd.o	\
+			ft_putnbr_fd.o	\
+			ft_lstnew.o		\
+			ft_lstdelone.o	\
+			ft_lstdel.o		\
+			ft_lstadd.o		\
+			ft_lstiter.o	\
+			ft_lstmap.o		\
+			ft_nblen.o		\
+			ft_strrev.o		\
+			ft_lstlen.o
 
-################################################################################
-#####                           COMPILER OPTIONS                           #####
-################################################################################
+HEADER = includes/
 
-CC = cc
-OPTS = $(foreach d, $(INC), -I$d)
-CFLAGS = -Wall -Wextra -Werror $(OPTS)
+all : $(NAME)
 
-################################################################################
-#####                            MAKEFILE RULES                            #####
-################################################################################
+$(NAME) : $(SRC)
+	gcc $(FLAGS) -c $(SRC) -I$(HEADER)
+	ar -rv $(NAME) $(OBJECTS)
+	ranlib $(NAME)
 
-.PHONY: all clean fclean re
+clean :
+	/bin/rm -f $(OBJECTS)
 
-all: $(NAME)
+fclean : clean
+	/bin/rm -f $(NAME)
 
-$(NAME):	$(OBJ)
-		@ar -rv $(NAME) $(OBJ)
-		@ranlib $(NAME)
-
-clean:
-		@/bin/rm -f $(OBJ)
-
-fclean: clean
-		@/bin/rm -f $(NAME)
-
-re: fclean all
+re : fclean all
