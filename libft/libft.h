@@ -6,14 +6,14 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 19:12:00 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 14:17:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 14:25:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE 32
+# define GNL_BUFF_SIZE 32
 
 # include <string.h>
 # include <stdlib.h>

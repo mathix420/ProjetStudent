@@ -6,16 +6,25 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 19:12:00 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/09 18:43:08 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 14:23:33 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define GNL_BUFF_SIZE 32
+
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct	s_file
+{
+	int				fd;
+	char			*sav;
+	struct s_file	*next;
+}				t_file;
 
 typedef struct	s_list
 {
@@ -24,6 +33,7 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+int				get_next_line(const int fd, char **line);
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *restrict dst, const void *restrict src,

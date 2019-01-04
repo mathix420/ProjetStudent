@@ -6,11 +6,11 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 13:52:34 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/19 16:11:33 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 14:24:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 t_file			*ft_newfile(int fd)
 {
@@ -93,10 +93,10 @@ int				get_next_line(const int fd, char **line)
 		return (-1);
 	current = ft_gocfile(file, fd);
 	if (!current || (!(current->sav) && !(current->sav = ft_strnew(0))) ||
-		!(buffer = ft_strnew(BUFF_SIZE)))
+		!(buffer = ft_strnew(GNL_BUFF_SIZE)))
 		return (-1);
 	while (!(r = 0) && !ft_strchr(current->sav, 10) && !ft_strchr(buffer, 10)
-		&& (r = read(fd, buffer, BUFF_SIZE)) > 0)
+		&& (r = read(fd, buffer, GNL_BUFF_SIZE)) > 0)
 	{
 		buffer[r] = 0;
 		tmp = current->sav;
