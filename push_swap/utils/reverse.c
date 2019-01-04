@@ -6,52 +6,32 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:09:23 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/19 19:09:35 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 16:39:59 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.c"
+#include "stack.h"
 
-void	rra(t_elem *stack_a)
+t_stack	*reverse(t_stack *stack)
 {
-	t_elem		*last;
-	t_elem		*lastlast;
+	t_stack		*first;
+	t_stack		*last;
 
-	last = stack_a;
-	lastlast = NULL;
-	while (last->before)
+	if (!stack || !stack->before || !stack->before->before)
+		return NULL;
+	first = stack;
+	while (stack->before)
 	{
-		lastlast = last;
-		last = last->before;
+		last = stack;
+		stack = stack->before;
 	}
-	if (last != stack_a && lastlast)
-	{
-		lastlast->before = NULL;
-		last->before = stack_a;
-	}
+	last->before = NULL;
+	stack->before = first;
+	return (stack);
 }
 
-void	rrb(t_elem *stack_b)
+void	rrr(t_stack **stack_a, t_stack **stack_b)
 {
-	t_elem		*last;
-	t_elem		*lastlast;
-
-	last = stack_b;
-	lastlast = NULL;
-	while (last->before)
-	{
-		lastlast = last;
-		last = last->before;
-	}
-	if (last != stack_b && lastlast)
-	{
-		lastlast->before = NULL;
-		last->before = stack_b;
-	}
-}
-
-void	rrr(t_elem *stack_a, t_elem *stack_b)
-{
-	rra(stack_a);
-	rrb(stack_b);
+	*stack_a = reverse(*stack_a);
+	*stack_b = reverse(*stack_b);
 }

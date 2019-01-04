@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/04 14:04:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 14:52:40 by agissing         ###   ########.fr       */
+/*   Created: 2018/12/19 19:04:47 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/04 15:53:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "stack.h"
 
-# include "libft.h"
-# include "stack.h"
-
-#endif
+void	push(t_stack **stack_a, t_stack **stack_b)
+{
+	if (!(*stack_a))
+		return ;
+	*stack_b = ft_new_elem((*stack_a)->nb, *stack_b);
+	*stack_a = ft_free_elem(*stack_a);
+}

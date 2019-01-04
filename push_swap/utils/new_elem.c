@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   new_elem.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/04 14:04:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 14:52:40 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/04 15:44:10 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/04 15:47:28 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "stack.h"
 
-# include "libft.h"
-# include "stack.h"
+t_stack	*ft_new_elem(int nb, t_stack *before)
+{
+	t_stack		*st;
 
-#endif
+	st = ft_memalloc(sizeof(t_stack));
+	st->before = before;
+	st->nb = nb;
+	return (st);
+}
+
+t_stack *ft_free_elem(t_stack *stack)
+{
+	t_stack *before;
+
+	before = stack->before;
+	free(stack);
+	return (before);
+}

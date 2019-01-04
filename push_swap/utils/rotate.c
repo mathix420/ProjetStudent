@@ -6,44 +6,31 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:05:31 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/19 19:05:47 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 16:40:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.c"
+#include "stack.h"
 
-void	ra(t_elem *stack_a)
+t_stack	*rotate(t_stack *stack)
 {
-	t_elem		*last;
+	t_stack		*first;
+	t_stack		*second;
 
-	last = stack_a;
-	while (last->before)
-		last = last->before;
-	if (stack_a != last)
-	{
-		last->before = stack_a;
-		stack_a->before = NULL;
-	}
-	stack_a = last;
+	if (!stack || !stack->before || !stack->before->before)
+		return NULL;
+	first = stack;
+	second = stack->before;
+	while (stack->before)
+		stack = stack->before;
+	first->before = NULL;
+	stack->before = first;
+	stack = second;
+	return (stack);
 }
 
-void	rb(t_elem *stack_b)
+void	rr(t_stack **stack_a, t_stack **stack_b)
 {
-	t_elem		*last;
-
-	last = stack_b;
-	while (last->before)
-		last = last->before;
-	if (stack_b != last)
-	{
-		last->before = stack_b;
-		stack_b->before = NULL;
-	}
-	stack_b = last;
-}
-
-void	rr(t_elem *stack_a, t_elem *stack_b)
-{
-	ra(stack_a);
-	rb(stack_b);
+	*stack_a = rotate(*stack_a);
+	*stack_b = rotate(*stack_b);
 }

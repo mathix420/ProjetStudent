@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 19:03:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/19 19:04:07 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/04 14:44:01 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/04 17:26:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "stack.h"
+#include "libft.h"
 
-void	sa(t_elem *stack_a)
+void		print_stack_numbers(t_stack *stack)
 {
-	t_elem		*tmp;
-
-	if (!stack_a)
-		return ;
-	tmp = stack_a->before->before;
-	stack_a->before->before = stack_a;
-	stack_a->before = tmp;
+	if (stack->before)
+	{
+		print_stack_numbers(stack->before);
+		ft_putchar(' ');
+	}
+	ft_putnbr(stack->nb);
 }
 
-void	sb(t_elem *stack_b)
+void		print_stack(t_stack *stack)
 {
-	t_elem		*tmp;
-
-	if (!stack_b)
-		return ;
-	tmp = stack_b->before->before;
-	stack_b->before->before = stack_b;
-	stack_b->before = tmp;
-}
-
-void	ss(t_elem *stack_a, t_elem *stack_b)
-{
-	sa(stack_a);
-	sb(stack_b);
+	ft_putstr("BAS ");
+	if (stack)
+		print_stack_numbers(stack);
+	ft_putstr(" HAUT\n");
 }
