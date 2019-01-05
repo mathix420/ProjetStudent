@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 19:46:06 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/05 19:04:19 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_moy(t_stack *pile, int max)
 
 	count = 1;
 	somme = pile->nb;
-	while (pile->before && count <= max)
+	while (pile->before && count < max)
 	{
 		pile = pile->before;
 		somme += pile->nb;
@@ -28,8 +28,44 @@ int		ft_moy(t_stack *pile, int max)
 	return (somme / count);
 }
 
+void	ft_add_op(t_op **op, int nb)
+{
+	t_op	new;
+
+	if (!*op)
+	{
+		if (!(*op = ft_memalloc(sizeof(t_op))))
+			return ;
+		(*op).nb = nb;
+		(*op).next = NULL;
+	}
+	else
+	{
+		if (!(new = ft_memalloc(sizeof(t_op))))
+			return ;
+		new.nb = nb;
+		new.next = *op;
+		*op = new;
+	}
+}
+
+int		ft_len(t_stack *pile)
+{
+	int		i;
+
+	i = 0;
+	while (pile)
+	{
+		i++;
+		pile = pile->before;
+	}
+	return (i);
+}
+
 void	rra_or_ra(int re, t_stack **pila, int l)
 {
+	if (l <= 0)
+		return ;
 	re %= l;
 	if (l - re < re)
 		while (re++ < l)
@@ -45,20 +81,53 @@ void	rra_or_ra(int re, t_stack **pila, int l)
 		}
 }
 
+void	rrb_or_rb(int re, t_stack **pilb, int l)
+{
+	if (l <= 0)
+		return ;
+	re %= l;
+	if (l - re < re)
+		while (re++ < l)
+		{
+			*pilb = rotate(*pilb);
+			ft_putstr("rb\n");
+		}
+	else
+		while (re--)
+		{
+			*pilb = reverse(*pilb);
+			ft_putstr("rrb\n");
+		}
+}
+
 int		is_ok_a(t_stack *pile, int max)
 {
-	while (pile->before && max--)
+	while (pile->before && --max)
 	{
 		if (pile->nb > pile->before->nb)
 			return (0);
-		pile = pile->before;
+
+ra
+ra
+pb
+pb
+pb
+sa
+ra
+sa
+rra
+pb
+sb
+pb
+sa
+pb		pile = pile->before;
 	}
 	return (1);
 }
 
 int		is_ok_b(t_stack *pile, int max)
 {
-	while (pile->before && max--)
+	while (pile->before && --max)
 	{
 		if (pile->nb < pile->before->nb)
 			return (0);
@@ -93,6 +162,80 @@ void	small_sort_a(t_stack **pila)
 	}
 }
 
+int		swap_if_b(t_stack *pile)
+{
+	if (pile->nb < pile->before->nb)
+	{
+		swap(pile);
+		return (1);
+	}
+	return (0);
+}
+
+void	small_sort_b(t_stack **pila, t_stack **pilb)
+{
+	swap_if_b(*pilb) ? ft_putstr("sb\n") : 0;
+	push(pilb, pila);
+	ft_putstr("pb\n");
+	swap_if_b(*pilb) ? ft_putstr("sb\n") : 0;
+	push(pilb, pila);
+	ft_putstr("pb\n");
+	swap_if(*pila) ? ft_putstr("sa\n") : 0;
+	push(pilb, pila);
+	ft_putstr("pb\n");
+}
+
+void	sort_b(t_stack **pila, t_stack **pilb, int count)
+{
+	int		moy;
+	int		re;
+	int		pe;
+	int		c;
+
+	c = count;
+	if (c == 3)
+	{
+		small_sort_b(pila, pilb);
+		return ;
+	}
+	else if (c == 2 && !is_ok_b(*pilb, 2))
+	{
+		swap(*pilb);
+		ft_putstr("sb\n");
+	}
+	if (c <= 1 || is_ok_b(*pilb, c))
+	{
+		while (c--)
+		{
+			push(pilb, pila);
+			ft_putstr("pa\n");
+		}
+		return ;
+	}
+	moy = ft_moy(*pilb, c);
+	re = 0;
+	pe = 0;
+	while (c > 0)
+	{
+		if ((*pilb)->nb < moy) //Simplification ici =======================================
+		{
+			*pilb = rotate(*pilb);
+			ft_putstr("rb\n");
+			re ++;
+		}
+		else
+		{
+			push(pilb, pila);
+			ft_putstr("pa\n");
+			pe++;
+		}
+		c--;
+	}
+	rrb_or_rb(re, pilb, ft_len(*pilb));
+	sort_a(pila, pilb, pe, count - pe);
+	sort_b(pila, pilb, count - pe);
+}
+
 void	sort_a(t_stack **pila, t_stack **pilb, int count, int bc)
 {
 	int		moy;
@@ -102,7 +245,10 @@ void	sort_a(t_stack **pila, t_stack **pilb, int count, int bc)
 
 	c = count;
 	if (c == 3)
+	{
 		small_sort_a(pila);
+		return ;
+	}
 	else if (c == 2 && !is_ok_a(*pila, c))
 	{
 		if (bc == 2 && !is_ok_b(*pilb, 2))
@@ -115,15 +261,16 @@ void	sort_a(t_stack **pila, t_stack **pilb, int count, int bc)
 			swap(*pila);
 			ft_putstr("sa\n");
 		}
+		return ;
 	}
 	if (c <= 1 || is_ok_a(*pila, c))
 		return ;
 	moy = ft_moy(*pila, c);
 	re = 0;
 	pe = 0;
-	while (c > 1)
+	while (c > 0)
 	{
-		if ((*pila)->nb >= moy) //Simplification ici =======================================
+		if ((*pila)->nb > moy) //Simplification ici =======================================
 		{
 			*pila = rotate(*pila);
 			ft_putstr("ra\n");
@@ -134,14 +281,12 @@ void	sort_a(t_stack **pila, t_stack **pilb, int count, int bc)
 			push(pila, pilb);
 			ft_putstr("pb\n");
 			pe++;
-		}	
+		}
 		c--;
 	}
-	re %= count - pe;
-
-	rra_or_ra(re, pila, count - pe);
+	rra_or_ra(re, pila, ft_len(*pila));
 	sort_a(pila, pilb, count - pe, pe);
-//	sort_b(pila, pilb, pe);
+	sort_b(pila, pilb, pe);
 }
 
 int		main(int c, char **v)
@@ -160,17 +305,18 @@ int		main(int c, char **v)
 		return (0);
 	while (i < c)
 		stck_a = ft_new_elem(ft_atoi(v[i++]), stck_a);
-	ft_putstr("A : ");
+
+/*	ft_putstr("A : ");
 	print_stack(stck_a);
 	ft_putstr("B : ");
-	print_stack(stck_b);
+	print_stack(stck_b);*/
 
 	if (is_ok_a(stck_a, c))
 		ft_putstr("============ Deja OK ==============\n");
 	sort_a(&stck_a, &stck_b, c - 1, 0);
 
-	ft_putstr("A : ");
+/*	ft_putstr("A : ");
 	print_stack(stck_a);	
 	ft_putstr("B : ");
-	print_stack(stck_b);
+	print_stack(stck_b);*/
 }

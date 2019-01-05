@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 19:09:23 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 16:39:59 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/05 14:17:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_stack	*reverse(t_stack *stack)
 	t_stack		*first;
 	t_stack		*last;
 
-	if (!stack || !stack->before || !stack->before->before)
+	if (!stack || !stack->before)
 		return NULL;
 	first = stack;
 	while (stack->before)
