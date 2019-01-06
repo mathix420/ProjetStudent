@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/05 20:09:25 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/06 12:54:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,7 @@ void	sort_a(t_stack **pila, t_stack **pilb, t_sort v)
 	pe = 0;
 	while (c > 0)
 	{
-		if ((*pila)->nb > moy) //Simplification ici =======================================
+		if ((*pila)->nb >= moy) //Simplification ici =======================================
 		{
 			*pila = rotate(*pila);
 			ft_add_op(v.op, 4);
@@ -323,6 +323,40 @@ void	print_sorting(t_op *ops)
 		ft_putstr("pb\n");
 }
 
+void	clean_sorting(t_op *ops)
+{
+	t_op	*next;
+	t_op	*last;
+
+	last = NULL;
+	while (ops->next)
+	{
+		next = ops->next;
+		while (next->next && next->nb == 0)
+			next = next->next;
+		if ((ops->nb == 4 && next->nb == 7) ||
+			(ops->nb == 5 && next->nb == 8) ||
+			(ops->nb == 7 && next->nb == 4) ||
+			(ops->nb == 8 && next->nb == 5))
+		{
+			ops->nb = 0;
+			ops->next->nb = 0;
+			if (last)
+				ops = last;
+			else
+			{
+				last = ops;
+				ops = ops->next;
+			}
+		}
+		else
+		{
+			last = ops;
+			ops = ops->next;
+		}
+	}
+}
+
 int		main(int c, char **v)
 {
 	t_stack		*stck_a;
@@ -330,13 +364,13 @@ int		main(int c, char **v)
 	t_sort		vars;
 	int			i;
 
-	i = 1;
+	i = c - 1;
 	stck_a = NULL;
 	stck_b = NULL;
 	if (c < 3)
 		return (0);
-	while (i < c)
-		stck_a = ft_new_elem(ft_atoi(v[i++]), stck_a);
+	while (i >= 1)
+		stck_a = ft_new_elem(ft_atoi(v[i--]), stck_a);
 
 /*	ft_putstr("A : ");
 	print_stack(stck_a);
@@ -351,6 +385,8 @@ int		main(int c, char **v)
 		return (0);
 	sort_a(&stck_a, &stck_b, vars);
 
+
+	clean_sorting(*vars.op);
 	print_sorting(*vars.op);
 	
 /*	ft_putstr("A : ");
