@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 15:44:10 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 15:47:28 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/06 14:23:02 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_stack	*ft_new_elem(int nb, t_stack *before)
 {
 	t_stack		*st;
 
-	st = ft_memalloc(sizeof(t_stack));
+	if (!(st = ft_memalloc(sizeof(t_stack))))
+		return (NULL);
 	st->before = before;
 	st->nb = nb;
 	return (st);

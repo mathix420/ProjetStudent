@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/06 12:54:45 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/06 14:54:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,36 +323,30 @@ void	print_sorting(t_op *ops)
 		ft_putstr("pb\n");
 }
 
-void	clean_sorting(t_op *ops)
+void	clean_sorting(t_op *o)
 {
 	t_op	*next;
 	t_op	*last;
 
 	last = NULL;
-	while (ops->next)
+	while (o && o->next)
 	{
-		next = ops->next;
+		next = o->next;
 		while (next->next && next->nb == 0)
 			next = next->next;
-		if ((ops->nb == 4 && next->nb == 7) ||
-			(ops->nb == 5 && next->nb == 8) ||
-			(ops->nb == 7 && next->nb == 4) ||
-			(ops->nb == 8 && next->nb == 5))
+		if ((o->nb == 4 && next->nb == 7) || (o->nb == 5 && next->nb == 8) ||
+			(o->nb == 7 && next->nb == 4) || (o->nb == 8 && next->nb == 5))
 		{
-			ops->nb = 0;
-			ops->next->nb = 0;
-			if (last)
-				ops = last;
-			else
-			{
-				last = ops;
-				ops = ops->next;
-			}
+			o->nb = 0;
+			next->nb = 0;
+			last ? (o = last) : (last = o);
+			if (!last)
+				o = next->next;
 		}
 		else
 		{
-			last = ops;
-			ops = ops->next;
+			last = o;
+			o = next;
 		}
 	}
 }
@@ -370,7 +364,8 @@ int		main(int c, char **v)
 	if (c < 3)
 		return (0);
 	while (i >= 1)
-		stck_a = ft_new_elem(ft_atoi(v[i--]), stck_a);
+		if (!(stck_a = ft_new_elem(ft_atoi(v[i--]), stck_a)))
+			return (0);
 
 /*	ft_putstr("A : ");
 	print_stack(stck_a);
