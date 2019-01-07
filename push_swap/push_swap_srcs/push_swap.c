@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/07 17:28:59 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/07 20:26:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,16 +186,6 @@ void	small_sort_b(t_stack **pila, t_stack **pilb, t_sort v)
 	ft_add_op(v.op, 10);
 }
 
-void	prep_b(t_stack **pila, t_stack **pilb, t_sort v)
-{
-	if ((*pilb)->before && ft_abs((*pila)->nb - (*pila)->before->nb) <
-		ft_abs((*pila)->nb - (*pilb)->nb))
-	{
-		swap(*pilb);
-		ft_add_op(v.op, 2);
-	}
-}
-
 t_stack	*get_last(t_stack *pile)
 {
 	while (pile->before)
@@ -203,94 +193,56 @@ t_stack	*get_last(t_stack *pile)
 	return (pile);
 }
 
-int		push_tri_a(t_stack **pila, t_stack **pilb, t_sort v, int r)
-{
-	prep_b(pila, pilb, v);
-	if (!r)
-		while ((*pila)->nb < (*pilb)->nb && (*pila)->before)
-		{
-			*pila = rotate(*pila);
-			ft_add_op(v.op, 4);
-			r++;
-		}
-	else
-	{
-		while ((*pila)->nb < (*pilb)->nb &&
-			   (get_last(*pila))->nb < (*pilb)->nb && r > 0)
-		{
-			*pila = reverse(*pila);
-			ft_add_op(v.op, 7);
-			r--;
-		}
-		while ((*pila)->nb > (*pilb)->nb && (*pila)->before)
-		{
-			*pila = rotate(*pila);
-			ft_add_op(v.op, 4);
-			r++;
-		}
-	}
-	push(pilb, pila);
-	ft_add_op(v.op, 10);
-	return (r);
-}
-
-void	top_sort(t_stack **pila, t_stack **pilb, t_sort v)
-{
-	int		moy;
-
-	moy = ft_moy(*pila, -1);
-	if ((*pilb)->before && (*pilb)->nb < moy)
-	{
-		*pilb = rotate(*pilb);
-		ft_add_op(v.op, 5);
-	}
-}
-
 void	little_sort(t_stack **pila, t_stack **pilb, t_sort v)
 {
-	int		i;
-	int		b;
-	int		r;
+	int		nb;
+	int		len;
+/*
 
-	i = ft_len(*pila);
-	b = 0;
-	r = 0;
-	while (i--)
+Tant que pila n'est pas OK
+  Si top > bottom alors ra
+  Sinon
+	Si top > top->before alors sa
+	Si pas ok alors pb
+
+Tant que pilb n'est pas vide
+  Si topb < topb->before alors sb
+  pa
+
+*/
+	nb = 0;
+	while ((*pila) && !is_ok_a(*pila, ft_len(*pila)))
 	{
-		while (!is_ok_a(*pila, ft_len(*pila)) && (*pila)->nb < (get_last(*pila))->nb)
+		if ((*pila)->nb > get_last(*pila)->nb)
 		{
-			*pila = rotate(*pila);
-			ft_add_op(v.op, 4);
-		}
-		if (!is_ok_a(*pila, ft_len(*pila)))
-		{
-			push(pila, pilb);
-			ft_add_op(v.op, 11);
-			b += 1;
-			top_sort(pila, pilb, v);
-		}
-	}
-	while (b-- > 0)
-	{
-		if ((*pilb)->nb >= (*pila)->nb && (*pilb)->nb > (*pila)->nb && !r)
-		{
-			push(pilb, pila);
-			ft_add_op(v.op, 10);	
-		}
-		else if ((*pilb)->nb <= get_last(*pila)->nb && (*pilb)->nb < (*pila)->nb && !r)
-		{
-			push(pilb, pila);
-			ft_add_op(v.op, 10);
 			*pila = rotate(*pila);
 			ft_add_op(v.op, 4);
 		}
 		else
-			r = push_tri_a(pila, pilb ,v , r);
+		{
+			if ((*pila)->nb > (*pila)->before->nb)
+			{
+				swap(*pila);
+				ft_add_op(v.op, 1);
+			}
+			if (!is_ok_a(*pila, ft_len(*pila)))
+			{
+				push(pilb, pila);
+				ft_add_op(v.op, 10);
+				nb++;
+			}
+		}
+		print_stack(*pila);
+		print_stack(*pilb);
+		getchar();
 	}
-	while (r--)
+	while (nb--)
 	{
-		*pila = reverse(*pila);
-		ft_add_op(v.op, 7);
+		if ((*pilb)->nb < (*pilb)->before->nb)
+		{
+			swap(*pilb);
+			ft_add_op(v.op, 2);
+		}
 	}
 }
 
@@ -480,13 +432,20 @@ int		main(int c, char **v)
 	if (!(vars.op = ft_memalloc(sizeof(t_op))))
 		return (0);
 
+	print_stack(stck_a);
+	print_stack(stck_b);
+
+
 	little_sort(&stck_a, &stck_b, vars);
 
-	print_stack(stck_a);
+
 	
 /*	sort_a(&stck_a, &stck_b, vars);*/
 	clean_sorting(*vars.op);
 	clean_sorting(*vars.op);
 	clean_sorting(*vars.op);
 	print_sorting(*vars.op);
+
+	print_stack(stck_a);
+	print_stack(stck_b);
 }
