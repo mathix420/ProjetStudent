@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   small_sort.c                                       :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/06 18:03:37 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/06 18:23:34 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/07 15:57:19 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/07 15:59:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int		
-
-void	push_tri_a(t_stack **pila, t_stack **pilb, t_sort v)
+int		ft_abs(int nb)
 {
-
-}
-
-void	top_sort_b(t_stack **pila, t_stack **pilb, t_sort v)
-{
-	moy = ft_moy(*pilb, c);
-	if (v.bc > 1 && (*pilb)->nb < moy)
-		*pilb = rotate(*pilb);
-}
-
-void	small_sort(t_stack **pila, t_stack **pilb, t_sort v)
-{
-	while (*pila)
-	{
-		while (!is_ok_a(*pila, v.c))
-		*pila = (*pila)->before;
-	}
+	return (nb > 0 ? nb : -nb);
 }
