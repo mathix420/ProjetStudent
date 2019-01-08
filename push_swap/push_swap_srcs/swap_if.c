@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   swap_if.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 19:03:38 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/08 22:21:21 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/08 19:20:05 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/08 19:21:43 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "push_swap.h"
 
-int		swap(t_stack *stack)
+int		swap_if_a(t_stack *pila)
 {
-	int		tmp;
-
-	if (!stack || !stack->before)
-		return (0);
-	tmp = stack->nb;
-	stack->nb = stack->before->nb;
-	stack->before->nb = tmp;
-	return (1);
+	if (pila->nb > pila->before->nb)
+	{
+		swap(pila);
+		return (1);
+	}
+	return (0);
 }
 
-int		ss(t_stack *stack_a, t_stack *stack_b)
+int		swap_if_b(t_stack *pile)
 {
-	swap(stack_a);
-	swap(stack_b);
-	return (1);
+	if (pile->nb < pile->before->nb)
+	{
+		swap(pile);
+		return (1);
+	}
+	return (0);
 }

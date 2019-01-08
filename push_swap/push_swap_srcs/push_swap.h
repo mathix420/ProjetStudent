@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:04:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/06 18:14:10 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/08 20:14:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,32 @@ typedef struct	s_sort
 	t_op	**op;
 }				t_sort;
 
-int				ft_moy(t_stack *pile, int max);
-int				is_ok_a(t_stack *pile, int max);
-int				is_ok_b(t_stack *pile, int max);
 void			sort_a(t_stack **pila, t_stack **pilb, t_sort v);
 void			sort_b(t_stack **pila, t_stack **pilb, t_sort v);
+
+int				ft_len(t_stack *pile);
+int				ft_moy(t_stack *pile, int max);
+int				ft_max(t_stack *pile, t_sort v);
+t_stack			*ft_get_last(t_stack *pile);
+
+int				is_ok_a(t_stack *pile, int max);
+int				is_ok_b(t_stack *pile, int max);
+
+int				swap_if_a(t_stack *pila);
+int				swap_if_b(t_stack *pile);
+
+void			small_sort_a(t_stack **pila, t_sort v);
+void			small_sort_b(t_stack **pila, t_stack **pilb, t_sort v);
+
+void			rra_or_ra(int re, t_stack **pila, int l, t_sort v);
+void			rrb_or_rb(int re, t_stack **pilb, int l, t_sort v);
+
+void			clean_sorting(t_op *o);
+void			print_sorting(t_op *ops);
+
+void			ft_add_op(t_op **op, int nb);
+void			ft_free_ops(t_op *op);
+
+void			little_sort(t_stack **pila, t_stack **pilb, t_sort v);
 
 #endif

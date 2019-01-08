@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_free_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/07 15:57:19 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/07 15:58:33 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/08 18:26:33 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/08 18:28:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "stack.h"
 
-int		ft_abs(int nb)
+void	ft_free_list(t_stack *stack)
 {
-	return (nb > 0 ? nb : -nb);
+	t_stack		*before;
+	while (stack)
+	{
+		before = stack->before;
+		free(stack);
+		stack = before;
+	}
 }

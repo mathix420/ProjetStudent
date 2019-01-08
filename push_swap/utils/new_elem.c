@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 15:44:10 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/06 14:23:02 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/08 18:29:03 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_stack	*ft_new_elem(int nb, t_stack *before)
 	return (st);
 }
 
-t_stack *ft_free_elem(t_stack *stack)
+t_stack	*ft_free_elem(t_stack *stack)
 {
 	t_stack *before;
 

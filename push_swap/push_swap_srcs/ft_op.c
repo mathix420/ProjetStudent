@@ -1,32 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   ft_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 19:03:38 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/08 22:21:21 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/08 19:33:27 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/08 19:33:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "push_swap.h"
 
-int		swap(t_stack *stack)
+void	ft_add_op(t_op **op, int nb)
 {
-	int		tmp;
+	t_op	*new;
 
-	if (!stack || !stack->before)
-		return (0);
-	tmp = stack->nb;
-	stack->nb = stack->before->nb;
-	stack->before->nb = tmp;
-	return (1);
+	if (!*op)
+	{
+		if (!(*op = ft_memalloc(sizeof(t_op))))
+			return ;
+		(*op)->nb = nb;
+		(*op)->next = NULL;
+	}
+	else
+	{
+		if (!(new = ft_memalloc(sizeof(t_op))))
+			return ;
+		new->nb = nb;
+		new->next = *op;
+		*op = new;
+	}
 }
 
-int		ss(t_stack *stack_a, t_stack *stack_b)
+void	ft_free_ops(t_op *op)
 {
-	swap(stack_a);
-	swap(stack_b);
-	return (1);
+	t_op	*tmp;
+
+	while (op->next)
+	{
+		tmp = op->next;
+		free(op);
+		op = tmp;
+	}
+	free(op);
 }
