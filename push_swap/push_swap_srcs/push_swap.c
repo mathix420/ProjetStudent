@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/07 20:26:09 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/08 13:54:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,20 @@ t_stack	*get_last(t_stack *pile)
 	return (pile);
 }
 
+int		get_max(t_stack *pile)
+{
+	int		max;
+
+	max = pile->nb;
+	while (pile->before)
+	{
+		pile = pile->before;
+		if (pile->nb > max)
+			max = pile->nb;
+	}
+	return (max);
+}
+
 void	little_sort(t_stack **pila, t_stack **pilb, t_sort v)
 {
 	int		nb;
@@ -211,7 +225,7 @@ Tant que pilb n'est pas vide
 
 */
 	nb = 0;
-	while ((*pila) && !is_ok_a(*pila, ft_len(*pila)))
+	while ((*pila) && !is_ok_a(*pila, ft_len(*pila)) && (!nb || (*pila)->nb < get_max))
 	{
 		if ((*pila)->nb > get_last(*pila)->nb)
 		{
@@ -227,8 +241,8 @@ Tant que pilb n'est pas vide
 			}
 			if (!is_ok_a(*pila, ft_len(*pila)))
 			{
-				push(pilb, pila);
-				ft_add_op(v.op, 10);
+				push(pila, pilb);
+				ft_add_op(v.op, 11);
 				nb++;
 			}
 		}
@@ -238,11 +252,13 @@ Tant que pilb n'est pas vide
 	}
 	while (nb--)
 	{
-		if ((*pilb)->nb < (*pilb)->before->nb)
+		if ((*pilb)->before && (*pilb)->nb < (*pilb)->before->nb)
 		{
 			swap(*pilb);
 			ft_add_op(v.op, 2);
 		}
+		push(pilb, pila);
+		ft_add_op(v.op, 10);
 	}
 }
 
@@ -435,12 +451,9 @@ int		main(int c, char **v)
 	print_stack(stck_a);
 	print_stack(stck_b);
 
-
 	little_sort(&stck_a, &stck_b, vars);
-
-
 	
-/*	sort_a(&stck_a, &stck_b, vars);*/
+//	sort_a(&stck_a, &stck_b, vars);
 	clean_sorting(*vars.op);
 	clean_sorting(*vars.op);
 	clean_sorting(*vars.op);
