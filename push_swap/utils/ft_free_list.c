@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 18:26:33 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/08 18:28:55 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/08 22:34:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_free_list(t_stack *stack)
 {
 	t_stack		*before;
+
 	while (stack)
 	{
 		before = stack->before;
