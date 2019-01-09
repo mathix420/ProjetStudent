@@ -6,7 +6,7 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 19:12:00 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/07 15:59:51 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/04 14:25:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int				ft_nblen(int n);
 char			*ft_strrev(char *s);
 int				ft_lstlen(t_list *lst);
-int				ft_abs(int nb);
 
 #endif

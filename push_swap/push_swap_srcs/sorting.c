@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 19:30:28 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/08 22:29:23 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/09 16:46:18 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	sort_b(t_stack **pila, t_stack **pilb, t_sort v)
 		return (small_sort_b(pila, pilb, v));
 	else if (i[3] == 2 && !is_ok_b(*pilb, 2))
 		swap(*pilb) ? ft_add_op(v.op, 2) : 0;
-	if ((!(i[2] = 0) && i[3] <= 1) || is_ok_b(*pilb, i[3]))
+	if (i[3] <= 1 || (!(i[2] = 0) && i[3] <= 1) || is_ok_b(*pilb, i[3]))
 	{
-		while (i[3]--)
+		while (i[3]-- > 0)
 			push(pilb, pila) ? ft_add_op(v.op, 10) : 0;
 		return ;
 	}
@@ -44,7 +44,7 @@ void	sort_a(t_stack **pila, t_stack **pilb, t_sort v)
 {
 	int		i[4];
 
-	if ((i[3] = v.count) < 8 && i[3] == ft_len(*pila))
+	if (((i[3] = v.count) < 8 && i[3] == ft_len(*pila)) || (i[3] <= 1))
 		return (little_sort(pila, pilb, v));
 	if (!(i[2] = 0) && i[3] == 3)
 		return (small_sort_a(pila, v));

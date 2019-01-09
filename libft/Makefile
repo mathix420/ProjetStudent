@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/01/04 14:18:20 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/09 16:14:20 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -91,7 +91,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = cc
 OPTS = $(foreach d, $(INC), -I$d)
-CFLAGS = -Wall -Wextra -Werror $(OPTS)
+FLAGS = -Wall -Wextra -Werror $(OPTS)
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -101,14 +101,21 @@ CFLAGS = -Wall -Wextra -Werror $(OPTS)
 
 all: $(NAME)
 
+%.o:		%.c
+		@$(CC) $(FLAGS) -o $@ -c $<
+		@printf "\33[2K ➡️  %-15s%s\r" "$<" "✅"
+
 $(NAME):	$(OBJ)
-		@ar -rv $(NAME) $(OBJ)
+		@ar rc $(NAME) $(OBJ)
 		@ranlib $(NAME)
+		@printf "\33[2K \r\nIt's time to eat ! 🍪\n"
 
 clean:
 		@/bin/rm -f $(OBJ)
+		@echo "Objects cleaned ♻️"
 
 fclean: clean
 		@/bin/rm -f $(NAME)
+		@echo "Library deleted 🚧"
 
 re: fclean all
