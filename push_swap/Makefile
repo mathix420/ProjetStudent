@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/09 17:52:02 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/09 18:40:07 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,12 +16,31 @@
 
 NAME = push_swap
 
-INC = includes
+INC = includes libft
 
 SDIR = srcs
-_SRC = 
+_SRC = checker.c \
+		ft_actions.c \
+		ft_op.c \
+		is_ok.c \
+		little_numbers_sort.c \
+		output_cleaner.c \
+		push_swap.c \
+		rr_or_r.c \
+		sorting.c \
+		sorting_len_three.c \
+		swap_if.c
 
-SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
+UTILSDIR = utils
+_UTILS = ft_free_list.c \
+		new_elem.c \
+		print_stack.c \
+		push.c \
+		reverse.c \
+		rotate.c \
+		swap.c
+
+SRC = $(patsubst %,$(SDIR)/%,$(_SRC)) $(patsubst %,$(UTILSDIR)/%,$(_UTILS))
 
 OBJ = $(SRC:.c=.o)
 
@@ -29,7 +48,7 @@ OBJ = $(SRC:.c=.o)
 #####                           COMPILER OPTIONS                           #####
 ################################################################################
 
-CC = cc
+CC = gcc
 OPTS = $(foreach d, $(INC), -I$d)
 FLAGS = -Wall -Wextra -Werror $(OPTS)
 
@@ -43,19 +62,27 @@ all: $(NAME)
 
 %.o:		%.c
 		@$(CC) $(FLAGS) -o $@ -c $<
-		@printf "\33[2K ➡️  %-15s%s\r" "$<" "✅"
+		@printf "\33[2K  ➡ %-15s%s\r" "$<" "✅"
 
 $(NAME):	$(OBJ)
-		@ar rc $(NAME) $(OBJ)
-		@ranlib $(NAME)
-		@printf "\33[2K \r\nIt's time to eat ! 🍪\n"
+		@make -C libft
+		@$(CC) $(FLAGS) -o $@ -Llibft -lft $(OBJ)
+		@printf "\33[2K \r\nPush_swap is done !\n"
 
 clean:
+		@printf "\n\e[92m%75s\n" "==================== LIBFT ====================  "
+		@make clean -C libft
+		@printf "\n\e[94m%75s\n" "==================== PUSH_SWAP ===================="
 		@/bin/rm -f $(OBJ)
-		@echo "Objects cleaned ♻️"
+		@echo "Objects cleaned\033[0m ♻️"
 
-fclean: clean
+fclean:
+		@printf "\n\e[92m%75s\n" "==================== LIBFT ====================  "
+		@make fclean -C libft
+		@printf "\n\e[94m%75s\n" "==================== PUSH_SWAP ===================="
+		@/bin/rm -f $(OBJ)
 		@/bin/rm -f $(NAME)
-		@echo "Library deleted 🚧"
+		@echo "Objects cleaned ♻️"
+		@echo "Executable deleted\033[0m 🚧 "
 
 re: fclean all

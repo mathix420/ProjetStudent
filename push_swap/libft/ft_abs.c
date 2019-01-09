@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/19 13:04:53 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/09 22:03:00 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/09 21:17:31 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/09 21:18:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include "libft.h"
-# include "stack.h"
-# include "mlx.h"
-
-typedef struct	s_mlx
+int		ft_abs(int nb)
 {
-	void    *mlx;
-	void    *win;
-	int		siz_x;
-	int		siz_y;
-	int		color;
-}				t_mlx;
-
-typedef struct	s_off
-{
-	int		x;
-	int		y;
-}				t_off;
-
-#endif
+	return (nb > 0 ? nb : -nb);
+}
