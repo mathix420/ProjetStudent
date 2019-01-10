@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/10 17:19:13 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/10 18:57:44 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 int		ft_max(t_stack *pile)
 {
 	int		max;
+	int		nb;
 
-	max = pile->nb;
+	max = ft_abs(pile->nb);
 	while (pile->before)
 	{
+		nb = ft_abs(pile->nb);
 		pile = pile->before;
-		if (pile->nb > max)
-			max = pile->nb;
+		if (nb > max)
+			max = nb;
 	}
 	return (max);
 }
@@ -105,9 +107,9 @@ void	print(t_mlx *mlx, t_off off, t_stack *pile)
 	while (pile)
 	{
 		if (pile->nb > 0)
-			mlx->color = 0x00ffff;
+			mlx->color = 0xf7ca18;
 		else
-			mlx->color = 0x99ffff;
+			mlx->color = 0x5333ed;
 		off.y = (i - 1) * mlx->ep;
 		ligne(mlx, off, mlx->ep, ft_abs(pile->nb) * mlx->step);
 		pile = pile->before;
@@ -159,10 +161,8 @@ int		treat(t_mlx *mlx)
 	if (!mlx->op)
 		return (0);
 	print_both(mlx);
-	printf("%d\n", mlx->op->nb);
 	mlx->op = ft_do_op(mlx);
-	print_stack(mlx->pila);
-	ft_bzero(mlx->str, mlx->siz_x * mlx->siz_y);
+	ft_bzero(mlx->str, mlx->siz_x * mlx->siz_y * sizeof(int));
 	print_both(mlx);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 	return (0);
@@ -209,6 +209,26 @@ void	ft_get_op(t_op **op)
 		free(ops);
 }
 
+void	ft_init(t_mlx *mlx, t_stack *stck_a, t_stack *stck_b)
+{
+    int     bpp;
+    int     s_l;
+    int     endian;
+
+	mlx->mlx = mlx_init();
+	mlx->len = ft_len(stck_a);
+	mlx->ep = 1000 / mlx->len;
+	mlx->siz_x = 1005;
+	mlx->siz_y = mlx->ep * mlx->len;
+	mlx->step = 500 / ft_max(stck_a);
+	mlx->win = mlx_new_window(mlx->mlx, mlx->siz_x, mlx->siz_y, "Checker Push_swap");
+	mlx->pila = stck_a;
+	mlx->pilb = stck_b;
+	ft_get_op(&mlx->op);
+	mlx->img = mlx_new_image(mlx->mlx, mlx->siz_x, mlx->siz_y);
+	mlx->str = (int *)mlx_get_data_addr(mlx->img, &bpp, &s_l, &endian);
+}
+
 int		main(int c, char **v)
 {
 	t_stack		*stck_a;
@@ -225,26 +245,7 @@ int		main(int c, char **v)
 	while (i >= 1)
 		if (!(stck_a = ft_new_elem(ft_atoi(v[i--]), stck_a)))
 			return (0);
-
-	ft_get_op(&mlx.op);
-
-	mlx.mlx = mlx_init();
-	mlx.siz_x = 1005;
-	mlx.siz_y = 1000;
-	mlx.win = mlx_new_window(mlx.mlx, mlx.siz_x, mlx.siz_y, "Checker Push_swap");
-	mlx.pila = stck_a;
-	mlx.pilb = stck_b;
-
-    int     bpp;
-    int     s_l;
-    int     endian;
-	
-	mlx.img = mlx_new_image(mlx.mlx, mlx.siz_x, mlx.siz_y);
-	mlx.str = (int *)mlx_get_data_addr(mlx.img, &bpp, &s_l, &endian);
-	
-	mlx.ep = 1000 / ft_len(stck_a);
-	mlx.step = 500 / ft_max(stck_a);
-
+	ft_init(&mlx, stck_a, stck_b);
 	print_both(&mlx);
 
 	mlx_loop_hook(mlx.mlx, &treat, &mlx);

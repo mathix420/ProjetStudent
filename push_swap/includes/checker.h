@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:53 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/10 17:18:40 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/10 18:40:56 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_mlx
 	int		ep;
 	int		step;
 	t_op	*op;
+	int		len;
 }				t_mlx;
 
 #endif

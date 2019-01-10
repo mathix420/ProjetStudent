@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/10 13:19:20 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/10 19:01:12 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,7 +18,7 @@ NAME = push_swap
 
 INC = includes libft
 
-SDIR = srcs
+SDIR = srcs/push_swap
 _SRC =	ft_actions.c \
 		ft_op.c \
 		is_ok.c \
