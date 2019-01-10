@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/09 18:40:07 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/10 13:19:20 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,8 +19,7 @@ NAME = push_swap
 INC = includes libft
 
 SDIR = srcs
-_SRC = checker.c \
-		ft_actions.c \
+_SRC =	ft_actions.c \
 		ft_op.c \
 		is_ok.c \
 		little_numbers_sort.c \
