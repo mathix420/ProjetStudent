@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/09 22:17:11 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/10 12:25:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int		ft_len(t_stack *pile)
 	return (i);
 }
 
+void    ft_fill_pixel(t_mlx mlx, int x, int y, int color)
+{
+	mlx.str[x + mlx.siz_x * y] = color;
+}
+
 void	ligne(t_mlx mlx, t_off off, int ep, int len)
 {
 	int		i;
@@ -49,7 +54,7 @@ void	ligne(t_mlx mlx, t_off off, int ep, int len)
 	{
 		j = off.x;
 		while (j < off.x + len)
-			mlx_pixel_put(mlx.mlx, mlx.win, j++, i, mlx.color);
+			ft_fill_pixel(mlx.mlx, mlx.win, j++, i, mlx.color);
 		i++;
 	}	
 }
