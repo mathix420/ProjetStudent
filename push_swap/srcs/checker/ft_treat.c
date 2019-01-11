@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_treat.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/10 19:03:33 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/11 13:12:04 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/11 13:12:54 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/11 13:18:15 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int		ft_max(t_stack *pile)
-{
-	int		max;
-	int		nb;
-
-	max = ft_abs(pile->nb);
-	while (pile->before)
-	{
-		nb = ft_abs(pile->nb);
-		pile = pile->before;
-		if (nb > max)
-			max = nb;
-	}
-	return (max);
-}
-
-int		ft_len(t_stack *pile)
+int		treat(t_mlx *mlx)
 {
 	int		i;
 
-	i = 1;
-	while (pile->before)
-	{
+	i = 0;
+	if (!mlx->op)
+		return (0);
+	print_both(mlx);
+	mlx->op = ft_do_op(mlx);
+	ft_bzero(mlx->str, mlx->siz_x * mlx->siz_y * sizeof(int));
+	print_both(mlx);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	while (mlx->len < 100 && i < (mlx->len > 30 ? 10000000 : 25000000))
 		i++;
-		pile = pile->before;
-	}
-	return (i);
+	return (0);
 }
