@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_treat.c                                         :+:      :+:    :+:   */
+/*   is_int.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/11 13:12:54 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 17:39:32 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/12 20:39:15 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/12 21:28:05 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
-int		treat(t_mlx *mlx)
+int		is_int(char *str)
 {
-	int		i;
+	long long	out;
+	int			i;
+	int			sign;
 
 	i = 0;
-	if (!mlx->op)
-		return (0);
-	print_both(mlx);
-	mlx->op = ft_do_op(mlx);
-	ft_bzero(mlx->str, mlx->siz_x * mlx->siz_y * sizeof(int));
-	if (mlx->opt & OPT_V)
+	out = 0;
+	while ((str[i] >= 8 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		sign = str[i++] == '-' ? 1 : 0;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		print_both(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-		while (mlx->len < 100 && i < (mlx->len > 30 ? 10000000 : 25000000))
-			i++;
+		out = (out * 10) + (str[i++] - '0');
+		if ((out - sign) > 2147483647)
+			return (0);
 	}
-	return (0);
+	return (ft_isnum(str));
 }

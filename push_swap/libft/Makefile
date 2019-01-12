@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/01/11 13:56:43 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/12 16:24:24 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -109,7 +109,7 @@ all: $(NAME)
 $(NAME):	$(OBJ)
 		@ar rc $(NAME) $(OBJ)
 		@ranlib $(NAME)
-		@printf "\33[2K \r\nLibft done !\n"
+		@printf "\33[2K \r\nLibft's done !\n"
 
 clean:
 		@/bin/rm -f $(OBJ)

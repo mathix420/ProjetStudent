@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/11 19:16:50 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/12 21:31:16 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -26,7 +26,11 @@ _PS =	ft_actions.c \
 		rr_or_r.c \
 		sorting.c \
 		sorting_len_three.c \
-		swap_if.c
+		swap_if.c \
+		ft_isnum.c \
+		options.c \
+		reverse_sort.c \
+		is_int.c
 
 CHDIR = srcs/checker
 _CH =	checker.c \
@@ -34,7 +38,14 @@ _CH =	checker.c \
 		ft_op.c \
 		ft_print.c \
 		ft_treat.c \
-		utils.c
+		utils.c	\
+		options.c \
+		ft_error.c \
+		checking.c \
+		counting.c \
+		ft_isnum.c \
+		ft_usage.c \
+		is_int.c
 
 UTILSDIR = utils
 _UTILS = ft_free_list.c \
@@ -52,6 +63,8 @@ CHSRC = $(patsubst %,$(CHDIR)/%,$(_CH)) $(patsubst %,$(UTILSDIR)/%,$(_UTILS))
 CHOBJ = $(CHSRC:.c=.o)
 
 LIBFT = libft/libft.a
+
+MLX = minilibx/libmlx.a
 
 ################################################################################
 #####                           COMPILER OPTIONS                           #####
@@ -72,16 +85,18 @@ all: push_swap checker
 $(LIBFT):
 	@make -C libft
 
+$(MLX):
+	@make -C minilibx
+
 %.o:		%.c
 	@$(CC) $(FLAGS) -o $@ -c $<
-	@printf "\33[2K  ➡ %-15s%s\r" "$<" "✅"
+	@printf "\33[2K  ➡ %-40s%s\r" "$<" "✅"
 
-push_swap: $(LIBFT) $(PSOBJ)
+push_swap: $(LIBFT) $(MLX) $(PSOBJ)
 	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(PSOBJ)
 	@printf "\33[2K \r\nPush_swap is done !\n"
 
 checker: $(LIBFT) $(CHOBJ)
-	@make -C minilibx
 	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit
 	@printf "\33[2K \r\nChecker is done !\n"
 
@@ -97,12 +112,12 @@ clean:
 		@echo "Objects cleaned\033[0m ♻️"
 
 fclean:
-		@make clean -C minilibx
+		@make fclean -C minilibx
 		@printf "\n\e[92m%75s\n" "==================== LIBFT ====================  "
 		@make fclean -C libft
 		@printf "\n\e[94m%75s\n" "==================== PUSH_SWAP ===================="
 		@/bin/rm -f $(PSOBJ) $(CHOBJ)
-		@/bin/rm -f $(NAME) checker
+		@/bin/rm -f push_swap checker
 		@echo "Objects cleaned ♻️"
 		@echo "Executable deleted\033[0m 🚧 "
 

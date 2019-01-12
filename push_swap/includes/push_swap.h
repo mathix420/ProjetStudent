@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:04:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/08 20:14:34 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 21:00:05 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_sort
 void			sort_a(t_stack **pila, t_stack **pilb, t_sort v);
 void			sort_b(t_stack **pila, t_stack **pilb, t_sort v);
 
+int				ft_isnum(char *str);
 int				ft_len(t_stack *pile);
 int				ft_moy(t_stack *pile, int max);
 int				ft_max(t_stack *pile, t_sort v);
@@ -62,5 +63,10 @@ void			ft_add_op(t_op **op, int nb);
 void			ft_free_ops(t_op *op);
 
 void			little_sort(t_stack **pila, t_stack **pilb, t_sort v);
+void			rev_check(t_stack **a, t_stack **b, t_sort v);
+
+int				ft_options(int c, char **v, t_stack **stck_a, t_sort *vars);
+int				ft_error(void);
+int				is_int(char *str);
 
 #endif

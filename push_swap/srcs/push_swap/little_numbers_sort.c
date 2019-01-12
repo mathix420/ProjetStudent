@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 19:29:18 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/11 14:42:52 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 15:54:26 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,9 @@ void	reverse_sort(t_stack **a, t_stack **b, t_sort v, int max)
 	}
 }
 
-void	total_rev(t_stack **a, t_sort v)
-{
-	int		i;
-
-	i = ft_len(*a);
-	while (i--)
-		(*a = rotate(*a)) ? ft_add_op(v.op, 4) : 0;
-}
-
 void	little_sort(t_stack **a, t_stack **b, t_sort v)
 {
 	v.bc = 0;
-	if ((*a) && is_ok_b(*a, ft_len(*a)))
-		return (total_rev(a, v));
 	while ((*a) && (!is_ok_a(*a, ft_len(*a)) ||
 					(v.bc && (*a)->nb < ft_max(*b, v))))
 		if ((*a)->nb > ft_get_last(*a)->nb)

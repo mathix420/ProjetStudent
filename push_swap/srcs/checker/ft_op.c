@@ -6,22 +6,29 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/11 13:11:38 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/11 13:16:49 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:56:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-void	ft_get_op(t_op **op)
+void	ft_get_op(t_mlx *mlx)
 {
 	char	*ops;
+	int		i;
 
 	ops = NULL;
-	while (get_next_line(0, &ops))
-		if (!ft_add(op, ops))
-			ft_putstr("Error TODO !!!!!!");
+	i = 0;
+	while (get_next_line(0, &ops) && ++i)
+		if (!ft_add(&mlx->op, ops))
+			exit(ft_error());
 	if (ops)
 		free(ops);
+	if (mlx->opt & OPT_L)
+	{
+		ft_putnbr(i);
+		ft_putstr(" lines\n");
+	}
 }
 
 int		ft_add(t_op **op, char *ops)
@@ -82,6 +89,8 @@ t_op	*ft_do_op(t_mlx *mlx)
 {
 	t_op	*tmp;
 
+	if (!(mlx->op))
+		return (NULL);
 	if (mlx->op->nb == 1 || mlx->op->nb == 2)
 		swap(mlx->op->nb == 1 ? mlx->pila : mlx->pilb);
 	else if (mlx->op->nb == 3)

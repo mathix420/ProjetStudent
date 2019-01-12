@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_treat.c                                         :+:      :+:    :+:   */
+/*   counting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/11 13:12:54 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 17:39:32 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/12 16:09:01 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/12 16:13:01 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int		treat(t_mlx *mlx)
+int		count_param(int c, char **v)
 {
 	int		i;
+	int		nb;
 
-	i = 0;
-	if (!mlx->op)
-		return (0);
-	print_both(mlx);
-	mlx->op = ft_do_op(mlx);
-	ft_bzero(mlx->str, mlx->siz_x * mlx->siz_y * sizeof(int));
-	if (mlx->opt & OPT_V)
-	{
-		print_both(mlx);
-		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-		while (mlx->len < 100 && i < (mlx->len > 30 ? 10000000 : 25000000))
-			i++;
-	}
-	return (0);
+	i = 1;
+	nb = 0;
+	while (i < c)
+		if (ft_isnum(v[i++]))
+			nb += 1;
+	return (nb);
 }

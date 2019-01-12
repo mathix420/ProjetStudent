@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 19:04:08 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/11 13:20:20 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 17:26:20 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,22 @@ void	ft_init(t_mlx *mlx, t_stack *stck_a, t_stack *stck_b)
 	int		s_l;
 	int		endian;
 
-	mlx->mlx = mlx_init();
 	mlx->len = ft_len(stck_a);
 	mlx->ep = 1000 / mlx->len;
 	mlx->siz_x = 1005;
 	mlx->siz_y = mlx->ep * mlx->len;
 	mlx->step = 500 / ft_max(stck_a);
-	mlx->win = mlx_new_window(mlx->mlx, mlx->siz_x, mlx->siz_y,
-							"Checker Push_swap");
 	mlx->pila = stck_a;
 	mlx->pilb = stck_b;
-	ft_get_op(&mlx->op);
-	mlx->img = mlx_new_image(mlx->mlx, mlx->siz_x, mlx->siz_y);
-	mlx->str = (int *)mlx_get_data_addr(mlx->img, &bpp, &s_l, &endian);
+	ft_get_op(mlx);
+	if (mlx->opt & OPT_V)
+	{
+		mlx->mlx = mlx_init();
+		mlx->win = mlx_new_window(mlx->mlx, mlx->siz_x, mlx->siz_y,
+								"Checker Push_swap");
+		mlx->img = mlx_new_image(mlx->mlx, mlx->siz_x, mlx->siz_y);
+		mlx->str = (int *)mlx_get_data_addr(mlx->img, &bpp, &s_l, &endian);
+	}
 }
 
 void	ft_fill_pixel(t_mlx *mlx, int x, int y, int color)
