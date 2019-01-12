@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:09:01 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 19:56:53 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:16:58 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		count_param(int c, char **v)
 
 	i = 1;
 	nb = 0;
-	while (i < c)
+	while (v[i] && i < c)
 		if (ft_isnum(v[i++]))
 			nb += 1;
 	return (nb);

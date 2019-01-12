@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:09:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 21:32:17 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:22:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int		get_options(int i, char **v, t_mlx *mlx)
 	int		j;
 
 	j = i;
-	while (v[j][0] == '-' && ft_isalpha(v[j][1]))
+	while (v[j] && v[j][0] == '-' && ft_isalpha(v[j][1]))
 		fill_opt(v[j++], mlx);
+	if (!v[j])
+		return (-1);
 	i = j - 1;
 	while (v[++i])
 		if (v[i][0] == '-' && ft_isalpha(v[i][1]))
@@ -49,7 +51,8 @@ int		options(int c, char **v, t_mlx *mlx)
 	int			i;
 
 	var = !count_param(c, v) ? 1 : 2;
-	i = get_options(1, v, mlx);
+	if ((i = get_options(1, v, mlx)) == -1)
+		return (ft_error());
 	if (!(stck_a = NULL) && !check_vals(c, v, var))
 		return (ft_error());
 	if (var == 1 && (v = ft_strsplit(v[i], ' ')))

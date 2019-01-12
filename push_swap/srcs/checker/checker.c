@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 18:14:22 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/12 22:38:08 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int		main(int c, char **v)
 	else
 		while (mlx.op)
 			mlx.op = ft_do_op(&mlx);
-	ft_putstr(is_ok_a(mlx.pila, mlx.len) ? "OK\n" : "KO\n");
+	ft_putstr(mlx.pila && is_ok_a(mlx.pila, mlx.len) ? "OK\n" : "KO\n");
 	return (0);
 }
