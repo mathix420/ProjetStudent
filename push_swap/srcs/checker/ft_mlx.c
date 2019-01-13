@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 19:04:08 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 17:26:20 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 16:17:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@ void	ft_init(t_mlx *mlx, t_stack *stck_a, t_stack *stck_b)
 	mlx->ep = 1000 / mlx->len;
 	mlx->siz_x = 1005;
 	mlx->siz_y = mlx->ep * mlx->len;
-	mlx->step = 500 / ft_max(stck_a);
+	if ((bpp = ft_max(stck_a)))
+		mlx->step = 500 / bpp;
+	else
+		mlx->step = 0;
 	mlx->pila = stck_a;
 	mlx->pilb = stck_b;
 	ft_get_op(mlx);
 	if (mlx->opt & OPT_V)
 	{
+		if (!mlx->step)
+		{
+			ft_putstr("Cannot display these values !\n");
+			exit(0);
+		}
 		mlx->mlx = mlx_init();
 		mlx->win = mlx_new_window(mlx->mlx, mlx->siz_x, mlx->siz_y,
 								"Checker Push_swap");

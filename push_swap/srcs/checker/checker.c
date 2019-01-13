@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 22:38:08 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 16:13:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		main(int c, char **v)
 	t_mlx		mlx;
 
 	if (c <= 1 || !options(c, v, &mlx))
-		return (0);
+		return (ft_error());
 	if (mlx.opt & OPT_V)
 	{
 		print_both(&mlx);
@@ -38,6 +38,7 @@ int		main(int c, char **v)
 	else
 		while (mlx.op)
 			mlx.op = ft_do_op(&mlx);
-	ft_putstr(mlx.pila && is_ok_a(mlx.pila, mlx.len) ? "OK\n" : "KO\n");
+	ft_putstr(mlx.pila && is_ok_a(mlx.pila, mlx.len) &&
+			!ft_len(mlx.pilb) ? "OK\n" : "KO\n");
 	return (0);
 }

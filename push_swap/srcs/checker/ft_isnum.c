@@ -5,20 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/12 16:07:30 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 16:13:43 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/12 19:32:41 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/12 21:27:29 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 int		ft_isnum(char *str)
 {
 	int		i;
 
 	i = 0;
-	while ((str[i] >= 8 && str[i] <= 13) || str[i] == ' ' || str[i] == '-' ||
-		str[i] == '+')
+	while ((str[i] >= 8 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	if (!(str[i] >= '0' && str[i] <= '9'))
 		return (0);
