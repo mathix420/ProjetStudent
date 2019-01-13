@@ -6,11 +6,17 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 19:04:08 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/13 16:17:35 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:49:16 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
+
+int		display_error(void)
+{
+	ft_putstr("Cannot display these values !\n");
+	return (0);
+}
 
 void	ft_init(t_mlx *mlx, t_stack *stck_a, t_stack *stck_b)
 {
@@ -32,10 +38,7 @@ void	ft_init(t_mlx *mlx, t_stack *stck_a, t_stack *stck_b)
 	if (mlx->opt & OPT_V)
 	{
 		if (!mlx->step)
-		{
-			ft_putstr("Cannot display these values !\n");
-			exit(0);
-		}
+			exit(display_error());
 		mlx->mlx = mlx_init();
 		mlx->win = mlx_new_window(mlx->mlx, mlx->siz_x, mlx->siz_y,
 								"Checker Push_swap");

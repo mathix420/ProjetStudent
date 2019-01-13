@@ -6,11 +6,11 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:06:52 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 16:40:17 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:09:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 int		ft_error(void)
 {

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:09:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/13 15:56:46 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 19:14:15 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,29 @@ int		get_options(int i, char **v, t_mlx *mlx)
 int		options(int c, char **v, t_mlx *mlx)
 {
 	t_stack		*stck_a;
-	int			var;
-	int			i;
+	int			i[2];
 	int			nb;
 
-	nb = 0;
-	var = !count_param(c, v) ? 1 : 2;
-	if ((i = get_options(1, v, mlx)) == -1)
+	i[0] = !count_param(c, v) ? 1 : 2;
+	if ((i[1] = get_options(1, v, mlx)) == -1)
 		return (0);
 	stck_a = NULL;
-	if (var == 1 && (v = ft_strsplit(v[i], ' ')))
+	if (i[0] == 1 && (v = ft_strsplit(v[i[1]], ' ')))
 	{
-		i = 0;
+		ft_bzero(i, 8);
 		if (!v[0] || !v[0][0])
 			return (0);
-		while (v[i])
-			i++;
-		i--;
-		var = 0;
+		while (v[i[1]])
+			i[1]++;
+		i[1]--;
 	}
-	else
-	{
-		var = i;
-		i = c - 1;
-	}
-	while (i >= var)
-		if (!ft_checkarg(v[i--], &nb) || !(stck_a = ft_new_elem(nb, stck_a)))
+	else if ((i[0] = i[1]) || 1)
+		i[1] = c - 1;
+	while (i[1] >= i[0])
+		if (!ft_checkarg(v[i[1]--], &nb) || !(stck_a = ft_new_elem(nb, stck_a)))
 			return (0);
+	if (!duplicates_check(stck_a))
+		return (0);
 	ft_init(mlx, stck_a, NULL);
 	return (1);
 }

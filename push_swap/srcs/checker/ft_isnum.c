@@ -6,11 +6,11 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 19:32:41 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 21:27:29 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 18:08:15 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
 int		ft_isnum(char *str)
 {

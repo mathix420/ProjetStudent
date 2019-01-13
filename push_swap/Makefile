@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/13 17:44:48 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/13 19:17:36 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -27,6 +27,7 @@ _PS =	ft_actions.c \
 		sorting.c \
 		sorting_len_three.c \
 		swap_if.c \
+		ft_isnum.c \
 		options.c \
 		reverse_sort.c \
 		is_int.c
@@ -89,7 +90,7 @@ $(MLX):
 	@make -C minilibx
 
 %.o:		%.c
-	@$(CC) $(FLAGS) -o $@ -c $< -g3
+	@$(CC) $(FLAGS) -o $@ -c $<
 	@printf "\33[2K  ➡ %-40s%s\r" "$<" "✅"
 
 push_swap: $(LIBFT) $(PSOBJ)
@@ -97,7 +98,7 @@ push_swap: $(LIBFT) $(PSOBJ)
 	@printf "\33[2K \r\nPush_swap is done !\n"
 
 checker: $(LIBFT) $(MLX) $(CHOBJ)
-	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g3
+	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit
 	@printf "\33[2K \r\nChecker is done !\n"
 
 norm:
