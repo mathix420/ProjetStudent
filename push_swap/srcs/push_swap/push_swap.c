@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:05:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 22:36:30 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/13 11:29:50 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ int		main(int c, char **v)
 
 	pila = NULL;
 	pilb = NULL;
-	if (c < 2)
-		return (0);
-	vars.count = c - 1;
+	if (c < 2 || !ft_options(c, v, &pila, &vars))
+		return (ft_error());
 	vars.bc = 0;
-	if (!ft_options(c, v, &pila, &vars) || is_ok_a(pila, vars.count) ||
-		!(vars.op = ft_memalloc(sizeof(t_op))))
+	if (is_ok_a(pila, vars.count) || !(vars.op = ft_memalloc(sizeof(t_op))))
 		return (0);
 	rev_check(&pila, &pilb, vars);
 	print_all(vars);

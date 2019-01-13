@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/12 22:14:59 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/13 11:42:31 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -92,12 +92,12 @@ $(MLX):
 	@$(CC) $(FLAGS) -o $@ -c $<
 	@printf "\33[2K  ➡ %-40s%s\r" "$<" "✅"
 
-push_swap: $(LIBFT) $(MLX) $(PSOBJ)
+push_swap: $(LIBFT) $(PSOBJ)
 	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(PSOBJ)
 	@printf "\33[2K \r\nPush_swap is done !\n"
 
-checker: $(LIBFT) $(CHOBJ)
-	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g3
+checker: $(LIBFT) $(MLX) $(CHOBJ)
+	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit
 	@printf "\33[2K \r\nChecker is done !\n"
 
 norm:
