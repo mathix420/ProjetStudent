@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_duplicates.c                                    :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/13 17:18:19 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/14 13:17:57 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/14 18:15:25 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/14 18:18:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stack.h"
+#include "push_swap.h"
 
-int		duplicates_check(t_stack *pile)
+int			ft_freetab(char **tab)
 {
-	t_stack	*sav;
-	t_stack	*p1;
+	int		i;
 
-	while (pile)
-	{
-		p1 = pile;
-		sav = p1 ? p1->before : p1;
-		while (sav)
-			if (!p1 || p1->nb != sav->nb)
-				sav = sav->before;
-			else
-				return (0);
-		pile = p1 ? p1->before : p1;
-	}
-	return (!p1 || !pile || p1->nb != pile->nb);
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab[i]);
+	free(tab);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/09 17:05:40 by agissing          #+#    #+#              #
-#    Updated: 2019/01/13 19:17:36 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/14 18:18:31 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,7 +30,8 @@ _PS =	ft_actions.c \
 		ft_isnum.c \
 		options.c \
 		reverse_sort.c \
-		is_int.c
+		is_int.c \
+		ft_freetab.c
 
 CHDIR = srcs/checker
 _CH =	checker.c \
@@ -90,15 +91,15 @@ $(MLX):
 	@make -C minilibx
 
 %.o:		%.c
-	@$(CC) $(FLAGS) -o $@ -c $<
+	@$(CC) $(FLAGS) -o $@ -c $< -g3
 	@printf "\33[2K  ➡ %-40s%s\r" "$<" "✅"
 
 push_swap: $(LIBFT) $(PSOBJ)
-	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(PSOBJ)
+	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(PSOBJ) -g3
 	@printf "\33[2K \r\nPush_swap is done !\n"
 
 checker: $(LIBFT) $(MLX) $(CHOBJ)
-	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit
+	@$(CC) $(FLAGS) -o $@ -Llibft -lft $(CHOBJ) -L minilibx -lmlx -framework OpenGL -framework AppKit -g3
 	@printf "\33[2K \r\nChecker is done !\n"
 
 norm:

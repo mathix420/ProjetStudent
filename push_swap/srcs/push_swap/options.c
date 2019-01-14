@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:09:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/13 12:39:41 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:35:48 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,27 @@ int		ft_checkarg(char *arg, int *nb)
 
 int		ft_options(int c, char **v, t_stack **pila, t_sort *vars)
 {
-	int			i;
-	int			nb;
+	int			i[2];
 
-	i = 0;
-	nb = 0;
+	ft_bzero(i, 8);
 	if (!count_param(c, v) && (v = ft_strsplit(v[1], ' ')))
 	{
-		while (v[i])
-			i++;
-		vars->count = i;
-		if (i > 0)
-			i--;
-		while (i >= 0)
-			if (!ft_checkarg(v[i--], &nb) || !(*pila = ft_new_elem(nb, *pila)))
-				return (0);
+		while (v[i[0]])
+			i[0]++;
+		vars->count = i[0];
+		if (i[0] > 0)
+			i[0]--;
+		while (i[0] >= 0)
+			if (!ft_checkarg(v[i[0]--], &i[1]) || !(*pila = ft_new_elem(i[1], *pila)))
+				return (ft_freetab(v));
+		ft_freetab(v);
 	}
 	else
 	{
 		vars->count = c - 1;
-		i = c - 1;
-		while (i > 0)
-			if (!ft_checkarg(v[i--], &nb) || !(*pila = ft_new_elem(nb, *pila)))
+		i[0] = c - 1;
+		while (i[0] > 0)
+			if (!ft_checkarg(v[i[0]--], &i[1]) || !(*pila = ft_new_elem(i[1], *pila)))
 				return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/04 14:04:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/12 21:00:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:18:14 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ void			rev_check(t_stack **a, t_stack **b, t_sort v);
 int				ft_options(int c, char **v, t_stack **stck_a, t_sort *vars);
 int				ft_error(void);
 int				is_int(char *str);
+
+int				ft_freetab(char **tab);
 
 #endif

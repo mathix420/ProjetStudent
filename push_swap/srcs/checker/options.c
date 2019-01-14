@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/12 16:09:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/13 20:15:33 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/14 14:30:33 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ int		options(int c, char **v, t_mlx *mlx)
 	int			i[2];
 	int			nb;
 
-	i[0] = !count_param(c, v) ? 1 : 2;
 	if ((i[1] = get_options(1, v, mlx)) == -1)
 		return (0);
 	stck_a = NULL;
-	if (i[0] == 1 && (v = ft_strsplit(v[i[1]], ' ')))
+	if (!count_param(c, v) && (v = ft_strsplit(v[i[1]], ' ')))
 	{
 		ft_bzero(i, 8);
 		if (!v[0] || !v[0][0])
