@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 13:04:24 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/13 18:15:42 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:54:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int		main(int c, char **v)
 {
 	t_mlx		mlx;
 
-	if (c <= 1 || !options(c, v, &mlx))
+	if (c <= 1)
+		return (0);
+	if (!options(c, v, &mlx))
 		return (ft_error());
 	if (mlx.opt & OPT_V)
 	{

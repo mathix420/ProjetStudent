@@ -6,7 +6,7 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:05:02 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/09 14:39:52 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/14 18:09:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,11 @@ static char	**ft_split(char **tab, char c, size_t l, const char *str)
 			i++;
 			l++;
 		}
-		if (!(tab[n] = malloc(sizeof(char) * (l + 1))))
-			return (NULL);
 		tab[n] = ft_strsub(str, save, l);
 		n++;
 		l = 0;
 	}
+	tab[n] = 0;
 	return (tab);
 }
 
@@ -68,12 +67,10 @@ char		**ft_strsplit(const char *str, char c)
 
 	if (str == NULL)
 		return (NULL);
-	m = count_word(str, c);
 	n = 0;
 	l = 0;
+	m = count_word(str, c);
 	if (!(tab = malloc(sizeof(char *) * (m + 1))))
 		return (NULL);
-	tab = ft_split(tab, c, l, str);
-	tab[count_word(str, c)] = 0;
-	return (tab);
+	return (ft_split(tab, c, l, str));
 }
