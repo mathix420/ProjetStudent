@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/18 16:17:50 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/20 20:40:42 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ t_lst	*ft_create_lst(char *name)
 	lst->next = NULL;
 	lst->name = ft_strdup(name);
 	if (stat(name, &lst->stat) < 0)
-		return (files_err(ft_title(name)));
+		return (files_err(name));
 	lst->pswd =	getpwuid(lst->stat.st_uid);
 	lst->grp = getgrgid(lst->stat.st_gid);
 	return (lst);
 }
 
-void	ft_lst_push_back(t_lst **lst, char *name)
+void	ft_lst_push_back(t_lst **lst, char *name, char *source)
 {
 	if (*lst)
 	{
 		if ((*lst)->next)
-			ft_lst_push_back(&((*lst)->next), name);
+			ft_lst_push_back(&((*lst)->next), name, source);
 		else
-			(*lst)->next = ft_create_lst(name);
+			(*lst)->next = ft_create_lst(join_path(source, name));
 	}
 	else
-		(*lst) = ft_create_lst(name);
+		(*lst) = ft_create_lst(join_path(source, name));
 }
 
 void	lstcpy(t_lst *new, t_lst *old)
@@ -58,7 +58,11 @@ void	lstcpy(t_lst *new, t_lst *old)
 	new->grp = getgrgid(new->stat.st_gid);
 }
 
-void	ft_sort(t_lst **lst)
+/*
+** Tri trop lourd (4 copies de liste en while)
+*/
+
+void	ft_sort(t_lst **lst, char opt)
 {
 	t_lst	*tmp1;
 	t_lst	*tmp2;
@@ -75,7 +79,8 @@ void	ft_sort(t_lst **lst)
 		tmp2 = tmp1->next;
 		while (tmp2)
 		{
-			if (ft_strcmp(trie->name, tmp2->name) > 0)
+			if (opt & OPT_T ? trie->stat.st_ctime < tmp2->stat.st_ctime
+				: ft_strcmp(trie->name, tmp2->name) > 0)
 			{
 				tmp3 = tmp2;
 				lstcpy(trie, tmp3);

@@ -6,7 +6,7 @@
 #    By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 15:54:25 by kemartin          #+#    #+#              #
-#    Updated: 2019/01/18 15:18:01 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/20 19:38:06 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRC		=	main.c \
 			option.c \
 			list.c \
 			ls.c \
-			modif.c
+			modif.c \
+			param.c \
+			paths.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -39,7 +41,7 @@ obj:
 	@mkdir -p $(OBJDIR)
 
 $(OBJDIR)%.o : $(SRCDIR)%.c
-	@$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $< -g3
 	@echo "Object done."
 
 $(FT_LIB) :
@@ -47,7 +49,7 @@ $(FT_LIB) :
 	@echo "Libft ok."
 
 $(NAME) : $(OBJ)
-	@$(CC) $(OBJ) $(FT_LNK) -o $(NAME)
+	@$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -fsanitize=address
 	@echo "Everything done."
 
 clean :

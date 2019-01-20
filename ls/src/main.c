@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:57:47 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/18 16:23:04 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/20 20:27:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,13 @@ int		is_file(char *name)
 	return (-1);
 }
 
-void	wich_ls(t_struct *tab)
+void	ls(t_struct *tab)
 {
-	if ((tab->opt & OPT_A) && (tab->opt & OPT_L))
-		ls_opt_la(tab);
-/*	if (tab->opt & OPT_LR)
-	reverse_lst(tab->lst);*/
-	else if (tab->opt & OPT_A)
-		ls_opt_a(tab);
-	else if (tab->opt & OPT_L)
-		ls_opt_l(tab);
+	get_childs(*tab->names, tab->opt);
+	if (tab->opt & OPT_L)
+		list_print(*(*tab->names)->child, tab->opt);
 	else
-		simple_ls(tab);
+		simple_print(*(*tab->names)->child, tab->opt);
 }
 
 int		main(int ac, char **av)
@@ -44,14 +39,14 @@ int		main(int ac, char **av)
 
 	i = 1;
 	tab.opt = 0;
-	if (!(tab.lst = (t_param **)malloc(sizeof(t_param *))))
+	if (!(tab.names = (t_param **)malloc(sizeof(t_param *))))
 		return (0);
-	*(tab.lst) = NULL;
+	*tab.names = NULL;
 	while (i < ac)
 		if (av[i][0] == '-')
 			options(av[i++], &tab);
 		else if (av[i][0] != '-')
-			ft_param_push_back(tab.lst, av[i++]);
-	wich_ls(&tab);
+			ft_param_push_back(tab.names, av[i++]);
+	ls(&tab);
 	return (0);
 }

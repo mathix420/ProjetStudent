@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:13:31 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/18 16:17:29 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/20 17:53:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_param	*ft_create_param(char *name)
 	lst->name = ft_strdup(name);
 	if (!(lst->child = (t_lst **)malloc(sizeof(t_lst *))))
 		return (NULL);
+	*(lst->child) = NULL;
 	return (lst);
 }
 
@@ -31,6 +32,25 @@ void	ft_param_push_back(t_param **lst, char *name)
 	{
 		if ((*lst)->next)
 			ft_param_push_back(&((*lst)->next), name);
+		else
+			(*lst)->next = ft_create_param(name);
+	}
+	else
+		(*lst) = ft_create_param(name);
+}
+
+void	ft_param_push_after(t_param **lst, char *name)
+{
+	t_param		*tmp;
+
+	if (*lst)
+	{
+		if ((*lst)->next)
+		{
+			tmp = (*lst)->next;
+			(*lst)->next = ft_create_param(name);
+			(*lst)->next->next = tmp;
+		}
 		else
 			(*lst)->next = ft_create_param(name);
 	}

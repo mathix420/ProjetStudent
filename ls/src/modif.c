@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/17 20:26:55 by kemartin         ###   ########.fr       */
+/*   Updated: 2019/01/20 19:34:00 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,29 @@ char	*cut_time_opt(char *str)
 
 void	reverse_lst(t_lst **lst)
 {
-	t_lst	*tmp1;
-	t_lst	*tmp2;
-	t_lst	*tmp3;
+	t_lst	*current;
+	t_lst	*previous;
+	t_lst	*next;
 
 	if (!(*lst) || !(*lst)->next)
 		return ;
-	tmp1 = (*lst);
-	tmp2 = tmp1->next;
-	tmp3 = tmp2->next;
-	tmp1->next = NULL;
-	tmp2->next = tmp1;
-	while (tmp3)
+	current = *lst;
+	previous = NULL;
+	while (current)
 	{
-		tmp1 = tmp2;
-		tmp2 = tmp3;
-		tmp3 = tmp3->next;
-		tmp2->next = tmp1;
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
 	}
-	lst = &tmp2;
+	*lst = previous;
 }
 
 char	*write_perms(int perm)
 {
 	char	*str;
 
-	if (!(str = (char*)malloc(sizeof(char) * 11)))
+	if (!(str = ft_strnew(10)))
 		return (NULL);
 	str[0] = (S_ISDIR(perm) ? 'd' : '-');
 	str[1] = ((perm & S_IRUSR) ? 'r' : '-');
@@ -67,7 +64,6 @@ char	*write_perms(int perm)
 	str[7] = ((perm & S_IROTH) ? 'r' : '-');
 	str[8] = ((perm & S_IWOTH) ? 'w' : '-');
 	str[9] = ((perm & S_IXOTH) ? 'x' : '-');
-	str[10] = '\0';
 	return (str);
 }
 
@@ -78,7 +74,5 @@ char	*ft_title(char *title)
 	while (ft_strchr(title, '/'))
 		title = ft_strchr(title, '/') + 1;
 	i = ft_strlen(title);
-	while (i && title[i] == '.' ? title[i] = '\0' : 1)
-		i--;
 	return (title);
 }
