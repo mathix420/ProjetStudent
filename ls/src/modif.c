@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/20 19:34:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 15:55:31 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ void	reverse_lst(t_lst **lst)
 	t_lst	*current;
 	t_lst	*previous;
 	t_lst	*next;
+
+	if (!(*lst) || !(*lst)->next)
+		return ;
+	current = *lst;
+	previous = NULL;
+	while (current)
+	{
+		next = current->next;
+		current->next = previous;
+		previous = current;
+		current = next;
+	}
+	*lst = previous;
+}
+
+void	reverse_param(t_param **lst)
+{
+	t_param	*current;
+	t_param	*previous;
+	t_param	*next;
 
 	if (!(*lst) || !(*lst)->next)
 		return ;

@@ -6,27 +6,27 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 19:21:24 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/20 20:32:29 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 18:40:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	get_childs(t_param *params, char opt)
+void	get_childs(t_param *p, char opt)
 {
 	DIR				*d;
 	struct dirent	*dir;
 
-	while (params)
+	while (p)
 	{
-		if ((d = opendir(params->name)))
+		if ((d = opendir(p->name)))
 		{
 			while ((dir = readdir(d)))
 				if (opt & OPT_A || dir->d_name[0] != '.')
-					ft_lst_push_back(params->child, dir->d_name, params->name);
+					ft_lst_push_back(p->child, dir->d_name, p->name);
 			closedir(d);
 		}
-		params = params->next;
+		p = p->next;
 	}
 }
 
@@ -39,7 +39,7 @@ void	simple_print(t_lst *lst, char opt)
 	{
 		ft_putstr(ft_title(lst->name));
 		if (lst->next)
-			ft_putchar('\t');
+			ft_putstr("  ");
 		else
 			ft_putchar('\n');
 		lst = lst->next;

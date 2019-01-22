@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   param.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:13:31 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/20 17:53:34 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:32:13 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_param	*ft_create_param(char *name)
 	if ((!(lst = (t_param *)malloc(sizeof(t_param)))))
 		return (NULL);
 	lst->next = NULL;
-	lst->name = ft_strdup(name);
+	lst->name = name != NULL ? ft_strdup(name) : ".";
 	if (!(lst->child = (t_lst **)malloc(sizeof(t_lst *))))
 		return (NULL);
 	*(lst->child) = NULL;
@@ -39,21 +39,16 @@ void	ft_param_push_back(t_param **lst, char *name)
 		(*lst) = ft_create_param(name);
 }
 
-void	ft_param_push_after(t_param **lst, char *name)
+void	ft_param_push_after(t_param *lst, char *name)
 {
 	t_param		*tmp;
 
-	if (*lst)
+	if (lst->next)
 	{
-		if ((*lst)->next)
-		{
-			tmp = (*lst)->next;
-			(*lst)->next = ft_create_param(name);
-			(*lst)->next->next = tmp;
-		}
-		else
-			(*lst)->next = ft_create_param(name);
+		tmp = lst->next;
+		lst->next = ft_create_param(name);
+		lst->next->next = tmp;
 	}
 	else
-		(*lst) = ft_create_param(name);
+		lst->next = ft_create_param(name);
 }

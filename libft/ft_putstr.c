@@ -6,7 +6,7 @@
 /*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:36:38 by agissing          #+#    #+#             */
-/*   Updated: 2018/12/07 12:33:07 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 18:43:26 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 void	ft_putstr(char const *s)
 {
-	while (*s)
-		write(1, s++, 1);
+	write(1, s, ft_strlen(s));
 }

@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/20 20:32:44 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 18:11:22 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct			s_param
 typedef struct			s_struct
 {
 	char		opt;
+	int			nb;
 	t_param		**names;
 }						t_struct;
 
@@ -72,6 +73,7 @@ char					*join_path(char *path1, char *path2);
 
 t_param					*ft_create_param(char *name);
 void					ft_param_push_back(t_param **lst, char *name);
+void					ft_param_push_after(t_param *lst, char *name);
 
 void					get_childs(t_param *params, char opt);
 void					simple_print(t_lst *lst, char opt);
@@ -85,6 +87,8 @@ char					*cut_time_opt(char *str);
 char					*write_perms(int perm);
 char					*ft_title(char *title);
 void					showme(t_lst *lst);
+
 void					reverse_lst(t_lst **lst);
+void					reverse_param(t_param **lst);
 
 #endif
