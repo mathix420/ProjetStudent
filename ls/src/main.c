@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:57:47 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 18:29:43 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 20:58:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,18 @@ void	ls(t_struct *tab)
 	tmp = *tab->names;
 	while (tmp)
 	{
-		if ((tmp)->next && tab->nb <= 1)
-			printf("%s:\n", (tmp)->name);
-		else if (tab->nb)
-			printf("\n%s:\n", (tmp)->name);
-		if (tab->opt & OPT_L)
-			list_print(*(tmp)->child, tab->opt);
-		else
-			simple_print(*(tmp)->child, tab->opt);
-		tab->nb++;
+		if (tmp->ok)
+		{
+			if ((*tab->names)->next && !tab->nb)
+				printf("%s:\n", (tmp)->name);
+			else if (tab->nb)
+				printf("\n%s:\n", (tmp)->name);
+			if (tab->opt & OPT_L)
+				list_print(*(tmp)->child, tab->opt);
+			else
+				simple_print(*(tmp)->child, tab->opt);
+			tab->nb++;
+		}
 		tmp = (tmp)->next;
 	}
 }
@@ -92,7 +95,7 @@ int		main(int ac, char **av)
 			ft_param_push_back(tab.names, av[i++]);
 	if (!*tab.names)
 		ft_param_push_back(tab.names, ".");
-	tab.nb = (*tab.names)->next ? 1 : 0;
+	tab.nb = 0;
 	tab.opt & OPT_UR ? ls_rec(&tab) : ls(&tab);
 	return (0);
 }

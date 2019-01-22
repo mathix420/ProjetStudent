@@ -6,20 +6,11 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 16:42:54 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 20:32:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-t_lst	*files_err(char *name)
-{
-	ft_putstr("ft_ls: ");
-	ft_putstr(name);
-	ft_putendl(": No such file or directory");
-	exit(0);
-	return (NULL);
-}	
 
 t_lst	*ft_create_lst(char *name)
 {
@@ -28,9 +19,9 @@ t_lst	*ft_create_lst(char *name)
 	if ((!(lst = (t_lst *)malloc(sizeof(t_lst)))))
 		return (NULL);
 	lst->next = NULL;
-	lst->name = ft_strdup(name);
+	lst->name = name;
 	if (stat(name, &lst->stat) < 0)
-		return (files_err(name));
+		return (NULL);
 	lst->pswd =	getpwuid(lst->stat.st_uid);
 	lst->grp = getgrgid(lst->stat.st_gid);
 	return (lst);
@@ -51,16 +42,12 @@ void	ft_lst_push_back(t_lst **lst, char *name, char *source)
 
 void	lstcpy(t_lst *new, t_lst *old)
 {
-	new->name = ft_strdup(old->name);
+	new->name = old->name;
 	if (stat(new->name, &new->stat) < 0)
 		return ;
 	new->pswd = getpwuid(new->stat.st_uid);
 	new->grp = getgrgid(new->stat.st_gid);
 }
-
-/*
-** Tri trop lourd (4 copies de liste en while)
-*/
 
 void	ft_sort(t_lst **lst, char opt)
 {

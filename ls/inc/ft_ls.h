@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 18:11:22 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/22 20:33:57 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct			s_lst
 
 typedef struct			s_param
 {
+	char			ok;
 	char			*name;
 	t_lst			**child;
 	struct s_param	*next;
