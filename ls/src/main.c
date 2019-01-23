@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:57:47 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 20:58:55 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:20:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,25 @@ void	ls(t_struct *tab)
 		if (tmp->ok)
 		{
 			if ((*tab->names)->next && !tab->nb)
-				printf("%s:\n", (tmp)->name);
+			{
+				ft_addstr(&tab->bf, (tmp)->name);
+				ft_addstr(&tab->bf, ":\n");
+			}
 			else if (tab->nb)
-				printf("\n%s:\n", (tmp)->name);
+			{
+				ft_addchar(&tab->bf, '\n');
+				ft_addstr(&tab->bf, (tmp)->name);
+				ft_addstr(&tab->bf, ":\n");
+			}
 			if (tab->opt & OPT_L)
-				list_print(*(tmp)->child, tab->opt);
+				list_print(*(tmp)->child, tab->opt, &tab->bf);
 			else
-				simple_print(*(tmp)->child, tab->opt);
+				simple_print(*(tmp)->child, &tab->bf, tab->opt);
 			tab->nb++;
 		}
 		tmp = (tmp)->next;
 	}
+	ft_putbuff(&tab->bf);
 }
 
 void	ls_rec(t_struct *tab)
@@ -56,6 +64,7 @@ void	ls_rec(t_struct *tab)
 	ls(tab);
 	new.opt = tab->opt;
 	new.nb = tab->nb;
+	new.bf = tab->bf;
 	while (*tab->names)
 	{
 		if (!(new.names = (t_param **)malloc(sizeof(t_param *))))
@@ -85,6 +94,8 @@ int		main(int ac, char **av)
 
 	i = 1;
 	tab.opt = 0;
+	tab.bf.id = 0;
+	ft_bzero(&tab.bf, sizeof(t_buf));
 	if (!(tab.names = (t_param **)malloc(sizeof(t_param *))))
 		return (0);
 	*tab.names = NULL;

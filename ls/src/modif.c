@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 15:55:31 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/23 17:29:17 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ char	*write_perms(int perm)
 
 	if (!(str = ft_strnew(10)))
 		return (NULL);
-	str[0] = (S_ISDIR(perm) ? 'd' : '-');
+	str[0] = '-';
+	S_ISCHR(perm) ? str[0] = 'c' : 0;
+	S_ISBLK(perm) ? str[0] = 'b' : 0;
+	S_ISDIR(perm) ? str[0] = 'd' : 0;
+	S_ISLNK(perm) ? str[0] = 'l' : 0;
 	str[1] = ((perm & S_IRUSR) ? 'r' : '-');
 	str[2] = ((perm & S_IWUSR) ? 'w' : '-');
 	str[3] = ((perm & S_IXUSR) ? 'x' : '-');

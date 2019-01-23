@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 20:32:46 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:10:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_lst	*ft_create_lst(char *name)
 		return (NULL);
 	lst->next = NULL;
 	lst->name = name;
-	if (stat(name, &lst->stat) < 0)
+	if (lstat(name, &lst->stat) < 0)
 		return (NULL);
 	lst->pswd =	getpwuid(lst->stat.st_uid);
 	lst->grp = getgrgid(lst->stat.st_gid);
@@ -43,7 +43,7 @@ void	ft_lst_push_back(t_lst **lst, char *name, char *source)
 void	lstcpy(t_lst *new, t_lst *old)
 {
 	new->name = old->name;
-	if (stat(new->name, &new->stat) < 0)
+	if (lstat(new->name, &new->stat) < 0)
 		return ;
 	new->pswd = getpwuid(new->stat.st_uid);
 	new->grp = getgrgid(new->stat.st_gid);

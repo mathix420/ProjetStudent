@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 12:09:32 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/18 15:42:27 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/23 19:08:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	illegal_opt(char c)
 {
-	ft_putstr("ft_ls: illegal option -- ");
-	ft_putchar(c);
-	ft_putchar('\n');
-	ft_putendl("usage: ft_ls [-lRart] [file ...]");
+	ft_putstr_fd("ft_ls: illegal option -- ", 2);
+	ft_putchar_fd(c, 2);
+	ft_putchar_fd('\n', 2);
+	ft_putendl_fd("usage: ft_ls [-lRart] [file ...]", 2);
 	exit(1);
 }
 
@@ -38,6 +38,8 @@ void	options(char *str, t_struct *tab)
 			tab->opt |= OPT_LR;
 		else if (str[i] == 't')
 			tab->opt |= OPT_T;
+		else if (str[i] == 'G')
+			tab->opt |= OPT_G;
 		else
 			illegal_opt(str[i]);
 		i++;

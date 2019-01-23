@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/22 20:33:57 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/23 20:20:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@
 # define OPT_A 4
 # define OPT_LR 8
 # define OPT_T 16
+# define OPT_G 32
 
+#define BUFSIZE_LS 1024
 
 typedef struct stat		t_stat;
 typedef struct dir		t_dir;
 typedef struct passwd 	t_pswd;
 typedef struct group	t_grp;
-// typedef	struct		s_dir
-// {
-//     ino_t			d_ino;       /* numéro d'inœud */
-//     off_t			d_off;       /* décalage jusqu'à la dirent suivante */
-//     unsigned short	d_reclen;    /* longueur de cet enregistrement */
-//     unsigned char	d_type;      /* type du fichier */
-//     char				d_name[256]; /* nom du fichier */
-// }					t_dir;
+
+typedef struct			s_buf
+{
+	unsigned		id;
+	char			buf[BUFSIZE_LS];
+}						t_buf;
 
 typedef struct			s_lst
 {
@@ -64,8 +64,14 @@ typedef struct			s_struct
 {
 	char		opt;
 	int			nb;
+	t_buf		bf;
 	t_param		**names;
 }						t_struct;
+
+void					ft_putbuff(t_buf *i);
+void					ft_addstr(t_buf *i, char *str);
+void					ft_addchar(t_buf *i, char c);
+void					ft_addnbr(t_buf *i, int nbr);
 
 t_lst					*ft_create_lst(char *name);
 void					ft_lst_push_back(t_lst **lst, char *name, char *source);
@@ -77,8 +83,8 @@ void					ft_param_push_back(t_param **lst, char *name);
 void					ft_param_push_after(t_param *lst, char *name);
 
 void					get_childs(t_param *params, char opt);
-void					simple_print(t_lst *lst, char opt);
-void					list_print(t_lst *lst, char opt);
+void					simple_print(t_lst *lst, t_buf *i, char opt);
+void					list_print(t_lst *lst, char opt, t_buf *i);
 
 int						is_file(char *name);
 int						is_opts(char c);
