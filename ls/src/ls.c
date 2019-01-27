@@ -3,120 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   ls.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/09 19:21:24 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/23 19:06:14 by agissing         ###   ########.fr       */
+/*   Created: 2019/01/25 13:03:48 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/26 14:20:28 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	files_err(char *name)
+void	ls(t_struct *tab)
 {
-	ft_putstr_fd("ft_ls: ", 2);
-	ft_putstr_fd(name, 2);
-	ft_putendl_fd(": No such file or directory", 2);
-}	
+	t_param		*tmp;
 
-void	get_childs(t_param *p, char opt)
+	get_childs(*tab->names, tab->opt);
+	if (((tmp = *tab->names) || 1) && tab->opt & OPT_LR)
+		reverse_param(tab->names);
+	while (tmp)
+	{
+		if (tmp->ok)
+		{
+			if ((*tab->names)->next && !tab->nb)
+				ft_addtwostr(&tab->bf, (tmp)->name, ":\n");
+			else if (tab->nb)
+			{
+				ft_addchar(&tab->bf, '\n');
+				ft_addtwostr(&tab->bf, (tmp)->name, ":\n");
+			}
+			if (tab->opt & OPT_L)
+				list_print(*(tmp)->child, tab->opt, &tab->bf);
+			else
+				simple_print(*(tmp)->child, &tab->bf, tab->opt);
+			tab->nb++;
+		}
+		tmp = (tmp)->next;
+	}
+	ft_putbuff(&tab->bf);
+}
+
+void	ls_rec(t_struct *tab)
+{
+	t_struct	new;
+
+	ls(tab);
+	new.opt = tab->opt;
+	new.nb = tab->nb;
+	new.bf = tab->bf;
+	while (*tab->names)
+	{
+		if (!(new.names = (t_param **)malloc(sizeof(t_param *))))
+			return ;
+		ft_sort((*tab->names)->child, tab->opt);
+		if (!(*new.names = NULL) && tab->opt & OPT_LR)
+			reverse_lst((*tab->names)->child);
+		while (*(*tab->names)->child)
+		{
+			if (S_ISDIR((*(*tab->names)->child)->stat.st_mode))
+			{
+				ft_param_push_back(new.names, (*(*tab->names)->child)->name);
+				ls_rec(&new);
+			}
+			*(*tab->names)->child = (*(*tab->names)->child)->next;
+		}
+		free(new.names);
+		*tab->names = (*tab->names)->next;
+	}
+}
+
+char	*link_pointer(char *name)
 {
 	DIR				*d;
 	struct dirent	*dir;
 
-	while (p)
-	{
-		if ((d = opendir(p->name)))
-		{
-			while ((dir = readdir(d)))
-				if (opt & OPT_A || dir->d_name[0] != '.')
-					ft_lst_push_back(p->child, dir->d_name, p->name);
-			closedir(d);
-		}
-		else
-		{
-			p->ok = 0;
-			files_err(p->name);
-		}
-		p = p->next;
-	}
-}
-
-void	print_G(t_lst *lst, t_buf *i)
-{
-	if (S_ISDIR(lst->stat.st_mode))
-		ft_addstr(i, "\033[1;36m");
-	else if (S_ISLNK(lst->stat.st_mode))
-		ft_addstr(i, "\033[0;35m");
-	else if (lst->stat.st_mode & S_IXUSR)
-		ft_addstr(i, "\033[0;31m");
-	else if (S_ISCHR(lst->stat.st_mode))
-		ft_addstr(i, "\033[43m\033[34m");
-	else if (S_ISBLK(lst->stat.st_mode))
-		ft_addstr(i, "\033[46m\033[34m");
-	ft_addstr(i, ft_title(lst->name));
-	ft_addstr(i, "\033[0m");
-}
-
-void	simple_print(t_lst *lst, t_buf *i, char opt)
-{
-	ft_sort(&lst, opt);
-	if (opt & OPT_LR)
-		reverse_lst(&lst);
-	while (lst)
-	{
-		opt & OPT_G ? print_G(lst, i)
-			: ft_addstr(i, ft_title(lst->name));
-		if (lst->next)
-			ft_addstr(i, "  ");
-		else
-			ft_addchar(i, '\n');
-		lst = lst->next;
-	}
-}
-
-void	leading(int size, char *str, t_buf *i)
-{
-	int		j;
-
-	j = 0;
-	while (str[j++])
-		size--;
-	ft_addstr(i, str);
-	while (size-- > 0)
-		ft_addchar(i, ' ');
-}
-
-void	leading_nbr(int size, int nbr, t_buf *i)
-{
-	unsigned	cpy;
-
-	cpy = nbr < 0 ? -nbr : nbr;
-	while ((cpy /= 10) > 0)
-		size--;
-	size--;
-	while (size-- >= 0)
-		ft_addchar(i, ' ');
-	ft_addnbr(i, nbr);
-	ft_addchar(i, ' ');
-}
-
-void	list_print(t_lst *lst, char opt, t_buf *i)
-{
-	ft_sort(&lst, opt);
-	if (opt & OPT_LR)
-		reverse_lst(&lst);
-	while (lst)
-	{
-		leading(11, write_perms(lst->stat.st_mode), i);
-		leading_nbr(2, lst->stat.st_nlink, i);
-		leading(10, lst->pswd->pw_name, i);
-		leading(12, lst->grp->gr_name, i);
-		leading_nbr(3, lst->stat.st_size, i);
-		leading(13, cut_time_opt(ctime(&lst->stat.st_ctime)), i);
-		opt & OPT_G ? print_G(lst, i)
-			: ft_addstr(i, ft_title(lst->name));
-		ft_addchar(i, '\n');
-		lst = lst->next;
-	}
+	if (!(d = opendir(name))
+		|| !(dir = readdir(d)))
+		return ("error");
+	return (dir->d_name);
 }

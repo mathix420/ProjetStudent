@@ -6,7 +6,7 @@
 #    By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 15:54:25 by kemartin          #+#    #+#              #
-#    Updated: 2019/01/23 18:01:25 by agissing         ###   ########.fr        #
+#    Updated: 2019/01/25 14:17:27 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,16 @@ NAME	= ft_ls
 SRC		=	main.c \
 			option.c \
 			list.c \
-			ls.c \
 			buf.c \
+			ls.c \
 			modif.c \
 			param.c \
-			paths.c
+			paths.c \
+			errors.c \
+			leading.c \
+			get_childs.c \
+			printing.c \
+			total.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 16:28:51 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/23 20:13:51 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/25 12:46:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ void	ft_addstr(t_buf *i, char *str)
 		ft_putbuff(i);
 	while (*str)
 		i->buf[i->id++] = *str++;
+}
+
+void	ft_addtwostr(t_buf *i, char *str, char *str2)
+{
+	if (i->id + ft_strlen(str) + ft_strlen(str2) + 1 >= BUFSIZE_LS)
+		ft_putbuff(i);
+	while (*str)
+		i->buf[i->id++] = *str++;
+	while (*str2)
+		i->buf[i->id++] = *str2++;
 }
 
 void	ft_addnbr(t_buf *i, int n)

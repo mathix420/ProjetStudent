@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/23 20:20:38 by agissing         ###   ########.fr       */
+/*   Updated: 2019/01/26 14:10:54 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@
 # define OPT_LR 8
 # define OPT_T 16
 # define OPT_G 32
+# define OPT_UA 64
+# define OPT_F 128
 
-#define BUFSIZE_LS 1024
+# define BUFSIZE_LS 1024
 
 typedef struct stat		t_stat;
 typedef struct dir		t_dir;
-typedef struct passwd 	t_pswd;
+typedef struct passwd	t_pswd;
 typedef struct group	t_grp;
 
 typedef struct			s_buf
@@ -49,6 +51,7 @@ typedef struct			s_lst
 	t_pswd			*pswd;
 	t_grp			*grp;
 	t_dir			*dir;
+	char			t;
 	struct s_lst	*next;
 }						t_lst;
 
@@ -70,15 +73,24 @@ typedef struct			s_struct
 
 void					ft_putbuff(t_buf *i);
 void					ft_addstr(t_buf *i, char *str);
+void					ft_addtwostr(t_buf *i, char *str, char *str2);
 void					ft_addchar(t_buf *i, char c);
 void					ft_addnbr(t_buf *i, int nbr);
 
-t_lst					*ft_create_lst(char *name);
+void					total(t_buf *i, t_lst *lst);
+void					files_err(char *name);
+
+void					leading(int size, char *str, t_buf *i);
+void					leading_nbr(int size, int nbr, t_buf *i);
+
+void					ls_rec(t_struct *tab);
+void					ls(t_struct *tab);
+char					*link_pointer(char *name);
+
 void					ft_lst_push_back(t_lst **lst, char *name, char *source);
 
 char					*join_path(char *path1, char *path2);
 
-t_param					*ft_create_param(char *name);
 void					ft_param_push_back(t_param **lst, char *name);
 void					ft_param_push_after(t_param *lst, char *name);
 
@@ -86,14 +98,11 @@ void					get_childs(t_param *params, char opt);
 void					simple_print(t_lst *lst, t_buf *i, char opt);
 void					list_print(t_lst *lst, char opt, t_buf *i);
 
-int						is_file(char *name);
-int						is_opts(char c);
 void					options(char *str, t_struct *tab);
 void					ft_sort(t_lst **lst, char opt);
 char					*cut_time_opt(char *str);
 char					*write_perms(int perm);
-char					*ft_title(char *title);
-void					showme(t_lst *lst);
+char					*ft_title(char *title, int t);
 
 void					reverse_lst(t_lst **lst);
 void					reverse_param(t_param **lst);

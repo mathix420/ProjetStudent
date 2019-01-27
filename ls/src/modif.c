@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/23 17:29:17 by kemartin         ###   ########.fr       */
+/*   Updated: 2019/01/26 11:46:32 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,12 @@ void	reverse_param(t_param **lst)
 	*lst = previous;
 }
 
-char	*write_perms(int perm)
-{
-	char	*str;
-
-	if (!(str = ft_strnew(10)))
-		return (NULL);
-	str[0] = '-';
-	S_ISCHR(perm) ? str[0] = 'c' : 0;
-	S_ISBLK(perm) ? str[0] = 'b' : 0;
-	S_ISDIR(perm) ? str[0] = 'd' : 0;
-	S_ISLNK(perm) ? str[0] = 'l' : 0;
-	str[1] = ((perm & S_IRUSR) ? 'r' : '-');
-	str[2] = ((perm & S_IWUSR) ? 'w' : '-');
-	str[3] = ((perm & S_IXUSR) ? 'x' : '-');
-	str[4] = ((perm & S_IRGRP) ? 'r' : '-');
-	str[5] = ((perm & S_IWGRP) ? 'w' : '-');
-	str[6] = ((perm & S_IXGRP) ? 'x' : '-');
-	str[7] = ((perm & S_IROTH) ? 'r' : '-');
-	str[8] = ((perm & S_IWOTH) ? 'w' : '-');
-	str[9] = ((perm & S_IXOTH) ? 'x' : '-');
-	return (str);
-}
-
-char	*ft_title(char *title)
+char	*ft_title(char *title, int t)
 {
 	int		i;
 
+	if (t)
+		return (title);
 	while (ft_strchr(title, '/'))
 		title = ft_strchr(title, '/') + 1;
 	i = ft_strlen(title);
