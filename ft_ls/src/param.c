@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:13:31 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/25 15:46:01 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:33:59 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 t_param	*ft_create_param(char *name)
 {
-	t_param		*lst;
+	t_param		*param;
 
-	if ((!(lst = (t_param *)malloc(sizeof(t_param)))))
+	if ((!(param = (t_param *)malloc(sizeof(t_param)))))
 		return (NULL);
-	lst->next = NULL;
-	lst->ok = 1;
-	lst->name = name != NULL ? name : ".";
-	if (!(lst->child = (t_lst **)malloc(sizeof(t_lst *))))
+	param->next = NULL;
+	param->ok = 1;
+	param->name = name != NULL ? name : ".";
+	if (!(param->child = (t_lst **)malloc(sizeof(t_lst *))))
 		return (NULL);
-	*(lst->child) = NULL;
-	return (lst);
+	*(param->child) = NULL;
+	return (param);
 }
 
-void	ft_param_push_back(t_param **lst, char *name)
+void	ft_param_push_back(t_param **param, char *name)
 {
-	if (*lst)
+	if (*param)
 	{
-		if ((*lst)->next)
-			ft_param_push_back(&((*lst)->next), name);
+		if ((*param)->next)
+			ft_param_push_back(&((*param)->next), name);
 		else
-			(*lst)->next = ft_create_param(name);
+			(*param)->next = ft_create_param(name);
 	}
 	else
-		(*lst) = ft_create_param(name);
+		(*param) = ft_create_param(name);
 }
 
-void	ft_param_push_after(t_param *lst, char *name)
+void	ft_param_push_after(t_param *param, char *name)
 {
 	t_param		*tmp;
 
-	if (lst->next)
+	if (param->next)
 	{
-		tmp = lst->next;
-		lst->next = ft_create_param(name);
-		lst->next->next = tmp;
+		tmp = param->next;
+		param->next = ft_create_param(name);
+		param->next->next = tmp;
 	}
 	else
-		lst->next = ft_create_param(name);
+		param->next = ft_create_param(name);
 }

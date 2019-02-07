@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/07 17:48:30 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:42:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ void					list_print(t_lst *lst, char opt, t_buf *i);
 
 void					options(char *str, t_struct *tab);
 void					ft_sort(t_lst **lst, char opt);
-char					*cut_time_opt(char *str);
-char					*write_perms(int perm);
+void					cut_time_opt(char *str, t_buf *i);
+void					write_perms(int perm, t_buf *i);
 char					*ft_title(char *title, int t);
+
+void					ft_free(t_param **tab);
 
 void					reverse_lst(t_lst **lst);
 void					reverse_param(t_param **lst);

@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/25 16:36:49 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 18:51:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,5 @@ void	ft_sort(t_lst **lst, char opt)
 		lstcpy(tmp1, trie);
 		tmp1 = tmp1->next;
 	}
+	free(trie);
 }

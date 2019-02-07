@@ -6,7 +6,7 @@
 #    By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 15:54:25 by kemartin          #+#    #+#              #
-#    Updated: 2019/02/07 17:33:58 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/07 18:20:26 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g3
 FT		= ./libft/
 FT_LIB	= $(addprefix $(FT),libft.a)
-FT_INC	= -I ./libft/includes
+FT_INC	= -I ./libft
 FT_LNK	= -L ./libft -l ft
 
 SRCDIR	= ./src/

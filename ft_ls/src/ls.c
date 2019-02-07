@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:03:48 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/07 17:16:40 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:43:33 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	ls(t_struct *tab)
 	ft_putbuff(&tab->bf);
 }
 
+int		is_p_pp(char *name)
+{
+	return ((name[0] == '.' && !name[1])
+			|| (name[0] == '.' && name[1] && name[1] == '.' && !name[2]));
+}
+
 void	ls_rec(t_struct *tab)
 {
 	t_struct	new;
@@ -58,13 +64,15 @@ void	ls_rec(t_struct *tab)
 			reverse_lst((*tab->names)->child);
 		while (*(*tab->names)->child)
 		{
-			if (S_ISDIR((*(*tab->names)->child)->stat.st_mode))
+			if (S_ISDIR((*(*tab->names)->child)->stat.st_mode)
+				&& !is_p_pp(ft_title((*(*tab->names)->child)->name, 0)))
 			{
 				ft_param_push_back(new.names, (*(*tab->names)->child)->name);
 				ls_rec(&new);
 			}
 			*(*tab->names)->child = (*(*tab->names)->child)->next;
 		}
+		ft_free(new.names);
 		free(new.names);
 		*tab->names = (*tab->names)->next;
 	}

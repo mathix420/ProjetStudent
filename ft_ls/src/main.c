@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:57:47 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/25 16:00:23 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:43:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ int		is_file(char *name)
 	if (errno == ENOTDIR)
 		return (1);
 	return (-1);
+}
+
+void	ft_free(t_param **tab)
+{
+	t_param	*tmp;
+	t_lst	*tmp1;
+
+	while (*tab)
+	{
+		tmp = *tab;
+		while (*tmp->child)
+		{
+			tmp1 = *tmp->child;
+			free((*tmp->child)->name);
+			*tmp->child = (*tmp->child)->next;
+			free(tmp1);
+		}
+		free(tmp->child);
+		*tab = (*tab)->next;
+		free(tmp);
+	}
+	free(*tab);
 }
 
 int		main(int ac, char **av)
@@ -44,5 +66,7 @@ int		main(int ac, char **av)
 		ft_param_push_back(tab.names, ".");
 	tab.nb = 0;
 	tab.opt & OPT_UR ? ls_rec(&tab) : ls(&tab);
+	ft_free(tab.names);
+	free(tab.names);
 	return (0);
 }

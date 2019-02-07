@@ -6,26 +6,27 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/26 11:46:32 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:15:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-char	*cut_time_opt(char *str)
+void	cut_time_opt(char *str, t_buf *x)
 {
 	int		i;
 	int		j;
 	char	*date;
 
 	if (!(date = (char *)malloc(sizeof(char) * 17)))
-		return (NULL);
+		return ;
 	i = 4;
 	j = 0;
 	while (i < 16 && str[i])
 		date[j++] = str[i++];
 	date[j] = '\0';
-	return (date);
+	leading(13, date, x);
+	free(date);
 }
 
 void	reverse_lst(t_lst **lst)
