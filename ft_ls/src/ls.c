@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:03:48 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/26 14:20:28 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:16:40 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	ls_rec(t_struct *tab)
 	}
 }
 
-char	*link_pointer(char *name)
+int		link_pointer(t_buf *i, char *name)
 {
-	DIR				*d;
-	struct dirent	*dir;
+	char	*buf;
 
-	if (!(d = opendir(name))
-		|| !(dir = readdir(d)))
-		return ("error");
-	return (dir->d_name);
+	buf = ft_strnew(500);
+	ft_addstr(i, " -> ");
+	readlink(name, buf, 500);
+	ft_addstr(i, buf);
+	return (1);
 }

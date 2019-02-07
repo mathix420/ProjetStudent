@@ -6,14 +6,14 @@
 #    By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/16 22:28:27 by kemartin          #+#    #+#              #
-#    Updated: 2018/12/11 19:49:17 by kemartin         ###   ########.fr        #
+#    Updated: 2019/02/07 17:39:41 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = libft.a
 
-IDIR = includes
+IDIR = .
 _INC = libft.h
 INC = $(patsubst %,$(IDIR)/%,$(_INC))
 

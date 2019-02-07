@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:47:57 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/25 14:17:36 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:51:54 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void		total(t_buf *i, t_lst *lst)
 	int		tot;
 
 	tot = 0;
+	if (!lst)
+		return ;
 	while (lst)
 	{
 		tot += lst->stat.st_blocks;

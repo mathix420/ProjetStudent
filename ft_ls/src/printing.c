@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:57:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/26 14:09:39 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:17:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ void	list_print(t_lst *lst, char op, t_buf *i)
 		leading(13, cut_time_opt(ctime(&lst->stat.st_ctime)), i);
 		op & OPT_G ? print_g(lst, i)
 			: ft_addstr(i, ft_title(lst->name, lst->t));
-		S_ISLNK(lst->stat.st_mode) ? ft_addtwostr(i, " -> ",
-					link_pointer(lst->name)) : 0;
+		S_ISLNK(lst->stat.st_mode) ? link_pointer(i, lst->name) : 0;
 		ft_addchar(i, '\n');
 		lst = lst->next;
 	}

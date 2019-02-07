@@ -69,6 +69,8 @@ export UPDATE_ZSH_DAYS=3
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+export PATH=/Users/agissing/.brew/bin:/Users/agissing/.brew/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/local/munki
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -108,7 +110,7 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # export ARCHFLAGS="-arch x86_64"
 
 # Load Homebrew config script
-source $HOME/.brewconfig.zsh
+# source $HOME/.brewconfig.zsh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -124,7 +126,7 @@ export MAIL='agissing@student.42.fr'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias 42FileChecker='bash ~/42FileChecker/42FileChecker.sh'
-alias clean="find . \( -name '*~' -type f -or -name '#*#' -type f -or -name 'a.out' -type f -or -name '*.dSYM' -type d \) | xargs rm -rf"
+alias clean="find . \( -name '*~' -type f -or -name '#*#' -type f -or -name 'a.out' -type f -or -name '*.dSYM' -type d \) | xargs rm -rf ;"
 alias gff="gcc -Wall -Werror -Wextra "
 alias mf-gen="python3 ~/42-utilities/mf-gen.py"
 alias proto-list="sh ~/42-utilities/proto-list.sh"

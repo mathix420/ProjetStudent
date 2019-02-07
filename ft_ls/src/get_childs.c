@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:56:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/26 14:05:57 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:47:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	get_childs(t_param *p, char opt)
 					ft_lst_push_back(p->child, dir->d_name, p->name);
 			closedir(d);
 		}
+		else if (errno == EACCES)
+			acces_error(p->name);
 		else
 		{
 			if (lstat(p->name, &buffer) < 0 && !(p->ok = 0))

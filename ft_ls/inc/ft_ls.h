@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:56:16 by kemartin          #+#    #+#             */
-/*   Updated: 2019/01/26 14:10:54 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:48:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ void					ft_addnbr(t_buf *i, int nbr);
 
 void					total(t_buf *i, t_lst *lst);
 void					files_err(char *name);
+void					acces_error(char *name);
 
 void					leading(int size, char *str, t_buf *i);
 void					leading_nbr(int size, int nbr, t_buf *i);
 
 void					ls_rec(t_struct *tab);
 void					ls(t_struct *tab);
-char					*link_pointer(char *name);
+int						link_pointer(t_buf *i, char *name);
 
 void					ft_lst_push_back(t_lst **lst, char *name, char *source);
 
