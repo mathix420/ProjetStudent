@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:56:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/07 17:47:55 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 22:17:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	get_childs(t_param *p, char opt)
 
 	while (p)
 	{
-		if ((d = opendir(p->name)))
+		lstat(p->name, &buffer);
+		if (!S_ISLNK(buffer.st_mode) && (d = opendir(p->name)))
 		{
 			while ((dir = readdir(d)))
 				if (opt & OPT_A || dir->d_name[0] != '.')

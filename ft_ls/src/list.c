@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/07 18:51:07 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 22:21:30 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_lst	*ft_create_lst(char *name, char *source)
 	if ((!(lst = (t_lst *)malloc(sizeof(t_lst)))))
 		return (NULL);
 	lst->next = NULL;
-	lst->name =	!source[0] ? name : join_path(source, name);
+	lst->name = !source[0] ? ft_strdup(name) : join_path(source, name);
 	lst->t = !source[0];
 	if (lstat(lst->name, &lst->stat) < 0)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:57:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/07 19:15:13 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 22:12:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	list_print(t_lst *lst, char op, t_buf *i)
 	{
 		write_perms(lst->stat.st_mode, i);
 		leading_nbr(2, lst->stat.st_nlink, i);
-		leading(10, lst->pswd->pw_name, i);
+		lst->pswd ? leading(10, lst->pswd->pw_name, i)
+		: leading_nbr2(8, lst->stat.st_uid, i);
 		leading(12, lst->grp->gr_name, i);
 		leading_nbr(5, lst->stat.st_size, i);
 		cut_time_opt(ctime(&lst->stat.st_ctime), i);

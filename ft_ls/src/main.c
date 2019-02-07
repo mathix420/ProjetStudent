@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 15:57:47 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/07 19:43:11 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 22:09:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_free(t_param **tab)
 int		main(int ac, char **av)
 {
 	int			i;
+	t_param		*tmp;
 	t_struct	tab;
 
 	i = 1;
@@ -62,10 +63,11 @@ int		main(int ac, char **av)
 			options(av[i++], &tab);
 		else if (av[i][0] != '-')
 			ft_param_push_back(tab.names, av[i++]);
-	if (!*tab.names)
+	if (!(*tab.names))
 		ft_param_push_back(tab.names, ".");
 	tab.nb = 0;
-	tab.opt & OPT_UR ? ls_rec(&tab) : ls(&tab);
+	tmp = *tab.names;
+	(tab.opt & OPT_UR) ? ls_rec(&tab) : ls(&tab);
 	ft_free(tab.names);
 	free(tab.names);
 	return (0);

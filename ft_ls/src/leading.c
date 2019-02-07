@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   leading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:58:47 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/25 13:02:16 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:46:59 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,19 @@ void	leading_nbr(int size, int nbr, t_buf *i)
 	while (size-- >= 0)
 		ft_addchar(i, ' ');
 	ft_addnbr(i, nbr);
+	ft_addchar(i, ' ');
+}
+
+void	leading_nbr2(int size, int nbr, t_buf *i)
+{
+	unsigned	cpy;
+
+	cpy = nbr < 0 ? -nbr : nbr;
+	while ((cpy /= 10) > 0)
+		size--;
+	size--;
+	ft_addnbr(i, nbr);
+	while (size-- >= 0)
+		ft_addchar(i, ' ');
 	ft_addchar(i, ' ');
 }

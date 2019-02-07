@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 13:03:48 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/07 19:43:33 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/07 21:58:14 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ int		is_p_pp(char *name)
 void	ls_rec(t_struct *tab)
 {
 	t_struct	new;
+	t_param		*tmp;
+	t_lst		*tmp1;
 
+	tmp = *tab->names;
 	ls(tab);
 	new.opt = tab->opt;
 	new.nb = tab->nb;
 	new.bf = tab->bf;
-	while (*tab->names)
+	while ((*tab->names))
 	{
 		if (!(new.names = (t_param **)malloc(sizeof(t_param *))))
 			return ;
@@ -70,12 +73,16 @@ void	ls_rec(t_struct *tab)
 				ft_param_push_back(new.names, (*(*tab->names)->child)->name);
 				ls_rec(&new);
 			}
-			*(*tab->names)->child = (*(*tab->names)->child)->next;
+			tmp1 = *((*tab->names))->child;
+			*((*tab->names))->child = (*(*tab->names)->child)->next;
+			free(tmp1->name);
+			free(tmp1);
 		}
-		ft_free(new.names);
-		free(new.names);
-		*tab->names = (*tab->names)->next;
+		(*tab->names) = ((*tab->names))->next;
 	}
+	free(new.names);
+	ft_free(tab->names);
+	ft_free(&tmp);
 }
 
 int		link_pointer(t_buf *i, char *name)
@@ -86,5 +93,6 @@ int		link_pointer(t_buf *i, char *name)
 	ft_addstr(i, " -> ");
 	readlink(name, buf, 500);
 	ft_addstr(i, buf);
+	free(buf);
 	return (1);
 }
