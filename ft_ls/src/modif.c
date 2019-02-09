@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/07 20:54:57 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/08 18:59:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ void	cut_time_opt(char *str, t_buf *x)
 	i = 4;
 	j = 0;
 	while (i < 16 && str[i])
+		date[j++] = str[i++];
+	date[j] = '\0';
+	leading(13, date, x);
+	free(date);
+}
+
+void	cut_time_year(char *str, t_buf *x)
+{
+	int		i;
+	int		j;
+	char	*date;
+
+	if (!(date = (char *)malloc(sizeof(char) * 17)))
+		return ;
+	i = 4;
+	j = 0;
+	while (i < 11 && str[i])
+		date[j++] = str[i++];
+	i += 8;
+	while (i < 24 && str[i])
 		date[j++] = str[i++];
 	date[j] = '\0';
 	leading(13, date, x);

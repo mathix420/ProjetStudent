@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:13:31 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/07 21:48:58 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/08 17:34:05 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,11 @@ void	ft_param_push_after(t_param *param, char *name)
 	}
 	else
 		param->next = ft_create_param(name);
+}
+
+void	paramcpy(t_param *new, t_param *old)
+{
+	new->ok = old->ok;
+	new->name = old->name;
+	new->child = old->child;
 }
