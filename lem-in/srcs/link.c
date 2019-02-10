@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 14:32:19 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/07 20:28:50 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/10 19:53:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int			create_link_tab(t_env *e)
 	int		j;
 
 	i = -1;
-	if (!(e->tab = (void ***)malloc(sizeof(void **) * e->info.nb_room)))
+	if (!(e->tab = (void ***)ft_memalloc(sizeof(void **) * e->info.nb_room)))
 		return (0);
 	while (++i < e->info.nb_room)
 	{
 		j = -1;
-		if (!(e->tab[i] = (void **)malloc(sizeof(void *) * e->info.nb_room)))
+		if (!(e->tab[i] = (void **)ft_memalloc(sizeof(void *) * e->info.nb_room)))
 		{
 			while (i)
 				free(e->tab[i--]);

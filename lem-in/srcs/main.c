@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:30:52 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/07 21:25:03 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:48:29 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int				main(void)
 	print_lst(&e);
 	print_tab(e.tab, e.info.nb_room);
 	find_path(&e);
+	free_env(&e);
 	return (0);
 }

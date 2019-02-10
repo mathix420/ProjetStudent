@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 16:31:25 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/09 18:25:20 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/10 19:15:43 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			print_way(t_env *e)
 		printf("e->solve->path->round = %d\n", tmp1->path->round);
 		while (tmp2)
 		{
-			printf("way->room = %s\n", tmp2->room->name);
+			if (tmp2->room)
+				printf("way->room = %s\n", tmp2->room->name);
 			tmp2 = tmp2->next;
 		}
 		tmp1 = tmp1->next;
@@ -38,41 +39,17 @@ void			create_lst(t_env *e, t_room *addr)
 	t_solve		*tmp;
 	t_way		*way;
 
-	if (!(way = (t_way *)malloc(sizeof(t_way))))
+	if (!(way = (t_way *)ft_memalloc(sizeof(t_way))))
 		return ;
 	way->room = addr;
 	way->round = 0;
 	way->next = NULL;
-	if (!(tmp = (t_solve *)malloc(sizeof(t_solve))))
+	if (!(tmp = (t_solve *)ft_memalloc(sizeof(t_solve))))
 		return ;
 	tmp->path = way;
 	tmp->nb = way->room->id;
 	tmp->next = e->solve;
 	e->solve = tmp;
-}
-
-int				list_path(t_room *ptr, t_solve *tmp)
-{
-	t_way	*new;
-	t_way	*test;
-
-	test = tmp->path;
-	if (test->room->id == 4)
-		return (0);
-	while (test)
-	{
-		if (test->room == ptr)
-			return (0);
-		test = test->next;
-	}
-	if (!(new = (t_way *)malloc(sizeof(t_way))))
-		return (0);
-	new->room = ptr;
-	new->next = tmp->path;
-	new->round = tmp->path->round + 1;
-	tmp->path = new;
-	tmp->nb = ptr->id;
-	return (1);
 }
 
 int				check_state(t_env *e, t_solve *tmp)
@@ -100,21 +77,21 @@ t_solve			*cpy(t_env *e, t_solve *ptr)
 	t_way		*ptr_path;
 	t_way		*cpy;
 	t_way		*tmp;
-	t_solve		*ptr_solve;
+	t_solve		*new_solve;
 	t_solve		*tmp1;
 	int			i;
 
 	i = 0;
 	ptr_path = ptr->path->next;
-	if (!(ptr_solve = (t_solve *)malloc(sizeof(t_solve))))
+	if (!(new_solve = (t_solve *)ft_memalloc(sizeof(t_solve))))
 		return (NULL);
-	ptr_solve->nb = ptr->nb;
+	new_solve->nb = ptr->nb;
 	while (ptr_path)
 	{
-		if (!(cpy = (t_way *)malloc(sizeof(t_way))))
+		if (!(cpy = (t_way *)ft_memalloc(sizeof(t_way))))
 			return (NULL);
 		if (!i++)
-			ptr_solve->path = cpy;
+			new_solve->path = cpy;
 		else
 			tmp->next = cpy;
 		cpy->room = ptr_path->room;
@@ -125,26 +102,9 @@ t_solve			*cpy(t_env *e, t_solve *ptr)
 	tmp1 = e->solve;
 	while (tmp1->next)
 		tmp1 = tmp1->next;
-	ptr_solve->next = NULL;
-	tmp1->next = ptr_solve;
+	new_solve->next = NULL;
+	tmp1->next = new_solve;
 	return (tmp1->next);
-}
-
-void        delete(t_env *e, t_solve *ptr)
-{
-    t_solve        *tmp;
-
-    tmp = e->solve;
-    while (tmp)
-    {
-        if (tmp->next->nb == ptr->nb || tmp == ptr)
-        {
-            tmp->next = ptr->next;
-            free(ptr);
-            break ;
-        }
-        tmp = tmp->next;
-    }
 }
 
 int			in_path(t_way *way, t_room *test)
@@ -162,7 +122,7 @@ void		add_room(t_room *ptr, t_solve *tmp)
 {
 	t_way	*new;
 
-	if (!(new = (t_way *)malloc(sizeof(t_way))))
+	if (!(new = (t_way *)ft_memalloc(sizeof(t_way))))
 		return ;
 	new->room = ptr;
 	new->next = tmp->path;
@@ -171,7 +131,7 @@ void		add_room(t_room *ptr, t_solve *tmp)
 	tmp->path = new;
 }
 
-void		get_next(t_env *e, t_solve *group)
+int			get_next(t_env *e, t_solve *group)
 {
 	int		x;
 	int		y;
@@ -181,8 +141,9 @@ void		get_next(t_env *e, t_solve *group)
 	x = -1;
 	first = 1;
 	y = group->nb;
+	if (y == e->info.end_id)
+		return (0);
 	while (++x < e->info.nb_room)
-	{
 		if (e->tab[y][x] && !in_path(group->path, e->tab[y][x]))
 		{
 			if (first && first--)
@@ -190,20 +151,74 @@ void		get_next(t_env *e, t_solve *group)
 			else if ((tmp = cpy(e, group)))
 				add_room(e->tab[y][x], tmp);
 		}
+	return (!first);
+}
+
+void		free_way(t_way *to_free)
+{
+	t_way			*tmp_w;
+
+	while (to_free)
+	{
+		tmp_w = to_free;
+		to_free = to_free->next;
+		free(tmp_w);
 	}
+}
+
+t_solve		*delete(t_env *e, t_solve *ptr)
+{
+	t_solve			*tmp;
+	t_solve			**tmp2;
+
+	tmp = e->solve;
+	tmp2 = &e->solve;
+	if (*tmp2 == ptr)
+	{
+		*tmp2 = ptr->next;
+		free_way(ptr->path);
+		free(ptr);
+		return (*tmp2);
+	}
+	while (tmp->next)
+	{
+		if (tmp->next == ptr)
+		{
+			tmp->next = ptr->next;
+			free_way(ptr->path);
+			free(ptr);
+			return (tmp->next);
+		}
+		tmp = tmp->next;
+	}
+	printf("%p == %p\n", ptr, tmp);
+	if (tmp == ptr)
+	{
+		tmp->next = ptr->next;
+		free_way(ptr->path);
+		free(ptr);
+		return (tmp->next);
+	}
+	printf("ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR\n");
+	return (NULL);
 }
 
 void		find_path(t_env *e)
 {
+	int		i;
 	t_solve	*tmp;
 
 	create_lst(e, e->room);
 	tmp = e->solve;
 	while (tmp)
 	{
-		while (!check_state(e, tmp))
-			get_next(e, tmp);
-		tmp = tmp->next;
+		i = 1;
+		while (i)
+			i = get_next(e, tmp);
+		if (!i && tmp->nb != e->info.end_id)
+			tmp = delete(e, tmp);
+		else
+			tmp = tmp->next;
 	}
 	print_way(e);
 }

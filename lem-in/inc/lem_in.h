@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/09 16:56:12 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:30:16 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ typedef struct		s_info
 	int				nb_ant;
 	int				nb_room;
 	int				nb_link;
-	int				is_start;
-	int				is_end;
+	int				start_id;
+	int				end_id;
 	int				dash;
 	int				space;
 	char			*comment;
@@ -68,14 +68,17 @@ typedef struct		s_env
 	int				error;
 }					t_env;
 
-// CHECK.C => 3
+// CHECK.C => 4
 //static void		no_room_case(t_env *e);
 void				check_basics(t_env *e);
 void				check_ant_nb(t_env *e);
 
+// FREE.C => 1
+void				free_env(t_env *e);
+
 // INIT.C => 2
 void				init_lst(t_env *e);
-void				init_id(t_room *room);
+void				init_id(t_env *e);
 
 // PRINT.C => 2
 void				print_lst(t_env *e);
@@ -88,8 +91,10 @@ int					add_start(t_env *e);
 int					add_end(t_env *e);
 int					room_lst(t_env *e, char *line);
 
-// EXIT.C => 1
+// EXIT.C => 2
+void				free_tab(t_env *e);
 void				ft_exit(int error);
+void				frexit(void *to_free, int error);
 
 // SORT_INPUT.C => 4
 //static void		hashtag_info(t_env *e, char *line);

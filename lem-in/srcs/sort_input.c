@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/07 13:57:12 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:48:40 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,32 @@ static void		hashtag_info(t_env *e, char *line)
 	cmp1 = "##start\0";
 	cmp2 = "##end\0";
 	if (!ft_strncmp(cmp1, line, 7))
-		e->info.is_start = 1;
+		e->info.start_id = -2;
 	else if (!ft_strncmp(cmp2, line, 5))
-		e->info.is_end = 1;
+		e->info.end_id = -2;
 }
 
 static int		start_end_info(t_env *e, char *line)
 {
+	char	*tmp;
+
 	if (e->tube)
 		return (0);
-	else if (e->info.space == 2 && !e->info.dash && e->info.is_start)
+	else if (e->info.space == 2 && !e->info.dash && e->info.start_id == -2)
 	{
-		e->info.start = line;
-		e->info.is_start = 0;
+		tmp = e->info.start;
+		e->info.start = ft_strdup(line);
+		e->info.start_id = -1;
 	}
-	else if (e->info.space == 2 && !e->info.dash && e->info.is_end)
+	else if (e->info.space == 2 && !e->info.dash && e->info.end_id == -2)
 	{
-		e->info.end = line;
-		e->info.is_end = 0;
+		tmp = e->info.end;
+		e->info.end = ft_strdup(line);
+		e->info.end_id = -1;
 	}
 	else
 		return (0);
+	free(tmp);
 	return (1);
 }
 
@@ -82,14 +87,16 @@ void			sort_input(t_env *e)
 		else
 			map_info(e, line);
 		if (!ft_strlen(line) || e->error)
+		{
+			free(line);
 			break ;
+		}
+		free(line);
 	}
-	line ? free(line) : 1;
 	check_basics(e);
 	if (!add_start(e) || !add_end(e))
 		ft_exit(0);
-	init_id(e->room);
+	init_id(e);
 	(!(create_link_tab(e))) ? ft_exit(0) : 1;
 	(!e->info.nb_link) ? ft_exit(1) : 1;
-	free(e->tube);
 }

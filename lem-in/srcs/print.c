@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 16:42:34 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/07 16:30:50 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/10 12:37:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ void		print_tab(void ***tab, int size)
 	i = -1;
 	while (++i < size)
 	{
+		j = 0;
+		while (j < size && !tab[j][i])
+			j++;
+		if (j < size && tab[j][i])
+			printf("%c : ", ((t_room *)tab[j][i])->name[0]);
 		j = -1;
 		while (++j < size)
-			printf("%-15p", tab[i][j]);
+			if (tab[i][j])
+				printf("%-2c", ((t_room *)tab[i][j])->name[0]);
 		printf("\n");
 	}
 }

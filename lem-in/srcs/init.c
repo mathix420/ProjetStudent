@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 12:21:45 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/07 17:38:41 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/10 20:04:01 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@ void			init_lst(t_env *e)
 	e->info.nb_ant = 0;
 	e->info.nb_room = 0;
 	e->info.nb_link = 0;
-	e->info.comment = NULL;
-	e->info.is_start = 0;
-	e->info.is_end = 0;
-	e->info.start = NULL;
-	e->info.end = NULL;
+	e->info.comment = ft_strnew(0);
+	e->info.start_id = -1;
+	e->info.end_id = -1;
+	e->info.start = ft_strnew(0);
+	e->info.end = ft_strnew(0);
 }
 
-void			init_id(t_room *room)
+void			init_id(t_env *e)
 {
 	t_room	*tmp;
 	int		i;
 
-	tmp = room;
+	tmp = e->room;
 	i = 0;
+	e->info.start_id = 0;
 	while (tmp)
 	{
 		tmp->id = i;
@@ -42,4 +43,5 @@ void			init_id(t_room *room)
 		tmp = tmp->next;
 		i++;
 	}
+	e->info.end_id = i - 1;
 }
