@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 19:47:31 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/08 18:59:39 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:35:06 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	cut_time_opt(char *str, t_buf *x)
 	int		j;
 	char	*date;
 
-	if (!(date = (char *)malloc(sizeof(char) * 17)))
+	if (!(date = (char *)ft_memalloc(sizeof(char) * 17)))
 		return ;
 	i = 4;
 	j = 0;
@@ -35,7 +35,7 @@ void	cut_time_year(char *str, t_buf *x)
 	int		j;
 	char	*date;
 
-	if (!(date = (char *)malloc(sizeof(char) * 17)))
+	if (!(date = (char *)ft_memalloc(sizeof(char) * 17)))
 		return ;
 	i = 4;
 	j = 0;
@@ -49,46 +49,6 @@ void	cut_time_year(char *str, t_buf *x)
 	free(date);
 }
 
-void	reverse_lst(t_lst **lst)
-{
-	t_lst	*current;
-	t_lst	*previous;
-	t_lst	*next;
-
-	if (!(*lst) || !(*lst)->next)
-		return ;
-	current = *lst;
-	previous = NULL;
-	while (current)
-	{
-		next = current->next;
-		current->next = previous;
-		previous = current;
-		current = next;
-	}
-	*lst = previous;
-}
-
-void	reverse_param(t_param **lst)
-{
-	t_param	*current;
-	t_param	*previous;
-	t_param	*next;
-
-	if (!(*lst) || !(*lst)->next)
-		return ;
-	current = *lst;
-	previous = NULL;
-	while (current)
-	{
-		next = current->next;
-		current->next = previous;
-		previous = current;
-		current = next;
-	}
-	*lst = previous;
-}
-
 char	*ft_title(char *title, int t)
 {
 	int		i;
@@ -99,4 +59,33 @@ char	*ft_title(char *title, int t)
 		title = ft_strchr(title, '/') + 1;
 	i = ft_strlen(title);
 	return (title);
+}
+
+void	ft_reverse(t_lst **lst, char opt, t_lst *tmp2, t_lst *tmp3)
+{
+	t_lst	*tmp1;
+	t_lst	*trie;
+
+	tmp1 = (*lst);
+	if (opt & OPT_F || !(trie = ft_memalloc(sizeof(t_lst))))
+		return ;
+	while (tmp1 && (tmp3 = tmp1))
+	{
+		lstcpy(trie, tmp1);
+		tmp2 = tmp1->next;
+		while (tmp2)
+		{
+			if (opt & OPT_T && trie->stat.st_mtime == tmp2->stat.st_mtime
+				&& ft_strcmp(tmp2->name, trie->name) > 0)
+				lstcpy(trie, (tmp3 = tmp2));
+			else if (opt & OPT_T ? trie->stat.st_mtime < tmp2->stat.st_mtime
+					: ft_strcmp(tmp2->name, trie->name) > 0)
+				lstcpy(trie, (tmp3 = tmp2));
+			tmp2 = tmp2->next;
+		}
+		lstcpy(tmp3, tmp1);
+		lstcpy(tmp1, trie);
+		tmp1 = tmp1->next;
+	}
+	free(trie);
 }

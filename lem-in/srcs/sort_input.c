@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/10 20:48:40 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/11 14:43:50 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ static void		map_info(t_env *e, char *line)
 			e->error = 1;
 	}
 	else if (e->info.dash == 1 && !e->info.space)
-		tube_lst(e, line);
+	{
+		if (!(tube_lst(e, line)))
+			free_env(e, 1);
+	}
 	else
 		e->error = 1;
 }
@@ -78,15 +81,15 @@ void			sort_input(t_env *e)
 {
 	char	*line;
 
-	init_lst(e);
 	check_ant_nb(e);
+	init_lst(e);
 	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#')
 			hashtag_info(e, line);
 		else
 			map_info(e, line);
-		if (!ft_strlen(line) || e->error)
+		if (!line[0] || e->error)
 		{
 			free(line);
 			break ;

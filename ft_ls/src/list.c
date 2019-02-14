@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/08 16:49:26 by kemartin          #+#    #+#             */
-/*   Updated: 2019/02/08 18:51:49 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:21:33 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_lst	*ft_create_lst(char *name, char *source)
 {
 	t_lst		*lst;
 
-	if ((!(lst = (t_lst *)malloc(sizeof(t_lst)))))
+	if ((!(lst = (t_lst *)ft_memalloc(sizeof(t_lst)))))
 		return (NULL);
 	lst->next = NULL;
 	lst->name = !source[0] ? ft_strdup(name) : join_path(source, name);
@@ -81,15 +81,13 @@ void	lstcpy(t_lst *new, t_lst *old)
 	new->grp = getgrgid(new->stat.st_gid);
 }
 
-void	ft_sort(t_lst **lst, char opt)
+void	ft_sort(t_lst **lst, char opt, t_lst *tmp2, t_lst *tmp3)
 {
 	t_lst	*tmp1;
-	t_lst	*tmp2;
-	t_lst	*tmp3;
 	t_lst	*trie;
 
 	tmp1 = (*lst);
-	if (opt & OPT_F || !(trie = malloc(sizeof(t_lst))))
+	if (opt & OPT_LR || opt & OPT_F || !(trie = ft_memalloc(sizeof(t_lst))))
 		return ;
 	while (tmp1 && (tmp3 = tmp1))
 	{
@@ -98,10 +96,10 @@ void	ft_sort(t_lst **lst, char opt)
 		while (tmp2)
 		{
 			if (opt & OPT_T && trie->stat.st_mtime == tmp2->stat.st_mtime
-				 && ft_strcmp(trie->name, tmp2->name) > 0)
+				&& ft_strcmp(trie->name, tmp2->name) > 0)
 				lstcpy(trie, (tmp3 = tmp2));
 			else if (opt & OPT_T ? trie->stat.st_mtime < tmp2->stat.st_mtime
-					 : ft_strcmp(trie->name, tmp2->name) > 0)
+					: ft_strcmp(trie->name, tmp2->name) > 0)
 				lstcpy(trie, (tmp3 = tmp2));
 			tmp2 = tmp2->next;
 		}

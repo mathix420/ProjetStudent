@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/10 20:30:16 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/14 14:29:19 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 # define LEM_IN_H
 # include "libft.h"
 # include <stdlib.h>
+
+/* ************************************************************************** */
+
 # include <stdio.h>
+
+/* ************************************************************************** */
 
 typedef struct		s_room
 {
@@ -41,14 +46,25 @@ typedef struct		s_solve
 {
 	struct s_way	*path;
 	int				nb;
+	int				id;
+	int				nb_ant;
 	struct s_solve	*next;
 }					t_solve;
+
+typedef struct		s_round
+{
+	struct s_solve	*solve;
+	int				steps;
+	int				nb_paths;
+	struct s_round	*next;
+}					t_round;
 
 typedef struct		s_info
 {
 	int				nb_ant;
 	int				nb_room;
 	int				nb_link;
+	int				nb_path;
 	int				start_id;
 	int				end_id;
 	int				dash;
@@ -64,35 +80,46 @@ typedef struct		s_env
 	struct s_tube	*tube;
 	struct s_info	info;
 	struct s_solve	*solve;
+	struct s_round	*round;
 	void			***tab;
 	int				error;
+	int				tmp;
 }					t_env;
 
 // CHECK.C => 4
+int					check_state(t_env *e, t_solve *tmp);
 //static void		no_room_case(t_env *e);
 void				check_basics(t_env *e);
 void				check_ant_nb(t_env *e);
 
-// FREE.C => 1
-void				free_env(t_env *e);
+// FREE.C => 5
+void				free_way(t_way *to_free);
+//static void		free_tab(t_env *e);
+//static void		free_tube_lst(t_env *e);
+//static void		free_room_lst(t_env *e);
+void				free_env(t_env *e, int error);
 
 // INIT.C => 2
 void				init_lst(t_env *e);
 void				init_id(t_env *e);
 
-// PRINT.C => 2
+// START_END.C => 3
+//static t_room		*start_end_cmp(e, char *cmp);
+int					add_end(t_env *e);
+int					add_start(t_env *e);
+
+// PRINT.C => 3
+void				print_way(t_env *e);
 void				print_lst(t_env *e);
 void				print_tab(void ***tab, int size);
+void				print_round(t_env *e);
 
-// LST.C => 5
+// LST.C => 3
 int					tube_lst(t_env *e, char *line);
 //static t_room		*room_check(t_env *e, char *line);
-int					add_start(t_env *e);
-int					add_end(t_env *e);
 int					room_lst(t_env *e, char *line);
 
 // EXIT.C => 2
-void				free_tab(t_env *e);
 void				ft_exit(int error);
 void				frexit(void *to_free, int error);
 
@@ -107,8 +134,29 @@ void				sort_input(t_env *e);
 //static void		find_links(t_env *e, t_room *addr1, t_room *addr2);
 int					create_link_tab(t_env *e);
 
-// WAY.C => 2
-void				create_lst(t_env *e, t_room *addr);
+// DELETE_CPY.C => 4
+//static void		cpy_room(t_env *e, t_solve *new_solve, t_solve *ptr);
+t_solve				*cpy_path(t_env *e, t_solve *ptr);
+//static t_solve	*first_node_delete(t_env *e, t_solve *ptr);
+t_solve				*delete_path(t_env *e, t_solve *ptr);
+
+// WAY.C => 5
+//static void		create_lst(t_env *e, t_room *addr);
+//static int		in_path(t_way *way, t_room *test);
+//static void		add_room(t_env *e, t_room *ptr, t_solve *tmp);
+//static int		get_next(t_env *e, t_solve *group);
 void				find_path(t_env *e);
+
+// SOLVING.C => 1
+void				solve(t_env *e);
+
+// SORT_OUTPUT.C => 7
+//static void		sort_output(t_env *e);
+//static inline int	is_end_start(t_env *e, t_room *room);
+//static int		linked(t_env *e, t_solve *cmp1, t_solve *cmp2);
+//static void		add_to_round(t_round *round, t_solve *way);
+void				path_to_round(t_env *e, t_round *round, t_solve *way2);
+//static void		find_round(t_env *e);
+void				init_resolution(t_env *e);
 
 #endif

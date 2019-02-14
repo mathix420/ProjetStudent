@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   solving.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/28 17:30:52 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/14 17:36:13 by agissing         ###   ########.fr       */
+/*   Created: 2019/02/11 13:44:49 by agissing          #+#    #+#             */
+/*   Updated: 2019/02/11 19:26:48 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int				main(void)
+void	solve(t_env *e)
 {
-	t_env		e;
-	int			y;
-	int			x;
+	t_solve		*solve;
 
-	y = -1;
-	x = -1;
-	sort_input(&e); //rapide
-//	print_lst(&e);
-//	print_tab(e.tab, e.info.nb_room);
-	find_path(&e); //lent
-	init_resolution(&e); //0.006 sec
-//	print_way(&e);
-	free_env(&e, 0); //rapide
-	return (0);
+	solve = e->solve;
+	while (solve && e->info.nb_ant)
+	{
+		
+		solve = solve->next;
+	}
 }

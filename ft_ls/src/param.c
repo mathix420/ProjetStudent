@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 16:13:31 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/08 17:34:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/13 18:49:51 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ t_param	*ft_create_param(char *name)
 {
 	t_param		*param;
 
-	if (!(param = (t_param *)malloc(sizeof(t_param))))
+	if (!(param = (t_param *)ft_memalloc(sizeof(t_param))))
 		return (NULL);
 	param->next = NULL;
 	param->ok = 1;
 	param->name = name != NULL ? name : ".";
-	if (!(param->child = (t_lst **)malloc(sizeof(t_lst *))))
+	if (!(param->child = (t_lst **)ft_memalloc(sizeof(t_lst *))))
 		return (NULL);
 	*param->child = NULL;
 	return (param);

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 14:09:04 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/14 18:41:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/14 19:40:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,42 @@ static int			linked(t_env *e, t_round *round, t_solve *cmp2)
 	return (0);
 }
 
-static void			add_to_round(int new_step, t_round **round, t_solve *way)
+static void			add_to_round(int steps, t_round **round, t_solve *way)
 {
 	t_round	*new;
 
 	if (!(new = (t_round *)ft_memalloc(sizeof(t_round))))
 		return ;
-	new->steps = new_step;
 	new->solve = way;
+	new->steps = steps;
 	new->next = *round;
 	new->nb_paths = (*round)->nb_paths + 1;
 	*round = new;
+}
+
+static void				add_one_ant(t_round *round)
+{
+	t_round		*min;
+
+	min = round;
+	while (round)
+	{
+		if (min->steps > round->steps)
+			min = round;
+		round = round->next;
+	}
+	min->solve->nb_ant++;
+	min->steps++;
+}
+
+static void				reset_ants(t_round *round)
+{
+	while (round)
+	{
+		round->solve->nb_ant = 0;
+		round->steps = 0;
+		round = round->next;
+	}
 }
 
 void				path_to_round(t_env *e, t_round *round, t_solve *way)
@@ -102,7 +127,7 @@ void				path_to_round(t_env *e, t_round *round, t_solve *way)
 
 	old_gap = 0;
 	start = 0;
-	while ((old_gap > (step2 - step1 < 0? step1 - step2 : step2 - step1) || !start) && nb_ant_in_1 > 0)
+	while ((old_gap > (step2 - step1 < 0 ? step1 - step2 : step2 - step1) || !start) && nb_ant_in_1 > 0)
 	{
 		old_gap = step2 - step1;
 		old_gap = old_gap < 0 ? -old_gap : old_gap;
@@ -111,9 +136,8 @@ void				path_to_round(t_env *e, t_round *round, t_solve *way)
 		step2++;
 		nb_ant_in_2++;
 		start = 1;
-		printf("old_gap :: %d gap :: %d\n", old_gap, step2 - step1 < 0 ? step1 - step2 : step2 - step1);
-	}
-	if (old_gap < (step2 - step1 < 0? step1 - step2 : step2 - step1))
+	}	
+	if (old_gap < (step2 - step1 < 0 ? step1 - step2 : step2 - step1))
 	{
 		step1++;
 		nb_ant_in_1++;
@@ -127,25 +151,20 @@ void				path_to_round(t_env *e, t_round *round, t_solve *way)
 		way->nb_ant = nb_ant_in_2;
 		while (nb_ant_in_2 > 0)
 		{
-			if (tmp->solve->path->round + tmp->solve->nb_ant > tmp->next->solve->path->round + tmp->next->solve->nb_ant)
+			if (tmp->next && tmp->solve->path->round > tmp->next->solve->path->round)
 			{
 				tmp->solve->nb_ant--;
 				nb_ant_in_2--;
 			}
-			else if (!tmp->next)
-			{
-				tmp->solve->nb_ant--;
-				nb_ant_in_2--;
-			}
-			else
+			else if (tmp->next)
 			{
 				tmp->next->solve->nb_ant--;
 				nb_ant_in_2--;
 			}
-			if (!tmp->next->next)
+			if (!tmp->next)
 				tmp = round;
 			else
-				tmp = tmp->next->next;
+				tmp = tmp->next;
 		}
 		add_to_round(step2, &e->round, way);
 	}
@@ -154,6 +173,7 @@ void				path_to_round(t_env *e, t_round *round, t_solve *way)
 static void			find_round(t_env *e)
 {
 	t_solve		*tmp;
+	int			i;
 
 	tmp = e->solve;
 	while (tmp && tmp->next)
@@ -169,6 +189,10 @@ static void			find_round(t_env *e)
 			path_to_round(e, e->round, tmp->next);
 		tmp = tmp->next;
 	}
+	i = e->info.nb_ant;
+	reset_ants(e->round);
+	while (i--)
+		add_one_ant(e->round);
 }
 
 void				init_resolution(t_env *e)

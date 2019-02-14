@@ -6,7 +6,7 @@
 /*   By: kemartin <kemartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/25 12:57:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/08 19:45:32 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:39:29 by kemartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	print_g(t_lst *lst, t_buf *i)
 
 void	simple_print(t_lst *lst, t_buf *i, char opt)
 {
-	ft_sort(&lst, opt);
+	ft_sort(&lst, opt, NULL, NULL);
 	if (opt & OPT_LR)
-		reverse_lst(&lst);
+		ft_reverse(&lst, opt, NULL, NULL);
 	while (lst)
 	{
 		if (opt & OPT_G)
@@ -51,9 +51,9 @@ void	simple_print(t_lst *lst, t_buf *i, char opt)
 
 void	list_print(t_lst *lst, char op, t_buf *i)
 {
-	ft_sort(&lst, op);
+	ft_sort(&lst, op, NULL, NULL);
 	if (op & OPT_LR)
-		reverse_lst(&lst);
+		ft_reverse(&lst, op, NULL, NULL);
 	while (lst)
 	{
 		write_perms(lst->stat.st_mode, lst->acl, i);

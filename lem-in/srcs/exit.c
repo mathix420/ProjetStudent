@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 12:22:35 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/10 20:16:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/11 12:53:01 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,10 @@ void			ft_exit(int error)
 	(error == 4) ? write(1, "Wrong ant number\n", 17) : 1;
 	(error == 5) ? write(1, "No way\n", 7) : 1;
 	exit(1);
+}
+
+void			frexit(void *to_free, int error)
+{
+	to_free ? free(to_free) : 1;
+	ft_exit(error);
 }
