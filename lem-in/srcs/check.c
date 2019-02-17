@@ -6,12 +6,12 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:35:00 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/12 12:13:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/17 14:19:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int			check_state(t_env *e, t_solve *tmp)
 {
 	int			size;
@@ -31,13 +31,13 @@ int			check_state(t_env *e, t_solve *tmp)
 	else
 		return (0);
 }
+*/
 
-/*
-   static void	no_room_case(t_env *e)
-   {
+   /* static void	no_room_case(t_env *e) */
+   /* { */
 
-   }*/
-
+   /* } */
+ /*
 void		check_basics(t_env *e)
 {
 	int		i;
@@ -77,3 +77,4 @@ void		check_ant_nb(t_env *e)
 		frexit(line, 4);
 	free(line);
 }
+ */

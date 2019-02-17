@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/09 17:10:19 by agissing          #+#    #+#              #
-#    Updated: 2019/02/11 19:30:00 by acompagn         ###   ########.fr        #
+#    Updated: 2019/02/17 14:17:19 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -19,7 +19,7 @@
 LEMIN = lem-in
 
 DIR_SRCS0 = srcs
-_SRCS0 = check.c \
+_SRCS0 = 	check.c \
 			exit.c \
 			init.c \
 			link.c \
@@ -32,6 +32,7 @@ _SRCS0 = check.c \
 			way.c  \
 			free.c \
 			solving.c \
+			print_tree.c \
 			sort_output.c
 
 LEMIN_SRC = $(patsubst %,$(DIR_SRCS0)/%,$(_SRCS0))

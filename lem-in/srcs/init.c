@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 12:21:45 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/12 18:57:48 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/17 14:21:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void			init_lst(t_env *e)
 	e->error = 0;
 	e->room = NULL;
 	e->tube = NULL;
-	e->solve = NULL;
+//	e->solve = NULL;
+	e->tree = NULL;
 	e->info.nb_room = 0;
 	e->info.nb_link = 0;
 	e->info.nb_path = 0;
@@ -40,7 +41,8 @@ void			init_id(t_env *e)
 	while (tmp)
 	{
 		tmp->id = i;
-		tmp->ant = 0;
+		tmp->depth = -1;
+//		tmp->ant = 0;
 		tmp = tmp->next;
 		i++;
 	}

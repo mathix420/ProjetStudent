@@ -6,12 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 16:42:34 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/14 14:10:47 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/17 14:23:12 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+/*
 void		print_way(t_env *e)
 {
 	t_solve		*tmp1;
@@ -45,7 +46,8 @@ void		print_round(t_env *e)
 	{
 		printf("id = %d\n", tmp1->solve->id);
 		printf("nb_ant = %d\n", tmp1->solve->nb_ant);
-		printf("steps = %d\n\n", tmp1->solve->path->round + tmp1->solve->nb_ant - 1);
+		printf("steps = %d\n", tmp1->solve->path->round + tmp1->solve->nb_ant - 1);
+		printf("round = %d\n\n", tmp1->solve->path->round);
 		tmp1 = tmp1->next;
 	}
 }
@@ -57,10 +59,26 @@ void		print_lst(t_env *e)
 	tmp = e->room;
 	while (tmp)
 	{
+		printf("ADDR = %p\n", tmp);
 		printf("room = %s\n", tmp->name);
 		printf("id = %d\n", tmp->id);
 		printf("ant = %d\n", tmp->ant);
 		tmp = tmp->next;
+	}
+}
+
+void		print_tab2(void ***tab, int size)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < size)
+	{
+		j = -1;
+		while (++j < size)
+				printf("%-15p", tab[i][j]);
+		printf("\n");
 	}
 }
 
@@ -84,3 +102,4 @@ void		print_tab(void ***tab, int size)
 		printf("\n");
 	}
 }
+*/
