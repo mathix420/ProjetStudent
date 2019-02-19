@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 12:21:45 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/17 15:14:38 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/17 18:14:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void			init_lst(t_env *e)
 	e->error = 0;
 	e->room = NULL;
 	e->tube = NULL;
-//	e->solve = NULL;
 	e->tree = NULL;
 	e->queue = NULL;
 	e->end_queue = NULL;
@@ -44,7 +43,6 @@ void			init_id(t_env *e)
 	{
 		tmp->id = i;
 		tmp->depth = -1;
-//		tmp->ant = 0;
 		tmp = tmp->next;
 		i++;
 	}

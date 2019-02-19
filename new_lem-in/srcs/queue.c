@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:26:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/17 15:26:54 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/17 18:11:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ int						enqueue(t_env *e, t_node *elmt)
 	t_queue		*tmp;
 
 	if (!e->queue && (e->queue = create_new(elmt))) // si queue n'existe pas et que le malloc fontionne
-	{
-		printf("OK!\n");
 		e->end_queue = e->queue; // on met la valeur dans le end_queue
-	}
 	else if (!e->queue || !(tmp = create_new(elmt))) // si un des deux malloc a buggue 
 		return (0);
 	else

@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/09 17:10:19 by agissing          #+#    #+#              #
-#    Updated: 2019/02/17 14:46:21 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/17 18:50:45 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -33,7 +33,8 @@ _SRCS0 = 	main.c \
 
 LEMIN_SRC = $(patsubst %,$(DIR_SRCS0)/%,$(_SRCS0))
 
-LEMIN_OBJ = $(patsubst %,obj/%,$(_SRCS0:.c=.o))
+DIR_OBJ = obj
+LEMIN_OBJ = $(patsubst %,$(DIR_OBJ)/%,$(_SRCS0:.c=.o))
 LIBFT = libft/libft.a
 
 ################################################################################
@@ -41,7 +42,7 @@ LIBFT = libft/libft.a
 ################################################################################
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -54,25 +55,25 @@ all : $(LEMIN)
 $(LIBFT) :
 	@make -C libft
 
+$(DIR_OBJ) :
+	@mkdir -p $@
+	@printf "\e[2K\e[94m[OBJ]\e[0m Directory created!\n"
+
 $(LEMIN_OBJ) : obj%.o : $(DIR_SRCS0)%.c
-	@$(CC) $(FLAGS) -c $< -o $@ -Iinc -Ilibft -g3
+	@$(CC) $(FLAGS) -c $< -o $@ -Iinc -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
-$(LEMIN) : $(LEMIN_OBJ) $(LIBFT)
+$(LEMIN) : $(DIR_OBJ) $(LEMIN_OBJ) $(LIBFT)
 	@$(CC) $(FLAGS) $(LEMIN_OBJ) -o $@ -Iinc -Ilibft -Llibft -lft
-	@printf "\e[2K\e[94m[PRG]\e[0m $(LEMIN) done !\n"
-
-fsanitize : $(LEMIN_OBJ) $(LIBFT)
-	@$(CC) $(FLAGS) $(LEMIN_OBJ) -o $(LEMIN) -Iinc -Ilibft -Llibft -lft -fsanitize=address -g3
-	@printf "\e[2K\e[94m[PRG]\e[0m $(LEMIN) done !\n"
+	@printf "\e[2K\e[94m[PRG]\e[0m $(LEMIN) done!\n"
 
 clean :
-	@/bin/rm -f $(LEMIN_OBJ)
+	@/bin/rm -rf $(DIR_OBJ)
 	@make clean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"
 
 fclean :
-	@/bin/rm -f $(LEMIN_OBJ)
+	@/bin/rm -rf $(DIR_OBJ)
 	@/bin/rm -f $(LEMIN)
 	@make fclean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"

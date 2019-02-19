@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/17 14:22:31 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:46:01 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_room
 	char			*name;
 	int				id;
 	int				depth;
+	int				nb_ant;
 	struct s_node	*node;
 	struct s_room	*next;
 }					t_room;
@@ -42,7 +43,7 @@ typedef struct 		s_node
 {
 	t_room			*room;
 	int				nb_next;
-	struct s_node	*next;
+	struct s_node	**next;
 }					t_node;
 
 typedef struct		s_queue
@@ -74,23 +75,22 @@ typedef struct		s_env
 	struct s_node	*tree;
 	struct s_queue	*queue;
 	struct s_queue	*end_queue;
-	void			***tab;
+	struct s_room	***tab;
+	int				*tab_size;
+	int				id_way;
+	int				steps;
 	int				error;
-	int				tmp;
+	t_room			*end_ptr;
 }					t_env;
-/*
-// CHECK.C => 4
-int					check_state(t_env *e, t_solve *tmp);
-//static void		no_room_case(t_env *e);
-void				check_basics(t_env *e);
-void				check_ant_nb(t_env *e);
-*/
-// FREE.C => 5
-/*void				free_way(t_way *to_free);*/
+// FREE.C => 4
 //static void		free_tab(t_env *e);
 //static void		free_tube_lst(t_env *e);
 //static void		free_room_lst(t_env *e);
 void				free_env(t_env *e, int error);
+
+// CHECK.C => 2
+void				check_basics(t_env *e);
+void				check_ant_nb(t_env *e);
 
 // INIT.C => 2
 void				init_lst(t_env *e);
@@ -128,41 +128,25 @@ void				sort_input(t_env *e);
 int					create_link_tab(t_env *e);
 
 /*
-// DELETE_CPY.C => 4
-//static void		cpy_room(t_env *e, t_solve *new_solve, t_solve *ptr);
-t_solve				*cpy_path(t_env *e, t_solve *ptr);
-//static t_solve	*first_node_delete(t_env *e, t_solve *ptr);
-t_solve				*delete_path(t_env *e, t_solve *ptr);
-*/
-// WAY.C => 4
-//static t_node		*create_lst(t_env *e, t_room *addr, int nb);
-//static int		nb_next(t_env *e, int y);
-//static void		get_next(t_env *e, t_node *ptr, int x);
-void				find_path(t_env *e);
-
-// SOLVING.C => 1
-void				solve(t_env *e);
-
-/*
-// SORT_OUTPUT.C => 9
-//static void		sort_output(t_env *e);
-//static inline int	is_end_start(t_env *e, t_room *room);
-//static int		linked(t_env *e, t_solve *cmp1, t_solve *cmp2);
-//static void		add_to_round(t_round *round, t_solve *way);
-void				path_to_round(t_env *e, t_round *round, t_solve *way);
-//static void		find_round(t_env *e, t_solve *ptr);
-void				init_resolution(t_env *e);
-*/
 //PRINT_TREE.C => 1
 void				print_tree(t_node *tree);
+*/
+
+// RESOLVE.C
+int					solve(t_env *e, t_node *node, int steps);
+void				init_resolution(t_env *e);
 
 //QUEUE.C => 2
 int					enqueue(t_env *e, t_node *elmt);
-t_queue				*dequeue(t_env *e);
+void				dequeue(t_env *e);
 
 //TREE.C => 2
 //static t_node		*create_node(t_env *e, t_room *room);
 t_node				*init_tree(t_env *e);
 void				build_tree(t_env *e);
+
+//BFS.C => 2
+void				clean_depth(t_env *e);
+void				bfs(t_env *e, t_node *start);
 
 #endif

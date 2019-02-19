@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 15:35:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/16 14:58:04 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/19 14:21:56 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int				room_lst(t_env *e, char *line)
 	}
 	e->info.nb_room++;
 	if (!(new = (t_room *)ft_memalloc(sizeof(t_room))))
+	{
+		printf("ICI3\n");
 		free_env(e, 1);
+	}
 	new->name = ft_strdup(line);
 	new->next = e->room;
 	e->room = new;
