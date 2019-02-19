@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/19 17:55:15 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:50:57 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,20 +128,25 @@ int					solve(t_env *e, t_node *node, int steps)
 	return (0);
 }
 
-int					init_solve(t_env *e)
+
+void				print_room(t_env *e)
 {
 	t_room	*tmp;
-	
+
 	tmp = e->room;
+	while (tmp)
+	{
+		printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
+		tmp = tmp->next;
+	}
+}
+
+int					init_solve(t_env *e)
+{
 	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * e->end_ptr->node->nb_next)))
 		return (0);
 	if (!solve(e, e->end_ptr->node, 0))
 		printf("DONE\n");
-/*	while (tmp)
-	{
-		printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
-		tmp = tmp->next;
-	}*/
 	print_tab3(e);
 	return (1);
 }
@@ -163,12 +168,15 @@ void				init_resolution(t_env *e)
 	e->end_ptr = end_ptr;
 	e->end_ptr->nb_ant = 1;
 
-	int		i;
+/*	int		i;
 
 	i = -1;
 	while (++i < e->end_ptr->node->nb_next)
 	{
 		printf("dd :: %s == %d\n", e->end_ptr->node->next[i]->room->name, e->end_ptr->node->next[i]->room->depth);
 	}
-	resolution(e);
+*/
+	bfs(e, e->end_ptr->node);
+	print_room(e);
+//	resolution(e);
 }

@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/19 18:46:01 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/19 22:39:23 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,5 @@ void				build_tree(t_env *e);
 //BFS.C => 2
 void				clean_depth(t_env *e);
 void				bfs(t_env *e, t_node *start);
-
+void				trace_new_path(t_env *e, t_node *start, int id);
 #endif
