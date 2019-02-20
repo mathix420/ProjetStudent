@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 14:32:19 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/17 14:38:11 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/20 17:54:48 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	fill_links_tab(t_env *e, t_room *addr1, t_room *addr2)
 	if (!addr1 || !addr2)
 		return ;
 	e->info.nb_link++;
+	printf("%s LINK %s\n", addr1->name, addr2->name);
 	e->tab[addr1->id][addr2->id] = addr2;
 	e->tab[addr2->id][addr1->id] = addr1;
 }
@@ -39,7 +40,7 @@ static void	find_links(t_env *e, t_room *addr1, t_room *addr2)
 			if (!ft_strncmp(t2->link, t1->name, i[0]) && t1->name[i[0]] == ' ')
 				addr1 = t1;
 			i[1] = ft_strlen(t2->link) - i[0] - 1;
-			if (!ft_strncmp(&t2->link[i[0] + 1], t1->name, i[1]))
+			if (!ft_strncmp(&t2->link[i[0] + 1], t1->name, i[1]) && t1->name[i[1]] == ' ')
 				addr2 = t1;
 			t1 = t1->next;
 		}

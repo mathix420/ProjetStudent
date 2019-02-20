@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/19 22:50:57 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/20 18:07:57 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,15 +168,17 @@ void				init_resolution(t_env *e)
 	e->end_ptr = end_ptr;
 	e->end_ptr->nb_ant = 1;
 
-/*	int		i;
+	int		i;
 
 	i = -1;
 	while (++i < e->end_ptr->node->nb_next)
-	{
-		printf("dd :: %s == %d\n", e->end_ptr->node->next[i]->room->name, e->end_ptr->node->next[i]->room->depth);
-	}
-*/
-	bfs(e, e->end_ptr->node);
+		printf("start room => %s\n", e->end_ptr->node->next[i]->room->name);
+	bfs(e, e->end_ptr->node, 1);
 	print_room(e);
+//	i = -1;
+//	while (++i < e->room->node->nb_next)
+//	{
+//		printf("start :: %s\n", e->room->node->next[i]->room->name);
+//	}
 //	resolution(e);
 }
