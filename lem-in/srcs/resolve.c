@@ -6,128 +6,24 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/20 18:07:57 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/21 21:22:53 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				shortest(t_env *e, t_room *end_ptr)
+void				clean_ant(t_env *e)
 {
-	int		i;
-	t_node	*node_min;
-	t_node	*node;
-	t_node	**node_ptr;
+	t_room	*tmp;
 
-	i = -1;
-	node_min = NULL;
-	node = end_ptr->node;
-	node_ptr = end_ptr->node->next;
-	while (++i < node->nb_next)
-		if (!node_min || node_ptr[i]->room->depth < node_min->room->depth)
-			node_min = node_ptr[i];
-	if (node_min->room->depth >= e->info.nb_ant)
-		printf("shortest path solution\n");
-	else
-		printf("try another\n");
-}
-
-static inline int	abss(int nb)
-{
-	return (nb >= 0 ? nb : -nb);
-}
-
-static inline int	greater(int nb1, int nb2)
-{
-	printf("%d ===== %d\n", nb1, nb2);
-	return (nb1 > nb2 ? nb1 : nb2);
-}
-
-void				print_tab3(t_env *e)
-{
-	int		i;
-
-	i = -1;
-	while (++i <= e->end_ptr->node->nb_next)
-		printf("%d  ", e->tab_size[i]);
-	printf("\n");
-}
-
-//int       dd = 0;
-
-int					do_smth(t_env *e, int path_size)
-{
-	int		ant_1;
-	int		ant_2;
-	int		step1;
-	int		step2;
-	int		gap;
-
-	step1 = e->steps - 1;
-	step2 = path_size;
-	ant_1 = e->info.nb_ant - 1;
-	ant_2 = 1;
-	gap = 0;
-	if (e->steps == -1)
+	tmp = e->room;
+	while (tmp)
 	{
-		e->room->nb_ant = 0;
-		e->steps = path_size + e->info.nb_ant - 1;
-//		printf("first e->steps = %d\n", e->steps);
-		step1 = e->id_way++;
-		if ((gap = solve(e, e->end_ptr->node, 0)) || (e->id_way-- && 0))
-			e->tab_size[step1 - 1] = path_size;
-		return (gap);
+		if (tmp->nb_ant != 1 && !tmp->lock)
+			tmp->nb_ant = 0;
+		tmp = tmp->next;
 	}
-	while ((step1 > step2 || gap > abss(step1 - step2)) && ant_1 > 0)
-	{
-		gap = abss(step1 - step2);
-		ant_1--;
-		ant_2++;
-		step1--;
-		step2++;
-	}
-	if (gap < abss(step1 - step2))
-	{
-		ant_1++;
-		ant_2--;
-		step1++;
-		step2--;
-	}
-//	printf("%d %d\n", e->steps, (step1 = greater(step1, step2)));
-	if (e->steps >=	(step1 = greater(step1, step2)))
-	{
-		e->room->nb_ant = 0;
-		e->steps = step1;
-		step1 = e->id_way++;
-		solve(e, e->end_ptr->node, 0);
-		e->tab_size[step1 - 1] = path_size;
-		return (1);
-	}
-	return (0);
 }
-
-int					solve(t_env *e, t_node *node, int steps)
-{
-	t_node	**tmp;
-	int		i;
-
-	if (node->room->id == e->info.start_id)
-		return (do_smth(e, steps));
-	i = -1;
-	tmp = node->next;
-	while (++i < node->nb_next)
-		if (!tmp[i]->room->nb_ant)
-		{
-			printf("POSE :: %s\n", tmp[i]->room->name);
-			tmp[i]->room->nb_ant = e->id_way;
-			if (solve(e, tmp[i], steps + 1))
-				return (1);
-			printf("ENLEVE :: %s\n", tmp[i]->room->name);
-			tmp[i]->room->nb_ant = 0;
-		}
-	return (0);
-}
-
 
 void				print_room(t_env *e)
 {
@@ -136,49 +32,85 @@ void				print_room(t_env *e)
 	tmp = e->room;
 	while (tmp)
 	{
-		printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
+		if (tmp->nb_ant)
+		{
+			if (tmp->lock)
+				printf("LOCKED => ");
+			printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
+		}
 		tmp = tmp->next;
 	}
 }
 
-int					init_solve(t_env *e)
+void				print_tab3(t_env *e)
 {
-	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * e->end_ptr->node->nb_next)))
-		return (0);
-	if (!solve(e, e->end_ptr->node, 0))
-		printf("DONE\n");
-	print_tab3(e);
-	return (1);
-}
-
-void				resolution(t_env *e)
-{
-	init_solve(e);
-//	distribute(e);
-}
-
-
-void				init_resolution(t_env *e)
-{
-	t_room	*end_ptr;
-
-	end_ptr = e->room;
-	while (end_ptr->next)
-		end_ptr = end_ptr->next;
-	e->end_ptr = end_ptr;
-	e->end_ptr->nb_ant = 1;
-
 	int		i;
 
 	i = -1;
-	while (++i < e->end_ptr->node->nb_next)
-		printf("start room => %s\n", e->end_ptr->node->next[i]->room->name);
-	bfs(e, e->end_ptr->node, 1);
-	print_room(e);
-//	i = -1;
-//	while (++i < e->room->node->nb_next)
-//	{
-//		printf("start :: %s\n", e->room->node->next[i]->room->name);
-//	}
-//	resolution(e);
+	while (++i < e->room->node->nb_next)
+		printf("%d  ", e->tab_size[i]);
+	printf("\n");
+	i = -1;
+	while (++i < e->room->node->nb_next)
+		printf("%d  ", e->tab_ant[i]);
+	printf("\n\n");
+}
+
+void				init_resolution(t_env *e)
+{
+	t_node	*start;
+	t_node	*tmp_2;
+	int		tmp;
+	int		count;
+	int		save;
+	int		i;
+	int		a;
+
+	tmp = -2;
+	i = -1;
+	count = 0;
+	a = 0;
+	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * e->room->node->nb_next)))
+		return ;
+	if (!(e->tab_ant = (int *)ft_memalloc(sizeof(int) * e->room->node->nb_next)))
+		return ;
+	while (1)
+	{
+		i = -1;
+		e->steps = -1;
+		start = e->room->node;
+		tmp_2 = NULL;
+		bfs(e, e->room->node, a, count);
+		count++;
+		printf("\n\n=========== CALL %d ==============\n", count);
+		printf("steps => %d\n", e->steps);
+//		print_room(e);
+		print_tab3(e);
+		if (e->steps != -1 && (tmp == -2 || tmp > e->steps))
+		{
+			a += 1;
+			tmp = e->steps;
+			save = count;
+		}
+		ft_bzero(e->tab_ant, sizeof(int) * e->room->node->nb_next);
+		ft_bzero(e->tab_size, sizeof(int) * e->room->node->nb_next);
+		while (++i < start->nb_next)
+		{
+			if (start->next[i]->room->nb_ant == 1 && start->next[i]->room->id != e->info.end_id && (start->next[i] != tmp_2 || !tmp_2))
+			{
+				tmp_2 = start;
+				start = start->next[i]->room->node;
+				i = -1;
+			}
+		}
+		clean_ant(e);
+		if (start->room->id == e->info.start_id)
+			break ;
+		else
+		{
+			start->room->nb_ant = 0;
+			printf("removing room %s\n", start->room->name);
+		}
+	}
+	printf("\n\n|||| BEST CHOICE = CALL %d ||||\n", save);
 }

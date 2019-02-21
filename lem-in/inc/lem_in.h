@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/20 18:08:06 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/21 20:59:27 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_room
 	int				id;
 	int				depth;
 	int				nb_ant;
+	int				lock;
 	struct s_node	*node;
 	struct s_room	*next;
 }					t_room;
@@ -77,11 +78,12 @@ typedef struct		s_env
 	struct s_queue	*end_queue;
 	struct s_room	***tab;
 	int				*tab_size;
+	int				*tab_ant;
 	int				id_way;
 	int				steps;
 	int				error;
-	t_room			*end_ptr;
 }					t_env;
+
 // FREE.C => 4
 //static void		free_tab(t_env *e);
 //static void		free_tube_lst(t_env *e);
@@ -133,12 +135,14 @@ void				print_tree(t_node *tree);
 */
 
 // RESOLVE.C
+void				print_tab3(t_env *e);
 int					solve(t_env *e, t_node *node, int steps);
 void				init_resolution(t_env *e);
 
 //QUEUE.C => 2
 int					enqueue(t_env *e, t_node *elmt);
 void				dequeue(t_env *e);
+void				clear_queue(t_env *e);
 
 //TREE.C => 2
 //static t_node		*create_node(t_env *e, t_room *room);
@@ -147,6 +151,6 @@ void				build_tree(t_env *e);
 
 //BFS.C => 2
 void				clean_depth(t_env *e);
-void				bfs(t_env *e, t_node *start, int id);
-void				trace_new_path(t_env *e, t_node *start, int id);
+int					bfs(t_env *e, t_node *start, int id, int count);
+
 #endif

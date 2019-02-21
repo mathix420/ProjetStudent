@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/19 14:23:11 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:15:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void			sort_input(t_env *e)
 {
 	char	*line;
 
-	check_ant_nb(e);
-	init_lst(e);
 	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#')

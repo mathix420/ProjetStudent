@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:13:02 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/19 16:18:57 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/21 11:15:04 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void			get_nexts(t_env *e, t_node *node)
 	while (++x < e->info.nb_room)
 		if (e->tab[node->room->id][x]) // && e->tab[node->room->id][x] != node->room
 		{
- //			printf("next %s\n", e->tab[node->room->id][x]->name);
+//			printf("next %s\n", e->tab[node->room->id][x]->name);
 			if (e->tab[node->room->id][x]->node)
 				next[i] = e->tab[node->room->id][x]->node;
 			else if (!(next[i] = create_node(e, e->tab[node->room->id][x]))

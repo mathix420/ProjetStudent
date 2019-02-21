@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/02/17 18:51:06 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/21 14:49:50 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -80,6 +80,7 @@ _SRC =	ft_memset.c 	\
 		ft_nblen.c		\
 		ft_strrev.c		\
 		ft_lstlen.c		\
+		ft_abs.c		\
 		get_next_line.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 

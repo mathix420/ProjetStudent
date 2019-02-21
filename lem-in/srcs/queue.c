@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:26:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/17 18:11:38 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/21 11:26:43 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static inline t_queue	*create_new(t_node *elmt)
 	new->node = elmt;
 	new->next = NULL;
 	return (new);
+}
+
+void					clear_queue(t_env *e)
+{
+	while (e->queue)
+		dequeue(e);
 }
 
 int						enqueue(t_env *e, t_node *elmt)

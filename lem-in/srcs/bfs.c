@@ -6,13 +6,13 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/20 18:07:48 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:22:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		clean_depth(t_env *e)
+static inline void	clean_depth(t_env *e)
 {
 	t_room	*tmp;
 
@@ -24,72 +24,86 @@ void		clean_depth(t_env *e)
 	}
 }
 
-void		trace_new_path(t_env *e, t_node *start, int id)
+int			get_weigth(t_env *e, int path_size, int id)
+{
+	int		nb_ant;
+	int		max;
+	int		i;
+
+	i = -1;
+	max = 0;
+	nb_ant = e->info.nb_ant;
+	while (++i < id)
+	{
+		e->tab_ant[i] = 0;
+		if (!max || e->tab_size[i] < max)
+			max = e->tab_size[i];
+	}
+	e->tab_size[id] = path_size - 2;
+	while (nb_ant)
+	{
+		i = -1;
+		while (++i <= id && nb_ant)
+		{
+//			printf("TEST step %d max %d id %d\n", e->tab_size[i] + e->tab_ant[i] - 2, max, id);
+			if ((e->tab_size[i] + e->tab_ant[i] - 2) < max)
+			{
+				e->tab_ant[i]++;
+				nb_ant--;
+				i = -1;
+			}
+		}
+		max++;
+	}
+	if (e->steps == -1 || max < e->steps)
+	{
+		printf("OK\n");
+		e->steps = max;
+		return (1);
+	}
+	printf("KO\n");
+	return (0);
+}
+
+static int			trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 {
 	int			i;
 	t_node		*tmp;
 	t_node		**next;
 
-	tmp = start;
-//	printf("trace_new_path %d\n", tmp->room->depth);
-	e->end_ptr->nb_ant =  0;
-	while (tmp->room->id != e->info.end_id)
+	tmp = end;
+	if (!(get_weigth(e, end->room->depth, id - 1)))
+		return (0);
+	printf("%d\tNEW PATH :: %s - %d\n", id, tmp->room->name, tmp->room->depth);
+	start->room->nb_ant =  0;
+	while (tmp->room->id != e->info.start_id)
 	{
 		next = tmp->next;
 		i = -1;
 		while (++i < tmp->nb_next)
-		{
-//			printf("Test :: %d == %d  %s\n", next[i]->room->depth ,tmp->room->depth - 1, next[i]->room->name);
 			if (next[i]->room->depth == (tmp->room->depth - 1)
 				&& !next[i]->room->nb_ant)
+			{
+//				printf("%d\tNEXT :: %s -  %d\n", id, next[i]->room->name, next[i]->room->depth);
 				break;
-		}
+			}
 		if (i == tmp->nb_next)
-		{
-//			printf("ESCAPE\n");
 			break;
-		}
 		tmp->room->depth = 0;
 		tmp = next[i];
 		tmp->room->nb_ant = id;
 	}
+	return (1);
 }
 
-void		unlock_new(t_env *e, t_node *start, int id)
+int					bfs(t_env *e, t_node *start, int id)
 {
 	int		i;
-	t_node	*tmp;
-
-	i = -1;
-	tmp = start;
-	printf("START = %s\n", start->room->name);
-	while (++i < tmp->nb_next)
-	{
-		printf("%d\n", tmp->next[i]->room->nb_ant);
-		if (start != tmp->next[i]
-			&& tmp->next[i]->room->nb_ant
-			&& tmp->next[i]->nb_next > 0)
-		{
-			printf("OK %s\n", tmp->next[i]->room->name);
-			tmp->next[i]->room->nb_ant = 0;
-			while (e->queue)
-				dequeue(e);
-			bfs(e, tmp->next[i], id);
-			return ;
-		}
-		else if (tmp->next[i]->room->nb_ant)
-			tmp = tmp->next[i]; 
-	}
-}
-
-void		bfs(t_env *e, t_node *start, int id)
-{
-	int		i;
+	int		j;
 
 	clean_depth(e);
 	enqueue(e, start);
 	start->room->depth = 1;
-	printf("ADD %s\n", e->queue->node->room->name);
 	while (e->queue)
 	{
 		i = -1;
@@ -100,13 +114,17 @@ void		bfs(t_env *e, t_node *start, int id)
 				enqueue(e, e->queue->node->next[i]);
 				e->queue->node->next[i]->room->depth
 					= e->queue->node->room->depth + 1;
-				if (!e->queue->node->next[i]->room->id)
+				if (e->queue->node->next[i]->room->id == e->info.end_id)
 				{
-					trace_new_path(e, e->queue->node->next[i], id++);
-					unlock_new(e, start, id);
-					return ;
+					j = trace_new_path(e, start, e->queue->node->next[i], ++id);
+					e->queue->node->next[i]->room->nb_ant = 0;
+					e->queue->node->next[i]->room->depth = 0;
+					start->room->nb_ant = 0;
+					clear_queue(e);
+					return (j && bfs(e, start, id));
 				}
 			}
 		dequeue(e);
 	}
+	return (0);
 }
