@@ -1,2 +1,0 @@
-#!/bin/sh
-ifconfig en1 ether | grep -o '\w\+:\w\+:\w\+:\w\+:\w\+:\w\+'
