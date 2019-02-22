@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 15:17:48 by agissing          #+#    #+#              #
-#    Updated: 2019/02/22 18:31:51 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/22 18:33:45 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ git clone https://github.com/mathix420/ProjetStudent.git $path
 cp -r $home/42/ProjetStudent/* $path/.
 cp $home/.zshrc $path/.
 cp $home/.emacs $path/.
-cp -r $home/Config $path/.
 
 files=$(cat $home/.sav)
 
@@ -43,15 +42,13 @@ done
 /bin/sh $home/42-utilities/cleaner.sh $path
 
 git -C $path add .
-git -C $path add .emacs
-git -C $path add .zshrc
 
 message="Auto commit $(date)"
 
 git -C $path commit -m "$message"
 git -C $path push origin master && cd ~/
 
-rm -rf $path
+#rm -rf $path
 
 printf '\n\e[32mAll done!\n'
 
