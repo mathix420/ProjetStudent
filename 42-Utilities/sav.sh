@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 15:17:48 by agissing          #+#    #+#              #
-#    Updated: 2019/02/22 18:47:50 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/22 18:49:15 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,7 @@ rm -rf $path
 
 git clone https://github.com/mathix420/ProjetStudent.git $path
 
-tree $path > log1
-
 yes | git -C $path rm -rf .
-
-tree $path > log2
 
 cp -r $home/42/ProjetStudent/* $path/.
 cp $home/.zshrc $path/.
@@ -44,11 +40,7 @@ for var in $makefiles; do
     make -C $(dirname $var) fclean
 done
 
-tree $path > log2
-
 /bin/sh $home/42-utilities/cleaner.sh $path
-
-tree $path > log3
 
 git -C $path add .
 
