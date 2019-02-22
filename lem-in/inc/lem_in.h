@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/21 20:59:27 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/22 12:13:28 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_env
 	struct s_queue	*queue;
 	struct s_queue	*end_queue;
 	struct s_room	***tab;
+	struct s_room	*end_ptr;
 	int				*tab_size;
 	int				*tab_ant;
 	int				id_way;
@@ -150,7 +151,7 @@ t_node				*init_tree(t_env *e);
 void				build_tree(t_env *e);
 
 //BFS.C => 2
-void				clean_depth(t_env *e);
+//void				clean_depth(t_env *e);
 int					bfs(t_env *e, t_node *start, int id, int count);
 
 #endif

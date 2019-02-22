@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/21 21:22:53 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/22 12:35:00 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,13 @@ void				init_resolution(t_env *e)
 		e->steps = -1;
 		start = e->room->node;
 		tmp_2 = NULL;
+		printf("\n\n=========== CALL %d ==============\n", count + 1);
 		bfs(e, e->room->node, a, count);
 		count++;
-		printf("\n\n=========== CALL %d ==============\n", count);
 		printf("steps => %d\n", e->steps);
-//		print_room(e);
+		print_room(e);
 		print_tab3(e);
+		printf("=========== END CALL ==============\n");
 		if (e->steps != -1 && (tmp == -2 || tmp > e->steps))
 		{
 			a += 1;

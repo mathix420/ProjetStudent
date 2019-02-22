@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/21 17:22:36 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 12:33:54 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static inline void	clean_depth(t_env *e)
 	}
 }
 
-int			get_weigth(t_env *e, int path_size, int id)
+int			get_weigth(t_env *e, int path_size, int id, int count)
 {
 	int		nb_ant;
 	int		max;
@@ -36,17 +36,17 @@ int			get_weigth(t_env *e, int path_size, int id)
 	while (++i < id)
 	{
 		e->tab_ant[i] = 0;
-		if (!max || e->tab_size[i] < max)
+		if ((!max || e->tab_size[i] < max) && (!count || i))
 			max = e->tab_size[i];
 	}
+	printf("ID :: %d\n", id);
 	e->tab_size[id] = path_size - 2;
 	while (nb_ant)
 	{
 		i = -1;
 		while (++i <= id && nb_ant)
 		{
-//			printf("TEST step %d max %d id %d\n", e->tab_size[i] + e->tab_ant[i] - 2, max, id);
-			if ((e->tab_size[i] + e->tab_ant[i] - 2) < max)
+			if (((e->tab_size[i] + e->tab_ant[i] - 1) < max) && (!count || i))
 			{
 				e->tab_ant[i]++;
 				nb_ant--;
@@ -55,7 +55,7 @@ int			get_weigth(t_env *e, int path_size, int id)
 		}
 		max++;
 	}
-	if (e->steps == -1 || max < e->steps)
+	if (e->steps == -1 || max <= e->steps)
 	{
 		printf("OK\n");
 		e->steps = max;
@@ -65,14 +65,14 @@ int			get_weigth(t_env *e, int path_size, int id)
 	return (0);
 }
 
-static int			trace_new_path(t_env *e, t_node *start, t_node *end, int id)
+static int			trace_new_path(t_env *e, t_node *start, t_node *end, int id, int count)
 {
 	int			i;
 	t_node		*tmp;
 	t_node		**next;
 
 	tmp = end;
-	if (!(get_weigth(e, end->room->depth, id - 1)))
+	if (!(get_weigth(e, end->room->depth, id - 1, count)))
 		return (0);
 	printf("%d\tNEW PATH :: %s - %d\n", id, tmp->room->name, tmp->room->depth);
 	start->room->nb_ant =  0;
@@ -96,7 +96,7 @@ static int			trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 	return (1);
 }
 
-int					bfs(t_env *e, t_node *start, int id)
+int					bfs(t_env *e, t_node *start, int id, int count)
 {
 	int		i;
 	int		j;
@@ -116,12 +116,12 @@ int					bfs(t_env *e, t_node *start, int id)
 					= e->queue->node->room->depth + 1;
 				if (e->queue->node->next[i]->room->id == e->info.end_id)
 				{
-					j = trace_new_path(e, start, e->queue->node->next[i], ++id);
+					j = trace_new_path(e, start, e->queue->node->next[i], ++id, count);
 					e->queue->node->next[i]->room->nb_ant = 0;
 					e->queue->node->next[i]->room->depth = 0;
 					start->room->nb_ant = 0;
 					clear_queue(e);
-					return (j && bfs(e, start, id));
+					return (j && bfs(e, start, id, count));
 				}
 			}
 		dequeue(e);
