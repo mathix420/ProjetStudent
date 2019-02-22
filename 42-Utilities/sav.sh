@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 15:17:48 by agissing          #+#    #+#              #
-#    Updated: 2019/02/22 18:28:31 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/22 18:31:51 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ home="/Users/$USER"
 path="$home/goinfre/ProjetStudent__github"
 
 python3 -c "import subprocess; subprocess.Popen(['/bin/zsh', '-c', 'say Backup starting'])"
+
+echo $path
 
 rm -rf $path
 git clone https://github.com/mathix420/ProjetStudent.git $path
