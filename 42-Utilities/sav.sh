@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/22 15:17:48 by agissing          #+#    #+#              #
-#    Updated: 2019/02/22 18:41:53 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/22 18:42:44 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ cp $home/.emacs $path/.
 
 files=$(cat $home/.sav)
 
-tree > log1
+tree $path > log1
 
 for var in $files; do
 	cp -r $home/$var $path/.
@@ -40,11 +40,11 @@ for var in $makefiles; do
     make -C $(dirname $var) fclean
 done
 
-tree > log2
+tree $path > log2
 
 /bin/sh $home/42-utilities/cleaner.sh $path
 
-tree > log3
+tree $path > log3
 
 git -C $path add .
 
