@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:26:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/21 11:26:43 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:13:27 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int						enqueue(t_env *e, t_node *elmt)
 {
 	t_queue		*tmp;
 
-	if (!e->queue && (e->queue = create_new(elmt))) // si queue n'existe pas et que le malloc fontionne
-		e->end_queue = e->queue; // on met la valeur dans le end_queue
-	else if (!e->queue || !(tmp = create_new(elmt))) // si un des deux malloc a buggue 
+	if (!e->queue && (e->queue = create_new(elmt)))
+		e->end_queue = e->queue;
+	else if (!e->queue || !(tmp = create_new(elmt)))
 		return (0);
 	else
 	{
@@ -45,7 +45,7 @@ int						enqueue(t_env *e, t_node *elmt)
 	return (1);
 }
 
-void					dequeue(t_env *e) // need to free return after use
+void					dequeue(t_env *e)
 {
 	t_queue		*first;
 

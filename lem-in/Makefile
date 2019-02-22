@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/09 17:10:19 by agissing          #+#    #+#              #
-#    Updated: 2019/02/19 18:46:52 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/22 18:09:57 by acompagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -31,7 +31,8 @@ _SRCS0 = 	main.c \
 			sort_input.c \
 			tree.c \
 			resolve.c \
-			queue.c
+			queue.c \
+			print.c
 
 LEMIN_SRC = $(patsubst %,$(DIR_SRCS0)/%,$(_SRCS0))
 

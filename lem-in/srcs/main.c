@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:30:52 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/21 17:14:30 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:31:30 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,10 @@ int				main(void)
 
 	check_ant_nb(&e);
 	init_lst(&e);
-	sort_input(&e); //rapide
-//	print_lst(&e);
-//	printf("=================================================\n\n\n");
-//	print_tab2(e.tab, e.info.nb_room);
+	sort_input(&e);
 	if (!(e.tree = init_tree(&e)))
 		return (1);
-//	find_path(&e); //lent
-	init_resolution(&e); //0.006 sec
-//	print_way(&e);
-	free_env(&e, 0); //rapide
+	init_resolution(&e);
+	free_env(&e, 0);
 	return (0);
 }

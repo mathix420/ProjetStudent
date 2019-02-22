@@ -6,13 +6,13 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 12:35:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 20:33:45 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				clean_ant(t_env *e)
+static void			clean_ant(t_env *e)
 {
 	t_room	*tmp;
 
@@ -25,51 +25,19 @@ void				clean_ant(t_env *e)
 	}
 }
 
-void				print_room(t_env *e)
-{
-	t_room	*tmp;
-
-	tmp = e->room;
-	while (tmp)
-	{
-		if (tmp->nb_ant)
-		{
-			if (tmp->lock)
-				printf("LOCKED => ");
-			printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
-		}
-		tmp = tmp->next;
-	}
-}
-
-void				print_tab3(t_env *e)
-{
-	int		i;
-
-	i = -1;
-	while (++i < e->room->node->nb_next)
-		printf("%d  ", e->tab_size[i]);
-	printf("\n");
-	i = -1;
-	while (++i < e->room->node->nb_next)
-		printf("%d  ", e->tab_ant[i]);
-	printf("\n\n");
-}
-
 void				init_resolution(t_env *e)
 {
 	t_node	*start;
 	t_node	*tmp_2;
 	int		tmp;
-	int		count;
 	int		save;
+	int		solve_id;
 	int		i;
-	int		a;
 
 	tmp = -2;
 	i = -1;
-	count = 0;
-	a = 0;
+	e->count = 0;
+	solve_id = 0;
 	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * e->room->node->nb_next)))
 		return ;
 	if (!(e->tab_ant = (int *)ft_memalloc(sizeof(int) * e->room->node->nb_next)))
@@ -80,18 +48,17 @@ void				init_resolution(t_env *e)
 		e->steps = -1;
 		start = e->room->node;
 		tmp_2 = NULL;
-		printf("\n\n=========== CALL %d ==============\n", count + 1);
-		bfs(e, e->room->node, a, count);
-		count++;
+		bfs(e, e->room->node, solve_id);
+		e->count++;
+		printf("\n\n=========== CALL %d ==============\n", e->count);
 		printf("steps => %d\n", e->steps);
 		print_room(e);
-		print_tab3(e);
-		printf("=========== END CALL ==============\n");
+		print_tab(e);
 		if (e->steps != -1 && (tmp == -2 || tmp > e->steps))
 		{
-			a += 1;
+			solve_id++;
 			tmp = e->steps;
-			save = count;
+			save = e->count;
 		}
 		ft_bzero(e->tab_ant, sizeof(int) * e->room->node->nb_next);
 		ft_bzero(e->tab_size, sizeof(int) * e->room->node->nb_next);

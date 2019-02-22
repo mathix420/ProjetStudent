@@ -6,37 +6,16 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:35:00 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/19 14:13:05 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:11:06 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-/*
-int			check_state(t_env *e, t_solve *tmp)
-{
-	int			size;
-	int			i;
 
-	size = 0;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->nb == e->info.nb_room - 1)
-			i++;
-		size++;
-		tmp = tmp->next;
-	}
-	if (i == size)
-		return (1);
-	else
-		return (0);
-}
+/* static void	no_room_case(t_env *e) */
+/* { */
 
-*/
-   /* static void	no_room_case(t_env *e) */
-   /* { */
-
-   /* } */
+/* } */
 
 void		check_basics(t_env *e)
 {

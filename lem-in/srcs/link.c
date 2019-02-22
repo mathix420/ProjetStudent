@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 14:32:19 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/21 11:15:48 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:12:23 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	fill_links_tab(t_env *e, t_room *addr1, t_room *addr2)
 	if (!addr1 || !addr2)
 		return ;
 	e->info.nb_link++;
-//	printf("%s LINK %s\n", addr1->name, addr2->name);
 	e->tab[addr1->id][addr2->id] = addr2;
 	e->tab[addr2->id][addr1->id] = addr1;
 }

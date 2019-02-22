@@ -1,50 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/06 12:21:45 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 20:13:38 by agissing         ###   ########.fr       */
+/*   Created: 2019/02/22 18:05:04 by acompagn          #+#    #+#             */
+/*   Updated: 2019/02/22 18:09:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			init_lst(t_env *e)
-{
-	e->error = 0;
-	e->steps = -1;
-	e->room = NULL;
-	e->tube = NULL;
-	e->tree = NULL;
-	e->queue = NULL;
-	e->end_queue = NULL;
-	e->info.nb_room = 0;
-	e->info.nb_link = 0;
-	e->info.nb_path = 0;
-	e->info.comment = ft_strnew(0);
-	e->info.start_id = -1;
-	e->info.end_id = -1;
-	e->info.start = ft_strnew(0);
-	e->info.end = ft_strnew(0);
-}
-
-void			init_id(t_env *e)
+void				print_room(t_env *e)
 {
 	t_room	*tmp;
-	int		i;
 
 	tmp = e->room;
-	i = 0;
-	e->info.start_id = 0;
 	while (tmp)
 	{
-		tmp->id = i;
-		tmp->depth = -1;
+		if (tmp->nb_ant)
+		{
+			if (tmp->lock)
+				printf("LOCKED => ");
+			printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
+		}
 		tmp = tmp->next;
-		i++;
 	}
-	e->info.end_id = i - 1;
+}
+
+void				print_tab(t_env *e)
+{
+	int		i;
+
+	i = -1;
+	while (++i < e->room->node->nb_next)
+		printf("%d  ", e->tab_size[i]);
+	printf("\n");
+	i = -1;
+	while (++i < e->room->node->nb_next)
+		printf("%d  ", e->tab_ant[i]);
+	printf("\n\n");
 }

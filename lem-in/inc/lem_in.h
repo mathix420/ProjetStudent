@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 12:13:28 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 20:13:25 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,19 @@ typedef struct		s_env
 	struct s_queue	*queue;
 	struct s_queue	*end_queue;
 	struct s_room	***tab;
-	struct s_room	*end_ptr;
 	int				*tab_size;
 	int				*tab_ant;
-	int				id_way;
 	int				steps;
 	int				error;
+	int				count;
+	int				lock_var;
 }					t_env;
+
+/* ************************************************************************** */
+// PRINT.C => 2
+void				print_room(t_env *e);
+void				print_tab(t_env *e);
+/* ************************************************************************** */
 
 // FREE.C => 4
 //static void		free_tab(t_env *e);
@@ -104,12 +110,6 @@ void				init_id(t_env *e);
 int					add_end(t_env *e);
 int					add_start(t_env *e);
 
-// PRINT.C => 3
-void				print_way(t_env *e);
-void				print_lst(t_env *e);
-void				print_tab(void ***tab, int size);
-void				print_tab2(void ***tab, int size);
-void				print_round(t_env *e);
 // LST.C => 3
 int					tube_lst(t_env *e, char *line);
 //static t_room		*room_check(t_env *e, char *line);
@@ -130,28 +130,25 @@ void				sort_input(t_env *e);
 //static void		find_links(t_env *e, t_room *addr1, t_room *addr2);
 int					create_link_tab(t_env *e);
 
-/*
-//PRINT_TREE.C => 1
-void				print_tree(t_node *tree);
-*/
-
-// RESOLVE.C
-void				print_tab3(t_env *e);
-int					solve(t_env *e, t_node *node, int steps);
+// RESOLVE.C => 2
+//static void		clean_ant(t_env *e);
 void				init_resolution(t_env *e);
 
-//QUEUE.C => 2
+//QUEUE.C => 3
 int					enqueue(t_env *e, t_node *elmt);
 void				dequeue(t_env *e);
 void				clear_queue(t_env *e);
 
-//TREE.C => 2
+//TREE.C => 3
 //static t_node		*create_node(t_env *e, t_room *room);
 t_node				*init_tree(t_env *e);
 void				build_tree(t_env *e);
 
-//BFS.C => 2
-//void				clean_depth(t_env *e);
-int					bfs(t_env *e, t_node *start, int id, int count);
+//BFS.C => 5
+void				clean_depth(t_env *e);
+//static int		fill_tab_ant(t_env *e, int max, int id);
+//static int		get_weight(t_env *e, int path_size);
+//static int		trace_new_path(t_env *e, t_node *start, t_node *end, int var);
+int					bfs(t_env *e, t_node *start, int id);
 
 #endif

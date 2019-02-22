@@ -6,13 +6,13 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/22 16:41:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/22 20:32:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static inline void	clean_depth(t_env *e)
+inline void		clean_depth(t_env *e)
 {
 	t_room	*tmp;
 
@@ -24,7 +24,30 @@ static inline void	clean_depth(t_env *e)
 	}
 }
 
-int			get_weigth(t_env *e, int path_size, int id, int count)
+static int		fill_tab_ant(t_env *e, int max, int id)
+{
+	int		nb_ant;
+	int		i;
+
+	nb_ant = e->info.nb_ant;
+	while (nb_ant)
+	{
+		i = -1;
+		while (++i <= id - e->count && nb_ant)
+		{
+			if ((e->tab_size[i] + e->tab_ant[i] - 1) < max && (!e->count || i))
+			{
+				e->tab_ant[i]++;
+				nb_ant--;
+				i = -1;
+			}
+		}
+		max++;
+	}
+	return (max);
+}
+
+static int		get_weigth(t_env *e, int path_size, int id)
 {
 	int		nb_ant;
 	int		max;
@@ -36,73 +59,51 @@ int			get_weigth(t_env *e, int path_size, int id, int count)
 	while (++i < id)
 	{
 		e->tab_ant[i] = 0;
-		if ((!max || e->tab_size[i] < max) && (!count || i))
+		if ((!max || e->tab_size[i] < max) && (!e->count || i))
 			max = e->tab_size[i];
 	}
-	printf("ID :: %d\n", id);
 	e->tab_size[id] = path_size - 2;
-	while (nb_ant)
-	{
-		i = -1;
-		while (++i <= id && nb_ant)
-		{
-			if (((e->tab_size[i] + e->tab_ant[i] - 1) < max) && (!count || i))
-			{
-				e->tab_ant[i]++;
-				nb_ant--;
-				i = -1;
-			}
-		}
-		max++;
-	}
+	max = fill_tab_ant(e, max, id);
 	if (e->steps == -1 || max <= e->steps)
-	{
-		printf("OK\n");
-		e->steps = max;
-		return (1);
-	}
-	printf("KO\n");
+		return (e->steps = max);
 	return (0);
 }
 
-static int			trace_new_path(t_env *e, t_node *start, t_node *end, int id, int count)
+static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 {
 	int			i;
-	t_node		*tmp;
 	t_node		**next;
 
-	tmp = end;
-	if (!(get_weigth(e, end->room->depth, id - 1, count)))
+	e->lock_var++;
+	printf("id :: %d == %d\n", id, e->count);
+	if (!(get_weigth(e, end->room->depth, id - 1)))
 		return (0);
-	printf("%d\tNEW PATH :: %s - %d\n", id, tmp->room->name, tmp->room->depth);
-	start->room->nb_ant =  0;
-	while (tmp->room->id != e->info.start_id)
+	start->room->nb_ant = 0;
+	while (end->room->id != e->info.start_id)
 	{
-		next = tmp->next;
+		next = end->next;
 		i = -1;
-		while (++i < tmp->nb_next)
-			if (next[i]->room->depth == (tmp->room->depth - 1)
+		while (++i < end->nb_next)
+			if (next[i]->room->depth == (end->room->depth - 1)
 				&& !next[i]->room->nb_ant)
-			{
-//				printf("%d\tNEXT :: %s -  %d\n", id, next[i]->room->name, next[i]->room->depth);
-				break;
-			}
-		if (i == tmp->nb_next)
-			break;
-		tmp->room->depth = 0;
-		tmp = next[i];
-		tmp->room->nb_ant = id;
+				break ;
+		if (i == end->nb_next)
+			break ;
+		end->room->depth = 0;
+		end = next[i];
+		if (e->count > 0 && !e->lock_var)
+			end->room->lock = 1;
+		end->room->nb_ant = id;
 	}
 	return (1);
 }
 
-lock
-
-int					bfs(t_env *e, t_node *start, int id, int count)
+int				bfs(t_env *e, t_node *start, int id)
 {
 	int		i;
 	int		j;
 
+	e->lock_var = -1;
 	clean_depth(e);
 	enqueue(e, start);
 	start->room->depth = 1;
@@ -115,15 +116,14 @@ int					bfs(t_env *e, t_node *start, int id, int count)
 			{
 				enqueue(e, e->queue->node->next[i]);
 				e->queue->node->next[i]->room->depth
-					= e->queue->node->room->depth + 1;
+				   	= e->queue->node->room->depth + 1;
 				if (e->queue->node->next[i]->room->id == e->info.end_id)
 				{
-					j = trace_new_path(e, start, e->queue->node->next[i], ++id, count);
+					j = trace_new_path(e, start, e->queue->node->next[i], ++id);
 					e->queue->node->next[i]->room->nb_ant = 0;
 					e->queue->node->next[i]->room->depth = 0;
-					start->room->nb_ant = 0;
 					clear_queue(e);
-					return (j && bfs(e, start, id, count));
+					return (j && bfs(e, start, id));
 				}
 			}
 		dequeue(e);
