@@ -1,2 +1,0 @@
-#!/bin/sh
-ps ax | grep sshd | head -1 | cut -d ' ' -f3

@@ -1,2 +1,0 @@
-#!/bin/sh
-last -x | grep "system boot" | head -1
