@@ -1,0 +1,2 @@
+#!/bin/sh
+find /home -type d | grep -o "\w\+$" | head -n-1
