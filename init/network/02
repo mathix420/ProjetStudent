@@ -1,3 +1,0 @@
-#!/bin/sh
-ifconfig en0 | grep -o "broadcast.*" | sed "s/ / : /"
-arp -a

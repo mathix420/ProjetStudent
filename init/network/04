@@ -1,2 +1,0 @@
-#!/bin/sh
-netstat -nr | grep default | grep en0 | grep -o '\d\+.\d\+.\d\+.\d\+'

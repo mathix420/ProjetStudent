@@ -1,2 +1,0 @@
-#!/bin/sh
-ps ax | grep tail | head -1 | cut -d " " -f3 | xargs kill
