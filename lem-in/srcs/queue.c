@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:26:03 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/22 18:13:27 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:01:53 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int						enqueue(t_env *e, t_node *elmt)
 	else
 	{
 		e->end_queue->next = tmp;
-		e->end_queue =  tmp;
+		e->end_queue = tmp;
 	}
 	return (1);
 }

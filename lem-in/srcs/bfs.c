@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/22 20:32:06 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/23 13:50:18 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ inline void		clean_depth(t_env *e)
 	}
 }
 
-static int		fill_tab_ant(t_env *e, int max, int id)
+static int		fill_ant_tab(t_env *e, int max, int id)
 {
 	int		nb_ant;
 	int		i;
@@ -33,9 +33,9 @@ static int		fill_tab_ant(t_env *e, int max, int id)
 	while (nb_ant)
 	{
 		i = -1;
-		while (++i <= id - e->count && nb_ant)
+		while (++i <= id - !!e->count && nb_ant)
 		{
-			if ((e->tab_size[i] + e->tab_ant[i] - 1) < max && (!e->count || i))
+			if ((e->tab_size[i] + e->tab_ant[i] - 1) < max && e->tab_size[i])
 			{
 				e->tab_ant[i]++;
 				nb_ant--;
@@ -49,23 +49,25 @@ static int		fill_tab_ant(t_env *e, int max, int id)
 
 static int		get_weigth(t_env *e, int path_size, int id)
 {
-	int		nb_ant;
 	int		max;
 	int		i;
 
 	i = -1;
 	max = 0;
-	nb_ant = e->info.nb_ant;
-	while (++i < id)
+	ft_bzero(e->tab_ant, sizeof(int) * e->room->node->nb_next);
+	while (++i < id - !!e->count)
 	{
 		e->tab_ant[i] = 0;
-		if ((!max || e->tab_size[i] < max) && (!e->count || i))
+		if ((!max || e->tab_size[i] < max))
 			max = e->tab_size[i];
 	}
-	e->tab_size[id] = path_size - 2;
-	max = fill_tab_ant(e, max, id);
-	if (e->steps == -1 || max <= e->steps)
-		return (e->steps = max);
+	e->tab_size[id - !!e->count] = path_size;
+	max = fill_ant_tab(e, max, id);
+	if (e->steps == -1 || max - 2 <= e->steps)
+	{
+		e->steps = max - 2;
+		return (1);
+	}
 	return (0);
 }
 
@@ -73,11 +75,11 @@ static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 {
 	int			i;
 	t_node		**next;
+	int			first = 0;
 
-	e->lock_var++;
-	printf("id :: %d == %d\n", id, e->count);
 	if (!(get_weigth(e, end->room->depth, id - 1)))
 		return (0);
+	e->lock_var++;
 	start->room->nb_ant = 0;
 	while (end->room->id != e->info.start_id)
 	{
@@ -89,10 +91,16 @@ static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 				break ;
 		if (i == end->nb_next)
 			break ;
+		int tmp_size = end->room->depth;
 		end->room->depth = 0;
 		end = next[i];
 		if (e->count > 0 && !e->lock_var)
+		{
+			if (!first)
+				printf("LOCKING PATH size %d\n", tmp_size);
 			end->room->lock = 1;
+		}
+		first++;
 		end->room->nb_ant = id;
 	}
 	return (1);
@@ -101,9 +109,7 @@ static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 int				bfs(t_env *e, t_node *start, int id)
 {
 	int		i;
-	int		j;
 
-	e->lock_var = -1;
 	clean_depth(e);
 	enqueue(e, start);
 	start->room->depth = 1;
@@ -115,15 +121,13 @@ int				bfs(t_env *e, t_node *start, int id)
 				&& !e->queue->node->next[i]->room->nb_ant)
 			{
 				enqueue(e, e->queue->node->next[i]);
-				e->queue->node->next[i]->room->depth
-				   	= e->queue->node->room->depth + 1;
+				e->queue->node->next[i]->room->depth =
+					e->queue->node->room->depth + 1;
 				if (e->queue->node->next[i]->room->id == e->info.end_id)
 				{
-					j = trace_new_path(e, start, e->queue->node->next[i], ++id);
-					e->queue->node->next[i]->room->nb_ant = 0;
-					e->queue->node->next[i]->room->depth = 0;
+					i = trace_new_path(e, start, e->queue->node->next[i], ++id);
 					clear_queue(e);
-					return (j && bfs(e, start, id));
+					return (i && bfs(e, start, id));
 				}
 			}
 		dequeue(e);

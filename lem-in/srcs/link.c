@@ -6,19 +6,21 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 14:32:19 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 18:12:23 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 13:59:46 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void	fill_links_tab(t_env *e, t_room *addr1, t_room *addr2)
+static void	fill_links_tab(t_env *e, t_room **addr1, t_room **addr2)
 {
-	if (!addr1 || !addr2)
+	if (!*addr1 || !*addr2)
 		return ;
 	e->info.nb_link++;
-	e->tab[addr1->id][addr2->id] = addr2;
-	e->tab[addr2->id][addr1->id] = addr1;
+	e->tab[(*addr1)->id][(*addr2)->id] = *addr2;
+	e->tab[(*addr2)->id][(*addr1)->id] = *addr1;
+	*addr1 = NULL;
+	*addr2 = NULL;
 }
 
 static void	find_links(t_env *e, t_room *addr1, t_room *addr2)
@@ -39,13 +41,12 @@ static void	find_links(t_env *e, t_room *addr1, t_room *addr2)
 			if (!ft_strncmp(t2->link, t1->name, i[0]) && t1->name[i[0]] == ' ')
 				addr1 = t1;
 			i[1] = ft_strlen(t2->link) - i[0] - 1;
-			if (!ft_strncmp(&t2->link[i[0] + 1], t1->name, i[1]) && t1->name[i[1]] == ' ')
+			if (!ft_strncmp(&t2->link[i[0] + 1], t1->name, i[1])
+				&& t1->name[i[1]] == ' ')
 				addr2 = t1;
 			t1 = t1->next;
 		}
-		fill_links_tab(e, addr1, addr2);
-		addr1 = NULL;
-		addr2 = NULL;
+		fill_links_tab(e, &addr1, &addr2);
 		t2 = t2->next;
 	}
 }

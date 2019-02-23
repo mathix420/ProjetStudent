@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 20:13:25 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/23 13:44:16 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ typedef struct		s_env
 }					t_env;
 
 /* ************************************************************************** */
-// PRINT.C => 2
-void				print_room(t_env *e);
+// PRINT.C => 4
+void				print_room(t_env *e, int lock_print);
 void				print_tab(t_env *e);
+void				print_neighbours(t_env *e);
+void				print_call(t_env *e, int best_call, int room_print, int lock_print);
 /* ************************************************************************** */
 
 // FREE.C => 4
@@ -130,8 +132,11 @@ void				sort_input(t_env *e);
 //static void		find_links(t_env *e, t_room *addr1, t_room *addr2);
 int					create_link_tab(t_env *e);
 
-// RESOLVE.C => 2
+// RESOLVE.C => 5
 //static void		clean_ant(t_env *e);
+//static int		malloc_tab(t_env *e);
+//static void		reseting_var(t_env *e);
+//statuc int		last_call_results(t_env *e);
 void				init_resolution(t_env *e);
 
 //QUEUE.C => 3

@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/01/09 18:39:27 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/21 14:49:50 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -80,6 +80,7 @@ _SRC =	ft_memset.c 	\
 		ft_nblen.c		\
 		ft_strrev.c		\
 		ft_lstlen.c		\
+		ft_abs.c		\
 		get_next_line.c
 SRC = $(patsubst %,$(SDIR)/%,$(_SRC))
 
@@ -103,21 +104,21 @@ all: $(NAME)
 
 %.o:		%.c
 		@$(CC) $(FLAGS) -o $@ -c $<
-		@printf "\33[2K  ➡ %-15s%s\r" "$<" "✅"
+		@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 $(NAME):	$(OBJ)
 		@ar rc $(NAME) $(OBJ)
 		@ranlib $(NAME)
-		@printf "\33[2K \r\nLibft done !\n"
+		@printf "\e[2K\e[94m[LIB]\e[0m Libft done!\n"
 
 clean:
 		@/bin/rm -f $(OBJ)
-		@echo "Objects cleaned ♻️"
+		@echo "\033[31m[DEL]\033[0m Objects ♻️"
 
 fclean:
 		@/bin/rm -f $(OBJ)
 		@/bin/rm -f $(NAME)
-		@echo "Objects cleaned ♻️"
-		@echo "Library deleted 🚧"
+		@echo "\033[31m[DEL]\033[0m Objects ♻️"
+		@echo "\033[31m[DEL]\033[0m Library 🚧"
 
 re: fclean all
