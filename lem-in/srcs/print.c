@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 18:05:04 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 13:30:21 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 18:25:06 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void		print_tab(t_env *e)
 
 	i = -1;
 	while (++i < e->room->node->nb_next)
-		printf("%4d", e->tab_size[i]);
+		printf("%-4d", e->tab_size[i]);
 	printf("\n");
 	i = -1;
 	while (++i < e->room->node->nb_next)
-		printf("%4d", e->tab_ant[i]);
+		printf("%-4d", e->tab_ant[i]);
+	printf("\n");
+	i = -1;
+	while (++i < e->room->node->nb_next)
+		printf("%-4d", e->tab_id[i]);
 	printf("\n\n");
 }
 
@@ -75,5 +79,17 @@ void		print_call(t_env *e, int best_call, int room_print, int lock_print)
 			print_room(e, 1);
 		else
 			print_room(e, 0);
+	}
+}
+
+void		print_buff(t_env *e)
+{
+	t_buff	*tmp;
+
+	tmp = e->buff;
+	while (tmp)
+	{
+		write(1, tmp->str, ft_strlen(tmp->str));
+		tmp = tmp->next;
 	}
 }

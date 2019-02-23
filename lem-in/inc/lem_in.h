@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 17:29:58 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 13:44:16 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 20:44:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_room
 	int				id;
 	int				depth;
 	int				nb_ant;
+	int				old_ant;
 	int				lock;
 	struct s_node	*node;
 	struct s_room	*next;
@@ -52,6 +53,13 @@ typedef struct		s_queue
 	t_node			*node;
 	struct s_queue	*next;
 }					t_queue;
+
+typedef struct		s_buff
+{
+	char			str[5000];
+	int				i;
+	struct s_buff	*next;
+}					t_buff;
 
 typedef struct		s_info
 {
@@ -77,9 +85,14 @@ typedef struct		s_env
 	struct s_queue	*queue;
 	struct s_queue	*end_queue;
 	struct s_room	***tab;
+	struct s_buff	*buff;
 	int				*tab_size;
 	int				*tab_ant;
+	int				*tab_id;
 	int				steps;
+	int				best_steps;
+	int				best_call;
+	int				solve_id;
 	int				error;
 	int				count;
 	int				lock_var;
@@ -91,6 +104,7 @@ void				print_room(t_env *e, int lock_print);
 void				print_tab(t_env *e);
 void				print_neighbours(t_env *e);
 void				print_call(t_env *e, int best_call, int room_print, int lock_print);
+void				print_buff(t_env *e);
 /* ************************************************************************** */
 
 // FREE.C => 4
@@ -155,5 +169,9 @@ void				clean_depth(t_env *e);
 //static int		get_weight(t_env *e, int path_size);
 //static int		trace_new_path(t_env *e, t_node *start, t_node *end, int var);
 int					bfs(t_env *e, t_node *start, int id);
+
+//BUFF_MAP.C => 2
+//static int		new_buff_node(t_env *e);
+int					keep_map_in_buff(t_env *e, char *line);
 
 #endif

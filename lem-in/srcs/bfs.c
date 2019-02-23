@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/23 13:50:18 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:10:52 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static int		get_weigth(t_env *e, int path_size, int id)
 	}
 	e->tab_size[id - !!e->count] = path_size;
 	max = fill_ant_tab(e, max, id);
+	if (!e->tab_ant[id - !!e->count])
+		return (0);
 	if (e->steps == -1 || max - 2 <= e->steps)
 	{
 		e->steps = max - 2;
@@ -75,10 +77,10 @@ static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 {
 	int			i;
 	t_node		**next;
-	int			first = 0;
 
 	if (!(get_weigth(e, end->room->depth, id - 1)))
 		return (0);
+	e->tab_id[id - !!e->count - 1] = id;
 	e->lock_var++;
 	start->room->nb_ant = 0;
 	while (end->room->id != e->info.start_id)
@@ -91,16 +93,10 @@ static int		trace_new_path(t_env *e, t_node *start, t_node *end, int id)
 				break ;
 		if (i == end->nb_next)
 			break ;
-		int tmp_size = end->room->depth;
 		end->room->depth = 0;
 		end = next[i];
 		if (e->count > 0 && !e->lock_var)
-		{
-			if (!first)
-				printf("LOCKING PATH size %d\n", tmp_size);
 			end->room->lock = 1;
-		}
-		first++;
 		end->room->nb_ant = id;
 	}
 	return (1);

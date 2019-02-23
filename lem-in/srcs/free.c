@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 15:50:43 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/23 14:28:24 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/23 15:06:26 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ static void		free_room_lst(t_env *e)
 void			free_env(t_env *e, int error)
 {
 	(error != 1) ? free_tab(e) : 1;
-	free(e->tab_size);
-	free(e->tab_ant);
+	if (e->tab_size)
+		free(e->tab_size);
+	if (e->tab_ant)
+		free(e->tab_ant);
 	free_tube_lst(e);
 	free_room_lst(e);
 	free(e->info.start);
 	free(e->info.end);
 	free(e->info.comment);
 	if (error)
-		ft_exit(0);
+		ft_exit(error);
 }

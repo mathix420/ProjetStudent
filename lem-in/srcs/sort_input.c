@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 14:44:28 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 15:05:38 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ static void		hashtag_info(t_env *e, char *line)
 	cmp1 = "##start\0";
 	cmp2 = "##end\0";
 	if (!ft_strncmp(cmp1, line, 7))
+	{
+		e->info.end_id = -1;
 		e->info.start_id = -2;
+	}
 	else if (!ft_strncmp(cmp2, line, 5))
+	{
+		e->info.start_id = -1;
 		e->info.end_id = -2;
+	}
 }
 
 static int		start_end_info(t_env *e, char *line)

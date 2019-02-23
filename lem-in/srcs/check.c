@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:35:00 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 14:38:54 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 17:38:31 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,18 @@ void		check_ant_nb(t_env *e)
 	while (line[++i])
 	{
 		if (line[i] >= '0' && line[i] <= '9')
-			e->info.nb_ant = e->info.nb_ant * 10 + (line[i] - 48);
+		{
+			if ( e->info.nb_ant * 10 + (line[i] - 48) > 2147483647)
+				frexit(line, 4);
+			else
+				e->info.nb_ant = e->info.nb_ant * 10 + (line[i] - 48);
+		}
 		else
 			frexit(line, 4);
 	}
 	if (e->info.nb_ant <= 0)
 		frexit(line, 4);
+	if (!(keep_map_in_buff(e, line)))
+		printf("to free, check nb_ant\n");
 	free(line);
 }
