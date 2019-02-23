@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:35:00 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 18:11:06 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:38:54 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,14 @@ void		check_basics(t_env *e)
 	i = 0;
 	j = 0;
 	if (!e->info.start[0] || !e->info.end[0])
-	{
-		printf("ICI1\n");
 		free_env(e, 1);
-	}
 	while (e->info.start[i] && e->info.start[i] != ' ')
 		i++;
 	while (e->info.end[j] && e->info.end[j] != ' ')
 		j++;
 	if (i == j)
 		if (!ft_strncmp(e->info.start, e->info.end, i))
-		{
-			printf("ICI2\n");
 			free_env(e, 1);
-		}
 	//	if (!e->info.nb_room)
 	//		no_room_case(e);
 }

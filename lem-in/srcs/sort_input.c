@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/22 18:12:08 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:44:28 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ static void		map_info(t_env *e, char *line)
 	else if (e->info.dash == 1 && !e->info.space)
 	{
 		if (!(tube_lst(e, line)))
-		{
-			printf("ICI4\n");
 			free_env(e, 1);
-		}
 	}
 	else
 		e->error = 1;
@@ -99,8 +96,8 @@ void			sort_input(t_env *e)
 	}
 	check_basics(e);
 	if (!add_start(e) || !add_end(e))
-		printf("A\n");
+		ft_exit(2);
 	init_id(e);
-	(!(create_link_tab(e))) ? printf("B\n") : 1;
+	(!(create_link_tab(e))) ? free_env(e, 1) : 1;
 	(!e->info.nb_link) ? ft_exit(1) : 1;
 }

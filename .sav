@@ -3,3 +3,5 @@
 Desktop
 ratpy.py
 quit.sh
+.valgrindrc
+.valgrindsupp

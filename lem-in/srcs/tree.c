@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 13:13:02 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/21 11:15:04 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:00:34 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ static void			get_nexts(t_env *e, t_node *node)
 	x = -1;
 	i = 0;
 	next = node->next;
-//	printf("IN %s\n", node->room->name);
 	while (++x < e->info.nb_room)
-		if (e->tab[node->room->id][x]) // && e->tab[node->room->id][x] != node->room
+		if (e->tab[node->room->id][x])
 		{
-//			printf("next %s\n", e->tab[node->room->id][x]->name);
 			if (e->tab[node->room->id][x]->node)
 				next[i] = e->tab[node->room->id][x]->node;
 			else if (!(next[i] = create_node(e, e->tab[node->room->id][x]))
-					|| !enqueue(e, next[i])) // WARNING NEED TO FREE AND EXIT THERE BECAUSE I DONT KNOW HOW TO DO IT LOL
+					|| !enqueue(e, next[i]))
 				printf("BIG ERROR !!!!!!!!!!!!!!!\n");
 			if (next[i]->room->depth == -1)
 				next[i]->room->depth = node->room->depth + 1;
