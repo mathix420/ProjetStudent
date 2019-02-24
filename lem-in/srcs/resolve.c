@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 10:29:24 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 21:42:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/24 14:23:56 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static void		print_one_round(t_env *e, t_node *start, int *passed)
 		while (++i < e->queue->node->nb_next)
 		{
 			if ((!e->queue->node->next[i]->room->depth  //si ya pas de depth
-				 && e->queue->node->next[i]->room->nb_ant) // et qu'il est utilise 
+				&& e->queue->node->next[i]->room->nb_ant) // et qu'il est utilise 
 				|| e->queue->node->next[i]->room->id == e->info.end_id) //ou si c'est la fin
 			{
 				room = e->queue->node->next[i]->room;
@@ -141,12 +141,12 @@ static void		print_one_round(t_env *e, t_node *start, int *passed)
 					*passed += 1;
 					e->tab_ant[id]--;
 				}
-				else if ((id = get_id(e, room->nb_ant)) >= 0 && room->depth == 2)
+				else if (id >= 0 && room->depth == 2)
 				{
 					room->old_ant = room->lock;
 					room->lock = 0;
 				}
-				else if (id >= 0 && e->queue->node->room->old_ant)
+				else if (e->queue->node->room->old_ant)
 				{
 					room->old_ant = room->lock;
 					room->lock = e->queue->node->room->old_ant;
@@ -161,6 +161,7 @@ static void		print_one_round(t_env *e, t_node *start, int *passed)
 					enqueue(e, e->queue->node->next[i]);
 			}
 		}
+//		print_tab(e);
 		dequeue(e);
 	}
 }
@@ -183,26 +184,17 @@ static void		print_solution(t_env *e)
 
 static void		get_solution(t_env *e, int best_count)
 {
+	print_tab(e);
+	e->count = 0;
 	while (1)
 	{
 		reseting_var(e);
 		bfs(e, e->room->node, e->solve_id);
-		if (e->lock_var != -1 || !e->count)
-		{
-			if (e->count - 1 == best_count)
-				return (print_solution(e));
-			e->count++;
-			e->solve_id++;
-		}
-		if (e->steps != -1 && (e->best_steps == -2 || e->best_steps > e->steps))
-		{
-			if (e->best_steps == -2 && e->steps == -1)
-				break ;
-			e->best_steps = e->steps;
-			e->best_call = e->count;
-		}
-		if (!last_call_results(e))
-			break ;
+		printf("%d == %d\n", e->count, best_count);
+		if (e->count == best_count)
+			return (print_solution(e));
+		e->count++;
+		e->solve_id++;
 	}
 	print_solution(e);
 }
