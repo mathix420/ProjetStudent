@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 15:05:38 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/16 14:59:00 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,9 @@ static void		hashtag_info(t_env *e, char *line)
 	cmp1 = "##start\0";
 	cmp2 = "##end\0";
 	if (!ft_strncmp(cmp1, line, 7))
-	{
-		e->info.end_id = -1;
 		e->info.start_id = -2;
-	}
 	else if (!ft_strncmp(cmp2, line, 5))
-	{
-		e->info.start_id = -1;
 		e->info.end_id = -2;
-	}
 }
 
 static int		start_end_info(t_env *e, char *line)
@@ -87,6 +81,8 @@ void			sort_input(t_env *e)
 {
 	char	*line;
 
+	check_ant_nb(e);
+	init_lst(e);
 	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#')
@@ -102,8 +98,8 @@ void			sort_input(t_env *e)
 	}
 	check_basics(e);
 	if (!add_start(e) || !add_end(e))
-		ft_exit(2);
+		ft_exit(0);
 	init_id(e);
-	(!(create_link_tab(e))) ? free_env(e, 1) : 1;
+	(!(create_link_tab(e))) ? ft_exit(0) : 1;
 	(!e->info.nb_link) ? ft_exit(1) : 1;
 }

@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 12:21:45 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 20:45:01 by agissing         ###   ########.fr       */
+/*   Updated: 2019/02/15 10:58:02 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,10 @@
 void			init_lst(t_env *e)
 {
 	e->error = 0;
-	e->steps = -1;
-	e->count = 0;
 	e->room = NULL;
 	e->tube = NULL;
-	e->tree = NULL;
-	e->queue = NULL;
-	e->end_queue = NULL;
-	e->tab_size = NULL;
-	e->tab_ant = NULL;
-	e->tab_id = NULL;
-	e->best_steps = -2;
-	e->best_call = 0;
-	e->solve_id = 0;
+	e->solve = NULL;
+	e->node = NULL;
 	e->info.nb_room = 0;
 	e->info.nb_link = 0;
 	e->info.nb_path = 0;
@@ -36,6 +27,7 @@ void			init_lst(t_env *e)
 	e->info.end_id = -1;
 	e->info.start = ft_strnew(0);
 	e->info.end = ft_strnew(0);
+	e->tmp = 0;
 }
 
 void			init_id(t_env *e)
@@ -49,7 +41,7 @@ void			init_id(t_env *e)
 	while (tmp)
 	{
 		tmp->id = i;
-		tmp->depth = -1;
+		tmp->ant = 0;
 		tmp = tmp->next;
 		i++;
 	}

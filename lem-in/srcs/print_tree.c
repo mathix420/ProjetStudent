@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   print_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 11:54:48 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/12 12:46:09 by agissing         ###   ########.fr       */
+/*   Created: 2019/02/15 13:45:18 by agissing          #+#    #+#             */
+/*   Updated: 2019/02/15 14:21:07 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lem_in.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+void		print_tree(t_node *tree)
 {
-	size_t	i;
-	char	*out;
+	int		i;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (!(out = ft_strnew(len)))
-		return (NULL);
-	while (i < len)
+	i = tree->nb_next - 1;
+	while (i > 0)
 	{
-		out[i] = s[start + i];
-		i++;
+		print_tree(tree->next++);
+		i--;
 	}
-	return (out);
+	ft_putstr(" <- ");
+	ft_putstr(tree->room->name);
+
+
 }

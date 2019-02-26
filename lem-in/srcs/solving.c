@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   solving.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 11:54:48 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/12 12:46:09 by agissing         ###   ########.fr       */
+/*   Created: 2019/02/11 13:44:49 by agissing          #+#    #+#             */
+/*   Updated: 2019/02/11 19:26:48 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lem_in.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+void	solve(t_env *e)
 {
-	size_t	i;
-	char	*out;
+	t_solve		*solve;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (!(out = ft_strnew(len)))
-		return (NULL);
-	while (i < len)
+	solve = e->solve;
+	while (solve && e->info.nb_ant)
 	{
-		out[i] = s[start + i];
-		i++;
+		
+		solve = solve->next;
 	}
-	return (out);
 }

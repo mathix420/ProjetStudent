@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 10:48:13 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 14:15:17 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/11 11:16:59 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_room	*start_end_cmp(t_env *e, char *cmp)
 	i = 0;
 	while (cmp[i] && cmp[i] != ' ')
 		i++;
-	while (tmp && tmp->next)
+	while (tmp->next)
 	{
 		if (!ft_strncmp(tmp->next->name, cmp, i))
 		{

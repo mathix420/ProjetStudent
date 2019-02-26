@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 15:35:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 14:05:57 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/16 14:58:04 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_room	*room_check(t_env *e, char *line)
 	while (tmp)
 	{
 		j = 0;
-		while (tmp->name[j] && tmp->name[j] != ' ')
+		while (tmp->name[j] && tmp->name[j] != ' ')	
 			j++;
 		if (i == j && !ft_strncmp(tmp->name, line, i))
 			return (tmp);

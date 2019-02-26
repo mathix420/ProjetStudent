@@ -1,0 +1,45 @@
+let MAP = JSON.parse(`{
+  "nb_ant": 10,
+  "start": "start",
+  "end": "end",
+  "rooms": [
+    {"name": "start", "x": 11, "y": 11, "links": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]},
+    {"name": "end", "x": 12, "y": 12, "links": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]},
+    {"name": "0", "x": 10,"y": 10, "links": ["start", "end"]},
+    {"name": "1", "x": 9,"y": 9,"links": ["start", "end"]},
+    {"name": "2", "x": 8,"y": 8,"links": ["start", "end"]},
+    {"name": "3", "x": 7,"y": 7,"links": ["start", "end"]},
+    {"name": "4", "x": 6,"y": 6,"links": ["start", "end"]},
+    {"name": "5", "x": 5,"y": 5,"links": ["start", "end"]},
+    {"name": "6", "x": 4,"y": 4,"links": ["start", "end"]},
+    {"name": "7", "x": 3,"y": 3,"links": ["start", "end"]},
+    {"name": "8", "x": 2,"y": 2, "links": ["start", "end"]},
+    {"name": "9", "x": 1,"y": 1, "links": ["start", "end"]},
+    {"name": "10", "x": 0,"y": 0, "links": ["start", "end"]}
+  ],
+  "steps": [{
+    "L1": "0",
+    "L2": "1",
+    "L3": "3",
+    "L4": "4",
+    "L5": "5",
+    "L6": "6",
+    "L7": "7",
+    "L8": "8",
+    "L9": "9",
+    "L10": "10"
+  },
+  {
+    "L1": "end",
+    "L2": "end",
+    "L3": "end",
+    "L4": "end",
+    "L5": "end",
+    "L6": "end",
+    "L7": "end",
+    "L8": "end",
+    "L9": "end",
+    "L10": "end"
+    }]
+  }
+`)

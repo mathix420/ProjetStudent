@@ -5,91 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/22 18:05:04 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 18:25:06 by agissing         ###   ########.fr       */
+/*   Created: 2019/02/05 16:42:34 by acompagn          #+#    #+#             */
+/*   Updated: 2019/02/16 15:53:53 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		print_room(t_env *e, int lock_print)
+void		print_way(t_env *e)
 {
-	t_room	*tmp;
+	t_solve		*tmp1;
+	t_way		*tmp2;
+
+	tmp1 = e->solve;
+	while (tmp1)
+	{
+		printf("=== NEW WAY ===\n");
+		tmp2 = tmp1->path;
+		printf("ADDR = %p\n", tmp1);
+		printf("tmp1->id = %d\n", tmp1->id);
+		printf("nb_ant = %d\n", tmp1->nb_ant);
+		printf("e->solve->path->round = %d\n", tmp1->path->round);
+		while (tmp2)
+		{
+			if (tmp2->room)
+				printf("way->room = %s\n", tmp2->room->name);
+			tmp2 = tmp2->next;
+		}
+		tmp1 = tmp1->next;
+	}
+}
+
+void		print_round(t_env *e)
+{
+	t_round		*tmp1;
+
+	tmp1 = e->round;
+	while (tmp1)
+	{
+		printf("id = %d\n", tmp1->solve->id);
+		printf("nb_ant = %d\n", tmp1->solve->nb_ant);
+		printf("steps = %d\n", tmp1->solve->path->round + tmp1->solve->nb_ant - 1);
+		printf("round = %d\n\n", tmp1->solve->path->round);
+		tmp1 = tmp1->next;
+	}
+}
+
+void		print_lst(t_env *e)
+{
+	t_room *tmp;
 
 	tmp = e->room;
 	while (tmp)
 	{
-		if (tmp->nb_ant)
-		{
-			if (lock_print && tmp->lock)
-				printf("LOCKED => ");
-			if (tmp->nb_ant)
-				printf("%s ==== %d\n", tmp->name, tmp->nb_ant);
-		}
+		printf("ADDR = %p\n", tmp);
+		printf("room = %s\n", tmp->name);
+		printf("id = %d\n", tmp->id);
+		printf("ant = %d\n", tmp->ant);
 		tmp = tmp->next;
 	}
 }
 
-void		print_tab(t_env *e)
+void		print_tab2(void ***tab, int size)
 {
 	int		i;
+	int		j;
 
 	i = -1;
-	while (++i < e->room->node->nb_next)
-		printf("%-4d", e->tab_size[i]);
-	printf("\n");
-	i = -1;
-	while (++i < e->room->node->nb_next)
-		printf("%-4d", e->tab_ant[i]);
-	printf("\n");
-	i = -1;
-	while (++i < e->room->node->nb_next)
-		printf("%-4d", e->tab_id[i]);
-	printf("\n\n");
-}
-
-void		print_neighbours(t_env *e)
-{
-	t_room	*ptr;
-	int		i;
-
-	ptr = e->room;
-	i = -1;
-	printf("START ROOM ===== %s\n", e->room->name);
-	while (++i < ptr->node->nb_next)
-		printf("---> %s\n", ptr->node->next[i]->room->name);
-	while (ptr->next)
-		ptr = ptr->next;
-	printf("\n\nEND ROOM ----> %s\n", ptr->name);
-	i = -1;
-	while (++i < ptr->node->nb_next)
-		printf("---> %s\n", ptr->node->next[i]->room->name);
-}
-
-void		print_call(t_env *e, int best_call, int room_print, int lock_print)
-{
-	printf("BEST CALL FOR NOW ==== %d\n", best_call);
-	printf("\n\n=========== CALL %d ==============\n", e->count + 1);
-	printf("steps => %d\n", e->steps);
-	print_tab(e);
-	if (room_print)
+	while (++i < size)
 	{
-		printf(" -- ROOMS --\n\n");
-		if (lock_print)
-			print_room(e, 1);
-		else
-			print_room(e, 0);
+		j = -1;
+		while (++j < size)
+				printf("%-15p", tab[i][j]);
+		printf("\n");
 	}
 }
 
-void		print_buff(t_env *e)
+void		print_tab(void ***tab, int size)
 {
-	t_buff	*tmp;
+	int		i;
+	int		j;
 
-	tmp = e->buff;
-	while (tmp)
+	i = -1;
+	while (++i < size)
 	{
-		write(1, tmp->str, ft_strlen(tmp->str));
-		tmp = tmp->next;
+		j = 0;
+		while (j < size && !tab[j][i])
+			j++;
+		if (j < size && tab[j][i])
+			printf("%c : ", ((t_room *)tab[j][i])->name[0]);
+		j = -1;
+		while (++j < size)
+			if (tab[i][j])
+				printf("%-2c", ((t_room *)tab[i][j])->name[0]);
+		printf("\n");
 	}
 }

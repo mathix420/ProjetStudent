@@ -6,16 +6,37 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 17:35:00 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/23 17:38:31 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/12 12:13:11 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-/* static void	no_room_case(t_env *e) */
-/* { */
+int			check_state(t_env *e, t_solve *tmp)
+{
+	int			size;
+	int			i;
 
-/* } */
+	size = 0;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->nb == e->info.nb_room - 1)
+			i++;
+		size++;
+		tmp = tmp->next;
+	}
+	if (i == size)
+		return (1);
+	else
+		return (0);
+}
+
+/*
+   static void	no_room_case(t_env *e)
+   {
+
+   }*/
 
 void		check_basics(t_env *e)
 {
@@ -47,20 +68,12 @@ void		check_ant_nb(t_env *e)
 	if (get_next_line(0, &line) <= 0 || !line[0])
 		ft_exit(4);
 	while (line[++i])
-	{
-		if (line[i] >= '0' && line[i] <= '9')
-		{
-			if ( e->info.nb_ant * 10 + (line[i] - 48) > 2147483647)
-				frexit(line, 4);
-			else
-				e->info.nb_ant = e->info.nb_ant * 10 + (line[i] - 48);
-		}
-		else
+		if (line[i] < '0' || line[i] > '9')
 			frexit(line, 4);
-	}
+	i = 0;
+	while (line[i] && line[i] >= '0' && line[i] <= '9')
+		e->info.nb_ant = e->info.nb_ant * 10 + (line[i++] - 48);
 	if (e->info.nb_ant <= 0)
 		frexit(line, 4);
-	if (!(keep_map_in_buff(e, line)))
-		printf("to free, check nb_ant\n");
 	free(line);
 }

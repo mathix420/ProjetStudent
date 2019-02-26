@@ -6,11 +6,23 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 15:50:43 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/23 15:06:26 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/11 13:07:43 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void			free_way(t_way *to_free)
+{
+	t_way			*tmp_w;
+
+	while (to_free)
+	{
+		tmp_w = to_free;
+		to_free = to_free->next;
+		free(tmp_w);
+	}
+}
 
 static void		free_tab(t_env *e)
 {
@@ -42,10 +54,7 @@ static void		free_room_lst(t_env *e)
 	while (e->room)
 	{
 		tmp = e->room;
-		if (tmp->node)
-			free(tmp->node->next);
-		free(tmp->node);
-		free(tmp->name);
+		free(e->room->name);
 		e->room = e->room->next;
 		free(tmp);
 	}
@@ -53,16 +62,27 @@ static void		free_room_lst(t_env *e)
 
 void			free_env(t_env *e, int error)
 {
+	t_solve		*tmp1;
+	t_way		*tmp2;
+
 	(error != 1) ? free_tab(e) : 1;
-	if (e->tab_size)
-		free(e->tab_size);
-	if (e->tab_ant)
-		free(e->tab_ant);
 	free_tube_lst(e);
+	while (e->solve)
+	{
+		while (e->solve->path)
+		{
+			tmp2 = e->solve->path;
+			e->solve->path = e->solve->path->next;
+			free(tmp2);
+		}
+		tmp1 = e->solve;
+		e->solve = e->solve->next;
+		free(tmp1);
+	}
 	free_room_lst(e);
 	free(e->info.start);
 	free(e->info.end);
 	free(e->info.comment);
 	if (error)
-		ft_exit(error);
+		ft_exit(0);
 }
