@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/16 14:59:00 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/27 15:17:42 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,28 @@ static void		hashtag_info(t_env *e, char *line)
 {
 	char	*cmp1;
 	char	*cmp2;
+	int		i;
+	int		hash;
 
 	cmp1 = "##start\0";
 	cmp2 = "##end\0";
+	i = -1;
+	hash = 0;
+	while (line[++i])
+		if (line[i] == '#')
+			hash++;
 	if (!ft_strncmp(cmp1, line, 7))
+	{
+		e->info.end_id = -1;
 		e->info.start_id = -2;
+	}
 	else if (!ft_strncmp(cmp2, line, 5))
+	{
+		e->info.start_id = -1;
 		e->info.end_id = -2;
+	}
+	else if (hash != 1 && hash != 2)
+		e->error = 1;
 }
 
 static int		start_end_info(t_env *e, char *line)
@@ -34,13 +49,15 @@ static int		start_end_info(t_env *e, char *line)
 	else if (e->info.space == 2 && !e->info.dash && e->info.start_id == -2)
 	{
 		tmp = e->info.start;
-		e->info.start = ft_strdup(line);
+		if (!(e->info.start = ft_strdup(line)))
+			free_env(e, 3);
 		e->info.start_id = -1;
 	}
 	else if (e->info.space == 2 && !e->info.dash && e->info.end_id == -2)
 	{
 		tmp = e->info.end;
-		e->info.end = ft_strdup(line);
+		if (!(e->info.end = ft_strdup(line)))
+			free_env(e, 3);
 		e->info.end_id = -1;
 	}
 	else
@@ -65,12 +82,12 @@ static void		map_info(t_env *e, char *line)
 		return ;
 	else if (e->info.space == 2 && !e->info.dash)
 	{
-		if (!(room_lst(e, line)))
+		if (!(room_list(e, line)))
 			e->error = 1;
 	}
 	else if (e->info.dash == 1 && !e->info.space)
 	{
-		if (!(tube_lst(e, line)))
+		if (!(tube_list(e, line)))
 			free_env(e, 1);
 	}
 	else
@@ -81,8 +98,6 @@ void			sort_input(t_env *e)
 {
 	char	*line;
 
-	check_ant_nb(e);
-	init_lst(e);
 	while (get_next_line(0, &line) > 0)
 	{
 		if (line[0] == '#')
@@ -94,12 +109,14 @@ void			sort_input(t_env *e)
 			free(line);
 			break ;
 		}
+		keep_map_in_buff(e, line);
 		free(line);
 	}
 	check_basics(e);
 	if (!add_start(e) || !add_end(e))
-		ft_exit(0);
+		ft_exit(2);
 	init_id(e);
-	(!(create_link_tab(e))) ? ft_exit(0) : 1;
+	(!(create_link_tab(e))) ? free_env(e, 1) : 1;
 	(!e->info.nb_link) ? ft_exit(1) : 1;
+	cut_room_name(e);
 }

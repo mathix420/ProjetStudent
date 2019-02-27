@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst.c                                              :+:      :+:    :+:   */
+/*   room_tube_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/01 15:35:06 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/16 14:58:04 by acompagn         ###   ########.fr       */
+/*   Created: 2019/02/27 14:10:21 by acompagn          #+#    #+#             */
+/*   Updated: 2019/02/27 15:17:46 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int				tube_lst(t_env *e, char *line)
+int				tube_list(t_env *e, char *line)
 {
-	t_tube *new;
+	t_tube	*new;
+	t_tube	*ptr;
 
+	ptr = e->tube;
 	if (!(new = (t_tube *)ft_memalloc(sizeof(t_tube))))
 		return (0);
-	new->link = ft_strdup(line);
-	new->next = e->tube;
-	e->tube = new;
+	if (!(new->link = ft_strdup(line)))
+		return (0);
+	new->next = NULL;
+	if (!e->tube)
+		e->tube = new;
+	else
+	{
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new;
+	}
 	return (1);
 }
 
@@ -39,7 +49,7 @@ static t_room	*room_check(t_env *e, char *line)
 	while (tmp)
 	{
 		j = 0;
-		while (tmp->name[j] && tmp->name[j] != ' ')	
+		while (tmp->name[j] && tmp->name[j] != ' ')
 			j++;
 		if (i == j && !ft_strncmp(tmp->name, line, i))
 			return (tmp);
@@ -48,22 +58,24 @@ static t_room	*room_check(t_env *e, char *line)
 	return (NULL);
 }
 
-int				room_lst(t_env *e, char *line)
+int				room_list(t_env *e, char *line)
 {
 	t_room	*new;
 	t_room	*tmp;
 
-	if (e->info.nb_link)
+	if (e->info.nb_link || !(check_coor(line)))
 		return (0);
 	if ((tmp = room_check(e, line)))
 	{
-		tmp->name = ft_strdup(line);
+		if (!(tmp->name = ft_strdup(line)))
+			free_env(e, 1);
 		return (1);
 	}
 	e->info.nb_room++;
 	if (!(new = (t_room *)ft_memalloc(sizeof(t_room))))
 		free_env(e, 1);
-	new->name = ft_strdup(line);
+	if (!(new->name = ft_strdup(line)))
+		free_env(e, 1);
 	new->next = e->room;
 	e->room = new;
 	return (1);

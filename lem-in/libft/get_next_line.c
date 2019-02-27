@@ -3,108 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 13:52:34 by agissing          #+#    #+#             */
-/*   Updated: 2019/01/04 14:25:21 by agissing         ###   ########.fr       */
+/*   Created: 2018/11/18 15:46:26 by acompagn          #+#    #+#             */
+/*   Updated: 2019/02/27 14:56:51 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_file			*ft_newfile(int fd)
+static t_gnl	*ft_lst(int fd, t_gnl *lst)
 {
-	t_file		*file;
+	t_gnl	*new;
 
-	if (!(file = (t_file*)malloc(sizeof(t_file))))
+	if (!(new = (t_gnl *)malloc(sizeof(t_gnl))))
 		return (NULL);
-	file->next = NULL;
-	file->fd = fd;
-	file->sav = NULL;
-	return (file);
+	new->fd = fd;
+	if (!(new->s = ft_strnew(1)))
+		return (NULL);
+	new->next = NULL;
+	new->head = (lst ? lst->head : new);
+	if (lst)
+		lst->next = new;
+	return (new);
 }
 
-t_file			*ft_gocfile(t_file *file, int fd)
+static t_gnl	*ft_check_fd(t_gnl *lst, int fd)
 {
-	if (file)
+	if (!(lst))
+		if (!(lst = ft_lst(fd, lst)))
+			return (NULL);
+	lst = lst->head;
+	while (lst)
 	{
-		if (file->fd == fd)
-			return (file);
-		else if (file->next)
-			return (ft_gocfile(file->next, fd));
-		file->next = ft_newfile(fd);
-		return (file->next);
+		if (lst->fd == fd)
+			return (lst);
+		if (lst->next == NULL)
+		{
+			if (!(lst = ft_lst(fd, lst)))
+				return (NULL);
+			return (lst);
+		}
+		lst = lst->next;
 	}
-	file = ft_newfile(fd);
-	return (file);
+	return (lst);
 }
 
-int				ft_delelem(t_file **file, int fd, int ret)
+static int		ft_check_line(char **line, t_gnl *lst)
 {
-	t_file		*last;
-	t_file		*tofree;
+	size_t		i;
+	char		*tmp;
 
-	last = *file;
-	while (last->fd != fd && last->next && last->next->fd != fd)
-		last = last->next;
-	tofree = last->fd == fd ? last : last->next;
-	if (last->fd == fd)
-		*file = tofree->next;
+	i = 0;
+	while (lst->s[i] != '\n' && lst->s[i])
+		i++;
+	if (!(*line = ft_strsub(lst->s, 0, i)))
+		return (-1);
+	if (i < ft_strlen(lst->s))
+	{
+		if (!(tmp = ft_strdup(ft_strchr(lst->s, '\n') + 1)))
+			return (-1);
+		free(lst->s);
+		lst->s = tmp;
+	}
 	else
-		last->next = tofree->next;
-	ft_strdel(&(tofree->sav));
-	free(tofree);
-	return (ret);
-}
-
-int				ft_treat(char **sav, char **line)
-{
-	char	*tmp;
-	int		l_line;
-
-	l_line = 0;
-	while ((*sav)[l_line] && (*sav)[l_line] != '\n')
-		l_line++;
-	if (((*sav)[l_line]) == '\n')
-	{
-		*line = ft_strsub(*sav, 0, l_line);
-		tmp = *sav;
-		*sav = ft_strdup(&(*sav)[l_line + 1]);
-		free(tmp);
-		!(*sav)[0] ? ft_strdel(sav) : 0;
-	}
-	else if (!((*sav)[l_line]))
-	{
-		*line = ft_strdup(*sav);
-		ft_strdel(sav);
-	}
+		ft_strclr(lst->s);
 	return (1);
 }
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_file	*file = NULL;
-	t_file			*current;
+	static t_gnl	*lst;
 	char			*tmp;
-	char			*buffer;
-	int				r;
+	int				ret;
+	char			keep[BUFF_SIZE + 1];
 
-	if (fd < 0 || !line || (!file && !(file = ft_newfile(fd))))
+	ret = 0;
+	if (fd < 0 || !line || read(fd, keep, 0) == -1 || BUFF_SIZE <= 0)
 		return (-1);
-	current = ft_gocfile(file, fd);
-	if (!current || (!(current->sav) && !(current->sav = ft_strnew(0))) ||
-		!(buffer = ft_strnew(GNL_BUFF_SIZE)))
+	if (!(lst = ft_check_fd(lst, fd)))
 		return (-1);
-	while (!(r = 0) && !ft_strchr(current->sav, 10) && !ft_strchr(buffer, 10)
-		&& (r = read(fd, buffer, GNL_BUFF_SIZE)) > 0)
+	while (!ft_strchr(lst->s, '\n') && (ret = read(fd, keep, BUFF_SIZE)) > 0)
 	{
-		buffer[r] = 0;
-		tmp = current->sav;
-		current->sav = ft_strjoin(current->sav, buffer);
+		keep[ret] = '\0';
+		tmp = lst->s;
+		if (!(lst->s = ft_strjoin(lst->s, keep)))
+			return (-1);
 		free(tmp);
 	}
-	free(buffer);
-	if (r < 0 || (r == 0 && (!(current->sav) || !(current->sav)[0])))
-		return (ft_delelem(&file, fd, r < 0 ? -1 : 0));
-	return (ft_treat(&(current->sav), line));
+	if (ret < BUFF_SIZE && !ft_strlen(lst->s))
+		return (0);
+	return (ft_check_line(line, lst));
 }

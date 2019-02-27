@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 14:41:03 by agissing          #+#    #+#             */
-/*   Updated: 2018/11/09 18:40:03 by agissing         ###   ########.fr       */
+/*   Created: 2018/11/08 10:59:05 by acompagn          #+#    #+#             */
+/*   Updated: 2019/02/27 12:48:18 by acompagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 
 char		*ft_itoa(int n)
 {
-	unsigned int	nb;
-	size_t			i;
-	char			*str;
+	char			*s;
+	int				len;
+	unsigned int	abs;
+	unsigned int	tmp;
 
-	i = 0;
-	if (!(str = ft_strnew(ft_nblen(n))))
-		return (NULL);
-	nb = (n < 0 ? -n : n);
-	while (nb > 0 || i == 0)
+	len = (n < 0) ? 2 : 1;
+	abs = (n < 0) ? -n : n;
+	tmp = abs;
+	while (tmp > 9)
 	{
-		str[i] = (nb % 10) + '0';
-		nb /= 10;
-		i++;
+		len++;
+		tmp /= 10;
 	}
+	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
+		return (NULL);
+	s[len--] = '\0';
+	while (abs > 9)
+	{
+		s[len--] = (abs % 10) + 48;
+		abs /= 10;
+	}
+	s[len] = (abs % 10) + 48;
 	if (n < 0)
-		str[i] = '-';
-	return (ft_strrev(str));
+		s[--len] = '-';
+	return (s);
 }
