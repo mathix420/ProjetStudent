@@ -10,9 +10,9 @@ let MARGIN = 0;
 let GOOD_SIZE = 0;
 let MAX_COORD = 0;
 let MIN_COORD = 2147483647;
-let MAX_STEPS;
+let MAX_STEPS = 0;
 
-let SPEED = 20;
+let SPEED = 100;
 
 let BUTTON_RAND;
 let BUTTON_RESTART;
@@ -86,25 +86,25 @@ function draw() {
       );
     }
   });
-  let step_id = parseInt((STEP - 1) / 100);
+  let step_id = parseInt((STEP - 1) / SPEED);
   if (step_id < MAP.steps.length && STEP > 1) {
     Object.keys(MAP.steps[step_id]).forEach(function(lemin_name){
       let room_name = MAP.steps[step_id][lemin_name];
       let lemin_id = parseInt(lemin_name.substring(1)) - 1;
       if (LEMIN_TAB.length <= lemin_id) {
         LEMIN_TAB.push(new lemin(lemin_name));
-      } else if (STEP % 100 === 0) {
+      } else if (STEP % SPEED === 0) {
         LEMIN_TAB[lemin_id].from = MAP.rooms[room_name];
-        if (room_name === MAP.end && STEP / 100 < MAP.steps.length) {
+        if (room_name === MAP.end && STEP / SPEED < MAP.steps.length) {
           ARRIVED += 1;
         }
       }
-      put_lemin(LEMIN_TAB[lemin_id].from, MAP.rooms[room_name], STEP % 100);
+      put_lemin(LEMIN_TAB[lemin_id].from, MAP.rooms[room_name], STEP % SPEED);
     });
   } else {
-    put_lemin(MAP.rooms[MAP.start], MAP.rooms[0], 0);
+    put_lemin(MAP.rooms[MAP.start], MAP.rooms[MAP.start], 0);
   }
-  if (STEP / 100 < MAP.steps.length) {
+  if (STEP / SPEED < MAP.steps.length) {
     STEP += 1;
   } else {
     ARRIVED = LEMIN_TAB.length;
@@ -134,8 +134,15 @@ function keyPressed() {
     LEMIN_TAB = [];
   } else if (keyCode === 88) {
     randomize();
-  } else if (keyCode === RIGHT_ARROW) {
-
+  } else if (keyCode === UP_ARROW && SPEED > 1) {
+    SPEED -= 1;
+  } else if (keyCode === DOWN_ARROW) {
+    SPEED += 1;
+  } else if (keyCode === 77) {
+    SPEED = 1;
+    STEP = 1;
+    ARRIVED = 0;
+    LEMIN_TAB = [];
   }
 }
 
@@ -177,8 +184,8 @@ function put_lemin(input, output, depth) {
   strokeWeight(2);
   noStroke();
   ellipse(
-    map(map(depth, 0, 100, input.x, output.x), MIN_COORD, MAX_COORD, MARGIN, windowWidth - MARGIN),
-    map(map(depth, 0, 100, input.y, output.y), MIN_COORD, MAX_COORD, MARGIN, windowHeight - MARGIN),
+    map(map(depth, 0, SPEED, input.x, output.x), MIN_COORD, MAX_COORD, MARGIN, windowWidth - MARGIN),
+    map(map(depth, 0, SPEED, input.y, output.y), MIN_COORD, MAX_COORD, MARGIN, windowHeight - MARGIN),
     SIZE_LEMIM,
     SIZE_LEMIM
   );
@@ -189,7 +196,7 @@ function draw_info() {
   textAlign(LEFT);
   textFont("Helvetica");
   textSize(30);
-  text(ARRIVED + "/" + MAP.nb_ant + " ants", 8, 30);
+  text(ARRIVED + "/" + MAP.nb_ant + " ants", 20, 35);
 }
 
 function draw_links() {
