@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/09 17:10:19 by agissing          #+#    #+#              #
-#    Updated: 2019/02/27 14:58:37 by acompagn         ###   ########.fr        #
+#    Updated: 2019/02/28 17:54:45 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -48,7 +48,7 @@ LIBFT = libft/libft.a
 ################################################################################
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -Wall -Wextra -Werror
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -69,7 +69,7 @@ $(LEMIN_OBJ) : obj%.o : $(DIR_SRCS0)%.c
 	@$(CC) $(FLAGS) -c $< -o $@ -Iinc -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
-$(LEMIN) : $(DIR_OBJ) $(LEMIN_OBJ) $(LIBFT)
+$(LEMIN) : inc/lem_in.h $(DIR_OBJ) $(LEMIN_OBJ) $(LIBFT)
 	@$(CC) $(FLAGS) $(LEMIN_OBJ) -o $@ -Iinc -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $(LEMIN) done!\n"
 

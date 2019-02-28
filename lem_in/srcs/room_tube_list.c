@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 14:10:21 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/27 15:17:46 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 18:51:31 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int				room_list(t_env *e, char *line)
 		return (0);
 	if ((tmp = room_check(e, line)))
 	{
+		free(tmp->name);
 		if (!(tmp->name = ft_strdup(line)))
 			free_env(e, 1);
 		return (1);

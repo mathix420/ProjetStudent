@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/28 15:57:48 by agissing          #+#    #+#              #
-#    Updated: 2019/02/28 15:57:49 by agissing         ###   ########.fr        #
+#    Updated: 2019/02/28 17:43:21 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 import fileinput, json, webbrowser, os
@@ -60,8 +60,8 @@ try:
         nb_line += 1
 
     map_file = open("visu/output.lem", 'w+')
-
     map_file.write("let MAP = JSON.parse(`%s`)" % json.dumps(map))
+    map_file.close()
 
     webbrowser.open('file:///%s/index.html' % os.path.dirname(os.path.realpath(__file__)))
 except Exception as e:

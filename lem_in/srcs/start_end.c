@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 10:48:13 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/27 14:53:03 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:44:52 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int				add_end(t_env *e)
 	t_room	*new;
 	t_room	*tmp;
 
-	tmp = start_end_cmp(e, e->info.end);
+	if (!(tmp = start_end_cmp(e, e->info.end)))
+		return (0);
 	e->info.nb_room++;
 	if (!(new = (t_room *)ft_memalloc(sizeof(t_room))))
 		return (0);

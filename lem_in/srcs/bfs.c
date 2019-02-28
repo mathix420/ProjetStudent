@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:07:49 by agissing          #+#    #+#             */
-/*   Updated: 2019/02/27 14:39:40 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 18:31:15 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		get_weigth(t_env *e, int path_size, int id)
 
 	i = -1;
 	max = 0;
-	ft_bzero(e->tab_ant, sizeof(int) * e->room->node->nb_next);
+	ft_bzero(e->tab_ant, sizeof(int) * (e->room->node->nb_next + 10));
 	while (++i < id - !!e->count)
 	{
 		e->tab_ant[i] = 0;

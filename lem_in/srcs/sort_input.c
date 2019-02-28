@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 18:26:55 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/27 15:17:42 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 17:45:50 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void		hashtag_info(t_env *e, char *line)
 	while (line[++i])
 		if (line[i] == '#')
 			hash++;
-	if (!ft_strncmp(cmp1, line, 7))
+	if (!ft_strncmp(cmp1, line, 7) && ft_strlen(line) == 7)
 	{
 		e->info.end_id = -1;
 		e->info.start_id = -2;
 	}
-	else if (!ft_strncmp(cmp2, line, 5))
+	else if (!ft_strncmp(cmp2, line, 5) && ft_strlen(line) == 5)
 	{
 		e->info.start_id = -1;
 		e->info.end_id = -2;

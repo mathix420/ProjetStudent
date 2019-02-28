@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 12:35:07 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/27 14:37:58 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:36:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void		print_one_round2(t_env *e, t_room **room, int *passed, int id)
 		*passed += 1;
 		e->tab_ant[id]--;
 	}
-	else if (id >= 0 && (*room)->depth == 2 &&
-			((*room)->old_ant = (*room)->lock))
+	else if (id >= 0 && (*room)->depth == 2
+			&& ((*room)->old_ant = (*room)->lock))
 		(*room)->lock = 0;
 	else if ((*room)->nb_ant == e->queue->node->room->nb_ant
 			|| (*room)->id == e->info.end_id)

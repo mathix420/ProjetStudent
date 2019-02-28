@@ -6,7 +6,7 @@
 /*   By: acompagn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 17:50:53 by acompagn          #+#    #+#             */
-/*   Updated: 2019/02/27 17:50:56 by acompagn         ###   ########.fr       */
+/*   Updated: 2019/02/28 18:31:44 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ static int		malloc_tab(t_env *e)
 	int		malloc_size;
 
 	malloc_size = e->room->node->nb_next;
-	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * malloc_size)))
+	if (!(e->tab_size = (int *)ft_memalloc(sizeof(int) * (malloc_size + 10))))
 	{
 		free_env(e, 2);
 		return (0);
 	}
-	if (!(e->tab_ant = (int *)ft_memalloc(sizeof(int) * malloc_size)))
+	if (!(e->tab_ant = (int *)ft_memalloc(sizeof(int) * (malloc_size + 10))))
 	{
 		free_env(e, 2);
 		return (0);
 	}
-	if (!(e->tab_id = (int *)ft_memalloc(sizeof(int) * malloc_size)))
+	if (!(e->tab_id = (int *)ft_memalloc(sizeof(int) * (malloc_size + 10))))
 	{
 		free_env(e, 2);
 		return (0);
@@ -40,7 +40,7 @@ static void		reseting_var(t_env *e)
 	e->lock_var = -1;
 	if (e->steps != -1)
 		clean_unused_path(e);
-	ft_bzero(e->tab_ant, sizeof(int) * e->room->node->nb_next);
+	ft_bzero(e->tab_ant, sizeof(int) * (e->room->node->nb_next + 10));
 }
 
 static int		last_call_results(t_env *e)

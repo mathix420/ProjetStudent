@@ -1,0 +1,22 @@
+98
+##start
+a 23 39
+b 1 12
+c 19 7
+d 6 18
+f 45 30
+g 2 18
+h 3 4
+##end
+e 43 12
+a-b
+a-d
+c-b
+c-e
+d-e
+e-g
+g-h
+d-f
+f-e
+h-a
+
