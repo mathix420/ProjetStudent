@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/01 09:17:27 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/01 13:29:28 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,6 @@ t_arena	*init_arena(int nb_champ)
 	return (arena);
 }
 
-void	init_op(t_arena *arena, void (*f)(t_arena *arena),
-		char *name, int duration)
-{
-	static int	position = 0;
-
-	arena->op_tab[position].name = ft_strdup(name);
-	arena->op_tab[position].duration = duration;
-	arena->op_tab[position].op_function = f;
-	position++;
-}
-
-void	init_op_tab(t_arena *arena)
-{
-	init_op(arena, ft_live, "live", 10);
-	init_op(arena, ft_ld, "ld", 5);
-	init_op(arena, ft_st, "st", 5);
-	init_op(arena, ft_add, "add", 10);
-	init_op(arena, ft_sub, "sub", 10);
-	init_op(arena, ft_and, "and", 6);
-	init_op(arena, ft_or, "or", 6);
-	init_op(arena, ft_xor, "xor", 6);
-	init_op(arena, ft_zjmp, "zjmp", 20);
-	init_op(arena, ft_ldi, "ldi", 25);
-	init_op(arena, ft_sti, "sti", 25);
-	init_op(arena, ft_fork, "fork", 800);
-	init_op(arena, ft_lld, "lld", 10);
-	init_op(arena, ft_lldi, "lldi", 50);
-	init_op(arena, ft_lfork, "lfork", 1000);
-	init_op(arena, ft_aff, "aff", 2);
-	init_op(arena, ft_nothing, "nothing", 0);
-}
-
 t_arena	*create_arena(int ac, char **av)
 {
 	int		champ;
@@ -81,7 +49,6 @@ t_arena	*create_arena(int ac, char **av)
 	if (ac == 1 || ac > 5)
 		ft_exit();
 	arena = init_arena(ac - 1);
-	init_op_tab(arena);
 	champ = 0;
 	while (++champ < ac)
 	{

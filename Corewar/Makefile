@@ -3,90 +3,100 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/07 10:43:07 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/01 10:10:59 by jnoe             ###   ########.fr        #
+#    Created: 2019/03/01 16:30:59 by agissing          #+#    #+#              #
+#    Updated: 2019/03/01 18:57:21 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+# ***                            MF-GEN MAKEFILE                           *** #
+# **************************************************************************** #
 
-INC_PATH	=	includes/
+################################################################################
+#####                              FILES VARS                              #####
+################################################################################
 
-INC			=	includes/corewar.h
+ASM = asm
+COREWAR = corewar
+OBJ_DIR = obj
 
-SRC_PATH	=	srcs/asm/
-SRC_PATH2	=	srcs/corewar/
+D_ASM = srcs/asm
+_SRC_ASM = asm.c 
+ASM_SRC = $(patsubst %,$(D_ASM)/%,$(_SRC_ASM))
+ASM_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_SRC_ASM:.c=.o))
 
-SRC_NAME 	=	asm.c \
-				
-SRC_NAME2 	=	corewar.c				\
-				create_arena.c			\
-				ft_exit.c				\
-				create_champions.c		\
-				op.c					\
-				print_map.c				\
-				print_structure.c		\
-				print_op_tab.c			\
-				hexa_to_int.c			\
+D_ASM_INC = includes
+_ASM_INC = op.h
+ASM_INC = $(patsubst %,$(D_ASM_INC)/%,$(_ASM_INC))
 
-OBJ_PATH	=	objs/asm/
-OBJ_PATH2	=	objs/corewar/
+D_COREWAR = srcs/corewar
+_SRC_COREWAR = corewar.c \
+				create_arena.c \
+				create_champions.c \
+				ft_exit.c \
+				ft_op.c \
+				hexa_to_int.c \
+				op.c \
+				print_map.c \
+				print_structure.c
+COREWAR_SRC = $(patsubst %,$(D_COREWAR)/%,$(_SRC_COREWAR))
+COREWAR_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_SRC_COREWAR:.c=.o))
 
-CPPFLAGS	=	-Iincludes
+D_COREWAR_INC = includes
+_COREWAR_INC = corewar.h \
+				op.h
+COREWAR_INC = $(patsubst %,$(D_COREWAR_INC)/%,$(_COREWAR_INC))
 
-LDFLAGS		=	-Llibft
-LDLIBS		=	-lft
+D_LIBFT = libft
+LIBFT = $(patsubst %,$(D_LIBFT)/%,$(shell make -C ${D_LIBFT} get_depth))
 
-NAME		=	asm
-NAME2		=	corewar
+################################################################################
+#####                           COMPILER OPTIONS                           #####
+################################################################################
 
-CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror
+CC = gcc
+FLAGS = -Wall -Wextra -Werror
 
-OBJ_NAME	=	$(SRC_NAME:.c=.o)
-OBJ_NAME2	=	$(SRC_NAME2:.c=.o)
+################################################################################
+#####                            MAKEFILE RULES                            #####
+################################################################################
 
-SRC			=	$(addprefix $(SRC_PATH),$(SRC_NAME))
-SRC2		=	$(addprefix $(SRC_PATH2),$(SRC_NAME2))
-OBJ			=	$(addprefix $(OBJ_PATH),$(OBJ_NAME))
-OBJ2		=	$(addprefix $(OBJ_PATH2),$(OBJ_NAME2))
+.PHONY : all clean fclean re libft
 
-all: $(NAME) $(NAME2)
+all : $(ASM) $(COREWAR)
 
-$(NAME): $(OBJ)
-	@make -C libft/
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ) -o $@
-	@echo "$(NAME) created"
+$(LIBFT) :
+	@make -C libft
 
-$(NAME2): $(OBJ2)
-	@make -C libft/
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(OBJ2) -o $@
-	@echo "$(NAME2) created"
+$(OBJ_DIR) :
+	@mkdir -p $@
+	@printf "\e[2K\e[94m[OBJ]\e[0m Directory created!\n"
 
-$(OBJ_PATH)%.o : $(SRC_PATH)%.c $(INC)
-	@mkdir objs 2> /dev/null || true
-	@mkdir $(OBJ_PATH) 2> /dev/null || true
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+$(ASM_OBJ) : $(OBJ_DIR)%.o : $(D_ASM)%.c
+	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
+	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
-$(OBJ_PATH2)%.o : $(SRC_PATH2)%.c $(INC)
-	@mkdir objs 2> /dev/null || true
-	@mkdir $(OBJ_PATH2) 2> /dev/null || true
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+$(ASM) : $(OBJ_DIR) $(ASM_OBJ) $(ASM_INC) $(LIBFT)
+	@$(CC) $(FLAGS) $(ASM_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
+	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n"
 
-lib_make_fclean:
-	@make -C libft/ fclean
+$(COREWAR_OBJ) : $(OBJ_DIR)%.o : $(D_COREWAR)%.c
+	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
+	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
-lib_make_clean:
-	@make -C libft/ clean
+$(COREWAR) : $(OBJ_DIR) $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT)
+	@$(CC) $(FLAGS) $(COREWAR_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
+	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n"
 
-clean:
-	@rm -rf $(OBJ) $(OBJ2) $(OBJ_PATH) $(OBJ_PATH2)
-	@echo "objs suppressed"
+clean :
+	@/bin/rm -rf $(OBJ_DIR)
+	@make clean -C libft
+	@echo "\033[33m[PRG]\033[0m Cleaning done"
 
-fclean: clean lib_make_fclean
-	@rm -rf $(NAME) $(NAME2)
-	@echo "exec suppressed"
+fclean :
+	@/bin/rm -rf $(OBJ_DIR)	
+	@/bin/rm -f $(ASM) $(COREWAR)
+	@make fclean -C libft
+	@echo "\033[33m[PRG]\033[0m Cleaning done"
 
-re: lib_make_fclean fclean all
-
-.PHONY:	all, clean, fclean, re
+re : fclean all

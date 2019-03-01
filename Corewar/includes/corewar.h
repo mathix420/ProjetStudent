@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/01 10:13:28 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/01 14:40:28 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 typedef struct s_champion	t_champion;
 typedef struct s_arena		t_arena;
 
-typedef struct				s_op
-{
-	char 					*name;
-	int						duration;
-	void					(*op_function)(t_arena *);
-}							t_op;
-
 typedef struct				s_map
 {
 	char					hex;
@@ -34,7 +27,6 @@ typedef struct				s_map
 
 struct						s_arena
 {
-	t_op					op_tab[17];
 	t_map					map[MEM_SIZE * 2 + 1];
 	int						cycle;
 	int						cycle_to_die;
@@ -45,7 +37,9 @@ struct						s_arena
 typedef struct				s_process
 {
 	t_map					*pc;
+	int						idx_instruction;
 	int						cycle_decount;
+	int						size_instruction;
 	t_champion				*champion;
 	struct s_process		*next;
 }							t_process;

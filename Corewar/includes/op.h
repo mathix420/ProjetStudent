@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 18:04:28 by jnoe              #+#    #+#             */
-/*   Updated: 2019/02/26 18:08:41 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/01 14:50:14 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,27 @@ typedef struct			s_header
 }						t_header;
 
 typedef char			t_arg_type;
+typedef struct s_arena	t_arena;
+
+typedef struct			s_encodage
+{
+	unsigned char		param1;
+	unsigned char		param2;
+	unsigned char		param3;
+}						t_encodage;
+
+typedef struct			s_op
+{
+	char				*name;
+	int					nb_param;
+	t_encodage			encodage;
+	int					op_code;
+	int					duration;
+	void				(*function)(t_arena *);
+	int					carry;
+	int					direct_size;
+}						t_op;
+
+extern t_op				op_tab[17];
 
 #endif

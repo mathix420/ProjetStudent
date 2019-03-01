@@ -6,7 +6,7 @@
 #    By: jnoe <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 13:10:17 by jnoe              #+#    #+#              #
-#    Updated: 2019/01/25 14:46:03 by jnoe             ###   ########.fr        #
+#    Updated: 2019/03/01 18:51:24 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME = libft.a
 
 CC = gcc
 CFLAGS = -Werror -Wall -Wextra
+
+INC = libft.h
 
 SRC = ft_strnstr.c ft_strcmp.c ft_tolower.c ft_bzero.c \
 	ft_toupper.c ft_strdup.c ft_memchr.c ft_strstr.c \
@@ -35,14 +37,19 @@ SRC = ft_strnstr.c ft_strcmp.c ft_tolower.c ft_bzero.c \
 
 OBJ = $(SRC:.c=.o)
 
+.PHONY: all get_depth clean fclean re
+
 all : $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INC)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "lib created"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
+
+get_depth:
+	@echo $(SRC) $(INC)
 
 clean: 
 	@/bin/rm -f $(OBJ)

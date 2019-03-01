@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/02/28 13:07:24 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/01 14:40:35 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_process	*init_process(t_map *pc, t_champion *champion)
 		ft_exit();
 	process->pc = pc;
 	process->cycle_decount = 0;
+	process->size_instruction = 0;
+	process->idx_instruction = 0;
 	process->champion = champion;
 	process->next = NULL;
 	return (process);
