@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/04 21:21:47 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/04 22:46:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ static int				start_with(char *str, char c)
 	return (0);
 }
 
-static int				
+// fonction qui donne la valeur de check pour comparer
+
+// fonction qui separe tout les args
+
+// 
 
 static int				parse(char *str, int count)
 {
