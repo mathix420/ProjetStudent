@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 11:56:06 by jnoe              #+#    #+#             */
-/*   Updated: 2019/01/07 13:13:52 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/04 19:59:41 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <unistd.h>
 # define BUFF_SIZE 4096
 
-typedef struct		s_list
+typedef struct		s_gnl_list
 {
 	int				fd;
 	char			*str;
 	struct s_list	*next;
-}					t_list;
+}					t_gnl_list;
 
 int					ft_realloc(char *str, char **line, int i);
 

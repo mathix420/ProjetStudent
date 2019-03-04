@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 14:33:10 by jnoe              #+#    #+#             */
-/*   Updated: 2018/11/20 16:52:04 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/09 13:28:17 by agissing          #+#    #+#             */
+/*   Updated: 2018/11/09 19:22:15 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,18 @@
 
 char	*ft_strtrim(char const *s)
 {
-	int		start;
-	int		end;
-	char	*str;
+	int		i;
+	int		j;
 
-	if (s != NULL)
-	{
-		start = 0;
-		end = ft_strlen(s) - 1;
-		while (s[start] == ' ' || s[start] == '\t' || s[start] == '\n')
-			start++;
-		while ((s[end] == ' ' || s[end] == '\t' || s[end] == '\n') && end != 0)
-			end--;
-		end++;
-		if (start > end)
-			return (ft_strnew(0));
-		if ((str = ft_strsub(s, start, end - start)) == NULL)
-			return (NULL);
-		return (str);
-	}
-	return (NULL);
+	if (!s)
+		return (NULL);
+	i = 0;
+	j = ft_strlen(s) - 1;
+	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+		i++;
+	if (s[i] == '\0')
+		return (ft_strdup(s + i));
+	while ((s[j] == ' ' || s[j] == '\n' || s[j] == '\t') && j > 0)
+		j--;
+	return (ft_strsub(s, i, j - i + 1));
 }

@@ -3,38 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 12:02:56 by jnoe              #+#    #+#             */
-/*   Updated: 2019/01/07 13:39:06 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/08 14:39:20 by agissing          #+#    #+#             */
+/*   Updated: 2018/11/19 15:14:11 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long	ft_atoi(const char *nptr)
+int		ft_atoi(const char *str)
 {
-	long long	nbr;
-	int			sign;
+	unsigned long long	out;
+	int					sign;
+	int					i;
 
-	nbr = 0;
-	while ((*nptr >= 7 && *nptr <= 13) || *nptr == 32)
-		nptr++;
+	i = 0;
+	out = 0;
 	sign = 1;
-	if (*nptr == '-')
-		(sign = -1);
-	if (*nptr == '-' || *nptr == '+')
-		nptr++;
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		if (sign == 1 && ((nbr >= 922337203685477580 && *nptr >= '7') ||
-			nbr >= 922337203685477581))
-			return (42949672956);
-		if (sign == -1 && ((nbr >= 922337203685477580 && *nptr >= '7') ||
-			nbr >= 922337203685477581))
-			return (42949672956);
-		nbr = nbr * 10 + (*nptr - '0');
-		nptr++;
-	}
-	return (sign * nbr);
+	while ((str[i] >= 8 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		sign = (str[i++] == '-' ? -1 : 1);
+	while (str[i] >= '0' && str[i] <= '9')
+		out = (out * 10) + (str[i++] - '0');
+	if (out > 9223372036854775807)
+		return ((sign == 1) ? -1 : 0);
+	return (out * sign);
 }

@@ -3,75 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 14:53:55 by jnoe              #+#    #+#             */
-/*   Updated: 2018/11/20 16:55:57 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/09 14:41:03 by agissing          #+#    #+#             */
+/*   Updated: 2018/11/09 18:40:03 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		len_str(int n)
+char		*ft_itoa(int n)
 {
-	int c;
-
-	c = 0;
-	if (n < 0)
-		c++;
-	while (n != 0)
-	{
-		n = n / 10;
-		c++;
-	}
-	return (c);
-}
-
-static void		reverse_str(char *str)
-{
-	int		i;
-	int		len;
-	int		j;
-	char	tmp;
+	unsigned int	nb;
+	size_t			i;
+	char			*str;
 
 	i = 0;
-	len = ft_strlen(str);
-	j = len - 1;
-	while (i < len / 2)
-	{
-		tmp = str[j];
-		str[j] = str[i];
-		str[i] = tmp;
-		i++;
-		j--;
-	}
-}
-
-char			*ft_itoa(int n)
-{
-	int		i;
-	char	*str;
-	int		sign;
-
-	i = 0;
-	if ((sign = 1) && (n < 0))
-		(sign = -1);
-	if ((str = ft_strnew(len_str(n))) == NULL)
+	if (!(str = ft_strnew(ft_nblen(n))))
 		return (NULL);
-	if (n == 0)
+	nb = (n < 0 ? -n : n);
+	while (nb > 0 || i == 0)
 	{
-		if ((str = ft_strnew(1)) == NULL)
-			return (NULL);
-		str[i] = '0';
-	}
-	while (n != 0)
-	{
-		str[i] = (sign * (n % 10) + 48);
-		n = n / 10;
+		str[i] = (nb % 10) + '0';
+		nb /= 10;
 		i++;
 	}
-	if (sign == -1)
+	if (n < 0)
 		str[i] = '-';
-	reverse_str(str);
-	return (str);
+	return (ft_strrev(str));
 }

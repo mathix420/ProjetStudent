@@ -3,108 +3,108 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/16 11:53:20 by jnoe              #+#    #+#             */
-/*   Updated: 2019/01/25 17:10:03 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/19 13:52:34 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/04 14:25:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int		ft_realloc(char *str, char **line, int len)
+t_file			*ft_newfile(int fd)
 {
-	char	*new_line;
-	int		i;
-	int		j;
-	int		len_line;
+	t_file		*file;
 
-	len_line = 0;
-	while ((*line)[len_line] != '\0')
-		len_line++;
-	if ((new_line = (char *)malloc(len + len_line + 1)) == NULL)
-		return (-1);
-	i = -1;
-	while ((*line)[++i] != '\0')
-		new_line[i] = (*line)[i];
-	j = -1;
-	while (++j < len)
-		new_line[i + j] = str[j];
-	new_line[i + j] = '\0';
-	free(*line);
-	*line = new_line;
+	if (!(file = (t_file*)malloc(sizeof(t_file))))
+		return (NULL);
+	file->next = NULL;
+	file->fd = fd;
+	file->sav = NULL;
+	return (file);
+}
+
+t_file			*ft_gocfile(t_file *file, int fd)
+{
+	if (file)
+	{
+		if (file->fd == fd)
+			return (file);
+		else if (file->next)
+			return (ft_gocfile(file->next, fd));
+		file->next = ft_newfile(fd);
+		return (file->next);
+	}
+	file = ft_newfile(fd);
+	return (file);
+}
+
+int				ft_delelem(t_file **file, int fd, int ret)
+{
+	t_file		*last;
+	t_file		*tofree;
+
+	last = *file;
+	while (last->fd != fd && last->next && last->next->fd != fd)
+		last = last->next;
+	tofree = last->fd == fd ? last : last->next;
+	if (last->fd == fd)
+		*file = tofree->next;
+	else
+		last->next = tofree->next;
+	ft_strdel(&(tofree->sav));
+	free(tofree);
+	return (ret);
+}
+
+int				ft_treat(char **sav, char **line)
+{
+	char	*tmp;
+	int		l_line;
+
+	l_line = 0;
+	while ((*sav)[l_line] && (*sav)[l_line] != '\n')
+		l_line++;
+	if (((*sav)[l_line]) == '\n')
+	{
+		*line = ft_strsub(*sav, 0, l_line);
+		tmp = *sav;
+		*sav = ft_strdup(&(*sav)[l_line + 1]);
+		free(tmp);
+		!(*sav)[0] ? ft_strdel(sav) : 0;
+	}
+	else if (!((*sav)[l_line]))
+	{
+		*line = ft_strdup(*sav);
+		ft_strdel(sav);
+	}
 	return (1);
 }
 
-int		check_endline(const int fd, char **str, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	int i;
-	int n;
+	static t_file	*file = NULL;
+	t_file			*current;
+	char			*tmp;
+	char			*buffer;
+	int				r;
 
-	if (*str == NULL || (*str)[0] == 0)
+	if (fd < 0 || !line || (!file && !(file = ft_newfile(fd))))
+		return (-1);
+	current = ft_gocfile(file, fd);
+	if (!current || (!(current->sav) && !(current->sav = ft_strnew(0))) ||
+		!(buffer = ft_strnew(GNL_BUFF_SIZE)))
+		return (-1);
+	while (!(r = 0) && !ft_strchr(current->sav, 10) && !ft_strchr(buffer, 10)
+		&& (r = read(fd, buffer, GNL_BUFF_SIZE)) > 0)
 	{
-		free(*str);
-		if ((*str = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))) == NULL)
-			return (-1);
-		if ((n = read(fd, *str, BUFF_SIZE)) == -1)
-			return (-1);
-		(*str)[n] = '\0';
-		if (n == 0 && *line[0] == '\0')
-			return (0);
-		if (n == 0 && *line[0] != '\0')
-			return (1);
+		buffer[r] = 0;
+		tmp = current->sav;
+		current->sav = ft_strjoin(current->sav, buffer);
+		free(tmp);
 	}
-	i = 0;
-	while ((*str)[i] != '\n' && (*str)[i] != '\0')
-		i++;
-	if (ft_realloc(*str, line, i) == -1)
-		return (-1);
-	if ((*str)[i] == '\n')
-		return (ft_strpart(str, i + 1));
-	ft_strpart(str, i);
-	return (check_endline(fd, str, line));
-}
-
-int		ft_strpart(char **str, int i)
-{
-	char	*newstr;
-	int		j;
-	int		len;
-
-	len = 0;
-	while ((*str)[len] != '\0')
-		len++;
-	if ((newstr = (char *)malloc(sizeof(char) * (len - i + 1))) == NULL)
-		return (-1);
-	j = 0;
-	while ((*str)[i] != '\0')
-	{
-		newstr[j] = (*str)[i];
-		i++;
-		j++;
-	}
-	newstr[j] = '\0';
-	free(*str);
-	*str = newstr;
-	return (1);
-}
-
-int		get_next_line(const int fd, char **line)
-{
-	static char	*str = NULL;
-	int			res;
-
-	if (fd < 0)
-		return (-1);
-	if (line == NULL)
-		return (-1);
-	*line = NULL;
-	free(*line);
-	if ((*line = (char *)malloc(1)) == NULL)
-		return (-1);
-	*line[0] = '\0';
-	res = (check_endline(fd, &str, line));
-	if (res == 0 || res == -1)
-		free(str);
-	return (res);
+	free(buffer);
+	if (r < 0 || (r == 0 && (!(current->sav) || !(current->sav)[0])))
+		return (ft_delelem(&file, fd, r < 0 ? -1 : 0));
+	return (ft_treat(&(current->sav), line));
 }

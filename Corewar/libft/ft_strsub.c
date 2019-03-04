@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 14:32:14 by jnoe              #+#    #+#             */
-/*   Updated: 2018/11/20 16:51:32 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/09 11:54:48 by agissing          #+#    #+#             */
+/*   Updated: 2018/11/12 12:46:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,18 @@
 
 char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char			*str;
-	unsigned int	i;
-	unsigned int	len_s;
+	size_t	i;
+	char	*out;
 
-	if (s != NULL)
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (!(out = ft_strnew(len)))
+		return (NULL);
+	while (i < len)
 	{
-		len_s = ft_strlen(s);
-		i = 0;
-		if ((str = ft_strnew(len)) == NULL)
-			return (NULL);
-		while (i < len && start < len_s && s[start + i] != '\0')
-		{
-			str[i] = s[start + i];
-			i++;
-		}
-		return (str);
+		out[i] = s[start + i];
+		i++;
 	}
-	return (NULL);
+	return (out);
 }

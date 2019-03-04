@@ -3,81 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: agissing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 11:33:14 by jnoe              #+#    #+#             */
-/*   Updated: 2018/11/20 18:53:24 by jnoe             ###   ########.fr       */
+/*   Created: 2018/11/09 14:05:02 by agissing          #+#    #+#             */
+/*   Updated: 2019/01/14 18:09:37 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		len_tab(char const *s, char c)
+static int	count_word(const char *s, char c)
 {
-	int i;
-	int l;
+	int		cmpt;
+	int		i;
 
-	l = 0;
+	cmpt = 0;
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		while (s[i] == c)
+		while (s[i] == c && s[i])
 			i++;
-		if (s[i] != '\0')
-			l++;
-		while (s[i] != '\0' && s[i] != c)
+		if (s[i] != c && s[i])
+			cmpt++;
+		while (s[i] != c && s[i])
 			i++;
 	}
-	return (l);
+	return (cmpt);
 }
 
-static int		len_str(char const *s, char c, int i)
+static char	**ft_split(char **tab, char c, size_t l, const char *str)
 {
-	int l;
+	size_t	save;
+	size_t	i;
+	size_t	n;
 
-	l = 0;
-	while (s[i + l] != '\0' && s[i + l] != c)
-		l++;
-	return (l);
-}
-
-static char		**makestr(char **tab, char const *s, char c, int i)
-{
-	int j;
-	int l;
-	int k;
-
-	j = 0;
-	while (s[i] != '\0')
+	save = 0;
+	i = 0;
+	n = 0;
+	while (str[i])
 	{
-		while (s[i] == c)
+		while (str[i] == c && str[i])
 			i++;
-		if (s[i] == '\0')
-			break ;
-		l = len_str(s, c, i);
-		if ((tab[j] = ft_strnew(l)) == NULL)
-			return (NULL);
-		k = -1;
-		while (++k < l)
+		save = i;
+		while (str[i] != c && str[i])
 		{
-			tab[j][k] = s[i];
 			i++;
+			l++;
 		}
-		j++;
+		tab[n] = ft_strsub(str, save, l);
+		n++;
+		l = 0;
 	}
-	tab[j] = NULL;
+	tab[n] = 0;
 	return (tab);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char		**ft_strsplit(const char *str, char c)
 {
-	char **tab;
+	int		m;
+	size_t	l;
+	char	**tab;
 
-	if (s != NULL)
-	{
-		if ((tab = (char **)malloc(sizeof(*tab) * (len_tab(s, c) + 1))) == NULL)
-			return (NULL);
-		return (makestr(tab, s, c, 0));
-	}
-	return (NULL);
+	if (str == NULL)
+		return (NULL);
+	l = 0;
+	m = count_word(str, c);
+	if (!(tab = malloc(sizeof(char *) * (m + 1))))
+		return (NULL);
+	return (ft_split(tab, c, l, str));
 }
