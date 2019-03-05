@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/01 13:29:28 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/05 15:23:36 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_arena	*init_arena(int nb_champ)
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->total_process = nb_champ;
 	arena->champion = NULL;
+	arena->process = NULL;
 	return (arena);
 }
 

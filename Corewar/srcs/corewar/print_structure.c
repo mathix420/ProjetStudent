@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:09:50 by jnoe              #+#    #+#             */
-/*   Updated: 2019/02/28 09:53:52 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/05 15:34:49 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_structure(t_arena arena, t_map *map)
 		ft_putnbr(champion->period_live_nb);
 		ft_putstr("\n");
 		ft_putstr("Process\n");
-		process = champion->process;
+		process = arena.process;
 		while (process)
 		{
 			ft_putstr("Pc: ");

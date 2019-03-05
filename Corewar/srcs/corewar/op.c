@@ -5,16 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/01 11:23:41 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/05 12:51:19 by agissing         ###   ########.fr       */
+/*   Created: 2019/03/05 18:01:21 by trlevequ          #+#    #+#             */
+/*   Updated: 2019/03/05 18:04:06 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define MAIN_FILE
-#include "op.h"
 #include "corewar.h"
 
-t_op    op_tab[17] =
+t_op	g_op_tab[17] =
 {
 	{"live", 1, {T_DIR, 0, 0}, 1, 10, &ft_live, 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG, 0}, 2, 5, &ft_ld, 1, 0},

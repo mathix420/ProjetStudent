@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
+#    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/03/01 16:30:59 by agissing          #+#    #+#              #
-#    Updated: 2019/03/05 15:49:29 by agissing         ###   ########.fr        #
+#    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
+#    Updated: 2019/03/05 19:04:10 by jnoe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -39,10 +39,13 @@ _SRC_COREWAR = corewar.c \
 			create_arena.c \
 			create_champions.c \
 			ft_exit.c \
+			check_encodage.c \
 			ft_op.c \
 			hexa_to_int.c \
 			op.c \
 			print_map.c \
+			parsing_header.c \
+			parsing_champion.c \
 			print_structure.c
 COREWAR_SRC = $(addprefix $(D_COREWAR),$(_SRC_COREWAR))
 COREWAR_OBJ = $(addprefix $(OBJ_DIR),$(_SRC_COREWAR:.c=.o))

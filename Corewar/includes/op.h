@@ -1,12 +1,12 @@
-/* ************************************************************************** */
+/* ************************************************************************* */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/26 18:04:28 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 13:52:17 by agissing         ###   ########.fr       */
+/*   Created: 2019/03/05 18:01:55 by trlevequ          #+#    #+#             */
+/*   Updated: 2019/03/05 19:25:53 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,41 +53,38 @@
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct			s_header
+# define REGISTRE				1 << 6
+# define DIRECT					1 << 7
+# define INDIRECT				3 << 6
+
+typedef struct					s_header
 {
-	unsigned int		magic;
-	char				prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int		prog_size;
-	char				comment[COMMENT_LENGTH + 1];
-}						t_header;
+	unsigned int				magic;
+	char						prog_name[PROG_NAME_LENGTH + 4];
+	unsigned int				prog_size;
+	char						comment[COMMENT_LENGTH + 4];
+}								t_header;
 
-typedef char			t_arg_type;
-typedef struct s_arena	t_arena;
+typedef char					t_arg_type;
+typedef struct s_process		t_process;		
 
-typedef struct			s_encodage
-{
-	unsigned char		param1;
-	unsigned char		param2;
-	unsigned char		param3;
-}						t_encodage;
-
-typedef struct			s_op
+typedef struct					s_op
 {
 	char				*name;
 	int					nb_param;
-	t_encodage			encodage;
+	unsigned char		encodage[3];
 	int					op_code;
 	int					duration;
-	void				(*function)(t_arena *);
+	void				(*function)(t_process *);
 	int					carry;
 	int					direct_size;
 	int					name_size;
 }						t_op;
 
 # ifdef MAIN_FILE
-extern t_op				op_tab[17];
+extern t_op				g_op_tab[17];
 # else
-t_op				op_tab[17];
+t_op					g_op_tab[17];
 # endif
 
 #endif

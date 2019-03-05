@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/01 14:40:35 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/05 18:52:57 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,24 @@ void		convert_to_hexa(unsigned char byte, t_map **map, int color)
 	*map += 2;
 }
 
-t_process	*init_process(t_map *pc, t_champion *champion)
+void		add_process_from_player(t_arena *arena, t_map *pc, int number)
 {
 	t_process	*process;
+	int			i;
 
+	i = 0;
 	if ((process = (t_process *)malloc(sizeof(t_process))) == NULL)
 		ft_exit();
 	process->pc = pc;
+	process->valid_encodage = 1;
 	process->cycle_decount = 0;
+	process->index = 0;
 	process->size_instruction = 0;
-	process->idx_instruction = 0;
-	process->champion = champion;
-	process->next = NULL;
-	return (process);
+	process->registre[i] = number;
+	while (++i < REG_NUMBER)
+		process->registre[i] = 0;
+	process->next = arena->process;
+	arena->process = process;
 }
 
 void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
@@ -52,8 +57,6 @@ void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
 	champion->number = number;
 	champion->last_live = 0;
 	champion->period_live_nb = 0;
-	champion->nb_process = 1;
-	champion->process = init_process(pc, champion);
 	champion->arena = arena;
 	champion->next = NULL;
 	tmp_champ = arena->champion;
@@ -63,6 +66,7 @@ void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
 		arena->champion = champion;
 	else
 		tmp_champ->next = champion;
+	add_process_from_player(arena, pc, number);
 }
 
 void		create_champ(char *file_name, t_map *map, int color, t_arena *arena)
@@ -80,8 +84,8 @@ void		create_champ(char *file_name, t_map *map, int color, t_arena *arena)
 		ft_exit();
 	while ((nb_bytes_read = read(fd, &byte, 1)) > 0)
 	{
-		if (map - beg_champion > CHAMP_MAX_SIZE * 2)
-			ft_exit();
+	/*	if (map - beg_champion > CHAMP_MAX_SIZE * 2)
+			ft_exit();*/
 		convert_to_hexa(byte, &map, color);
 	}
 	if ((nb_bytes_read = read(fd, &byte, 1)) == -1)
