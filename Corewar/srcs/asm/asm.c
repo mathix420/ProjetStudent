@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/05 14:05:41 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/05 14:52:40 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ static char				*get_name(char *str)
 	return (ft_strncpy(out, str, i)); // need to check LABEL_CHARS
 }
 
+static int				get_param(char *str, int index)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+	{
+		
+	}
+}
+
 static int				get_index(char *str)
 {
 	int		i;
@@ -68,7 +79,7 @@ static int				get_index(char *str)
 	while (op_tab[++i].name)
 		if (is_space(str[op_tab[i].name_size]) &&
 			!ft_strncmp(op_tab[i].name, str, op_tab[i].name_size))
-			return (i); // need to check params
+			return (get_param(str + op_tab[i].name_size, i)); // need to check params
 	return (-1);
 }
 
