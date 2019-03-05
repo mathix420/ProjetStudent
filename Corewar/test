@@ -1,0 +1,245 @@
+NAME :: .name           "42"
+COMMENT :: .comment        "Just a basic Winner Program"
+Get function :: st
+There is a label :: entree
+Get function :: live
+Get function :: ld
+Get function :: ld
+Get function :: zjmp
+There is a label :: tir
+Get function :: sti
+Get function :: ld
+Get function :: ld
+Get function :: ld
+Get function :: ld
+There is a label :: tirf
+Get function :: live
+Get function :: fork
+Get function :: live
+Get function :: sub
+Get function :: zjmp
+Get function :: ld
+Get function :: fork
+Get function :: live
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: ld
+Get function :: zjmp
+There is a label :: tirop
+Get function :: ld
+Get function :: ld
+Get function :: ld
+There is a label :: tirb
+Get function :: live
+Get function :: sti
+Get function :: sti
+Get function :: add
+Get function :: add
+Get function :: sub
+Get function :: zjmp
+Get function :: ld
+Get function :: zjmp
+Get function :: zjmp
+There is a label :: p32deb
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+There is a label :: p32
+Get function :: sub
+Get function :: add
+Get function :: ldi
+Get function :: sti
+There is a label :: p32li
+Get function :: live
+Get function :: ld
+Get function :: sti
+Get function :: zjmp
+There is a label :: tirvd
+Get function :: zjmp
+There is a label :: bite
+Get function :: sti
+Get function :: ldi
+Get function :: sti
+Get function :: ldi
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: ld
+Get function :: ld
+Get function :: ld
+Get function :: ld
+There is a label :: b0
+Get function :: live
+Get function :: sub
+Get function :: zjmp
+Get function :: fork
+Get function :: st
+Get function :: xor
+Get function :: add
+Get function :: add
+Get function :: ld
+Get function :: zjmp
+There is a label :: b1
+Get function :: add
+Get function :: add
+Get function :: add
+Get function :: ld
+Get function :: zjmp
+There is a label :: top
+Get function :: live
+Get function :: ld
+Get function :: sti
+Get function :: ld
+Get function :: sti
+Get function :: ld
+Get function :: zjmp
+There is a label :: infi
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+Get function :: sti
+There is a label :: l0
+Get function :: live
+There is a label :: l1
+Get function :: live
+There is a label :: l2
+Get function :: live
+There is a label :: l3
+Get function :: live
+There is a label :: l4
+Get function :: live
+There is a label :: l5
+Get function :: live
+There is a label :: l6
+Get function :: live
+There is a label :: l7
+Get function :: live
+There is a label :: l8
+Get function :: live
+There is a label :: l9
+Get function :: live
+There is a label :: l10
+Get function :: live
+Get function :: zjmp
+There is a label :: p1
+Get function :: zjmp
+Get function :: live
+There is a label :: copie
+Get function :: ld
+There is a label :: tart
+Get function :: sti
+Get function :: or
+Get function :: zjmp
+Get function :: sub
+Get function :: zjmp
+Get function :: ld
+Get function :: zjmp
+There is a label :: tirvd2
+Get function :: zjmp
+There is a label :: topd
+Get function :: ld
+Get function :: sti
+Get function :: ld
+Get function :: sti
+Get function :: ld
+Get function :: zjmp
+There is a label :: p64deb
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+Get function :: zjmp
+There is a label :: p64
+Get function :: ld
+Get function :: sub
+Get function :: and
+Get function :: zjmp
+Get function :: ld
+Get function :: add
+There is a label :: cont
+Get function :: add
+Get function :: ld
+Get function :: ld
+Get function :: ldi
+Get function :: sti
+Get function :: sti
+There is a label :: p64li
+Get function :: live
+Get function :: ld
+Get function :: zjmp
+There is a label :: tirdow
+Get function :: ld
+Get function :: ld
+Get function :: ld
+There is a label :: tird
+Get function :: live
+Get function :: sti
+Get function :: sti
+Get function :: add
+Get function :: add
+Get function :: sub
+Get function :: zjmp
+Get function :: ld
+Get function :: zjmp
+Get function :: zjmp
+There is a label :: fin
+Get function :: live

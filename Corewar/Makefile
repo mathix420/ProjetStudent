@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/01 16:30:59 by agissing          #+#    #+#              #
-#    Updated: 2019/03/04 19:57:12 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/05 12:59:53 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -22,13 +22,15 @@ OBJ_DIR = obj/
 
 #asm
 D_ASM = srcs/asm/
-_SRC_ASM = asm.c 
+_SRC_ASM = asm.c \
+			op.c \
+			ft_op.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
 ASM_OBJ = $(addprefix $(OBJ_DIR),$(_SRC_ASM:.c=.o))
 
 #asm includes
 D_ASM_INC = includes/
-_ASM_INC = op.h asm.h
+_ASM_INC = asm.h op.h
 ASM_INC = $(addprefix $(D_ASM_INC),$(_ASM_INC))
 
 #corewar

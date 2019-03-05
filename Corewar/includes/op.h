@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 18:04:28 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/01 14:50:14 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/05 13:52:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,13 @@ typedef struct			s_op
 	void				(*function)(t_arena *);
 	int					carry;
 	int					direct_size;
+	int					name_size;
 }						t_op;
 
+# ifdef MAIN_FILE
 extern t_op				op_tab[17];
+# else
+t_op				op_tab[17];
+# endif
 
 #endif
