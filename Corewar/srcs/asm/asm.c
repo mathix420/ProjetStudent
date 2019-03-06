@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/05 19:35:25 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/06 12:48:25 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void						p_error(int x, char *line, int code)
 	if (code == NO_NAME_OR_COMMENT)
 		printf("asm:%s No name or comment%s: first commands must \
 be %s and %s\n", COLOR_RED, COLOR_END, NAME_CMD_STRING, COMMENT_CMD_STRING);
+	else if (code == BAD_PARAMETER)
+		printf("asm:%s Bad parameter%s\n", COLOR_RED, COLOR_END);
 	printf("\t`%s`\n", line);
 	printf("\t %s%*s%s\n", COLOR_GREEN, x, "^", COLOR_END);
 	exit(1);
@@ -47,30 +49,57 @@ static int				start_with(char *str, char c)
 	return (0);
 }
 
+static int				is_in_str(char c, char *str)
+{
+	while (*str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 static char				*get_label_name(char *str)
 {
 	char	*out;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (str[i] && str[i] != LABEL_CHAR)
+	j = 0;
+	while (str[i] && str[i] != LABEL_CHAR && is_in_str(str[i], LABEL_CHARS))
 		i++;
+	if (str[i] != LABEL_CHAR)
+		p_error(i + 1, str, BAD_LABEL_NAME);
 	if (!(out = ft_strnew(i)))
 		return (NULL);
 	return (ft_strncpy(out, str, i)); // need to check LABEL_CHARS
 }
 
-static inline int		check_params(char param, unsigned char enc)
+static inline int		is_nbr_char(char c)
 {
-	unsigned char	val;
+	return (c == '-' || c == '+' || (c >= '0' && c <= '9'));
+}
+
+static inline int		check_params(char *param, uint8_t enc)
+{
+	uint8_t		val;
 
 	val = 0;
-	(param == DIRECT_CHAR) ? val |= T_DIR : 0;
-	(param == LABEL_CHAR) ? val |= T_IND : 0;
-	(param == 'r') ? val |= T_REG : 0;
-
-	if (val & enc)
-		exit(1);
+	if (*param != DIRECT_CHAR && *param != LABEL_CHAR
+		&& *param != 'r' && !is_nbr_char(*param))
+		return (0);
+	if (*param == DIRECT_CHAR) // and check chars
+		val |= T_DIR;
+	else if (*param == LABEL_CHAR) // and check chars
+		val |= T_IND;
+	else if (*param == 'r') // and check chars
+		val |= T_REG;
+	else if (is_nbr_char(*param)) // and check chars
+		val |= T_DIR;
+	if (!(val & enc))
+		p_error(2, param, BAD_PARAMETER);
 	return (1);
 }
 
@@ -88,7 +117,7 @@ static int				get_param(char *str, int index)
 	{
 		if (str[i] == '#')
 			return (1);
-		else if (ok == -1 && check_params(str[i], g_op_tab[index].encodage[count]))
+		else if (ok == -1 && check_params(str + i, g_op_tab[index].encodage[count]))
 			ok = i;
 		else if (ok >= 0 && (str[i] == SEPARATOR_CHAR || is_space(str[i]) || str[i] == '\n' || !str[i]))
 		{
@@ -165,8 +194,11 @@ static int				parse(char *str, int count, t_header *h)
 				return (1);
 			if (str[i] == LABEL_CHAR && str[i - 1] != DIRECT_CHAR)
 			{
-				printf("%sThere is a label :: %s%s\n", COLOR_RED, (tmp = get_label_name(str)), COLOR_END);
-				free(tmp);
+				if ((tmp = get_label_name(str)))
+				{
+					printf("%sThere is a label :: %s%s\n", COLOR_RED, tmp, COLOR_END);
+					free(tmp);
+				}
 			}
 			else if ((id = get_index(str + i)) >= 0)
 				return (1);
