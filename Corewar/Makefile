@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/06 11:43:02 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/06 17:33:23 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -18,15 +18,17 @@
 
 ASM = asm
 COREWAR = corewar
-OBJ_DIR = obj/
+D_OBJ = obj/
+D_ASM_OBJ = $(D_OBJ)asm/
+D_COREWAR_OBJ = $(D_OBJ)corewar/
 
 #asm
 D_ASM = srcs/asm/
 _SRC_ASM = asm.c \
 			op.c \
-			ft_op.c
+			check_param.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
-ASM_OBJ = $(addprefix $(OBJ_DIR),$(_SRC_ASM:.c=.o))
+ASM_OBJ = $(addprefix $(D_ASM_OBJ),$(_SRC_ASM:.c=.o))
 
 #asm includes
 D_ASM_INC = includes/
@@ -39,6 +41,7 @@ _SRC_COREWAR = corewar.c \
 			create_arena.c \
 			create_champions.c \
 			ft_exit.c \
+			get_instruction.c \
 			check_encodage.c \
 			ft_op.c \
 			hexa_to_int.c \
@@ -46,9 +49,10 @@ _SRC_COREWAR = corewar.c \
 			print_map.c \
 			parsing_header.c \
 			parsing_champion.c \
+			parsing_arguments.c \
 			print_structure.c
 COREWAR_SRC = $(addprefix $(D_COREWAR),$(_SRC_COREWAR))
-COREWAR_OBJ = $(addprefix $(OBJ_DIR),$(_SRC_COREWAR:.c=.o))
+COREWAR_OBJ = $(addprefix $(D_COREWAR_OBJ),$(_SRC_COREWAR:.c=.o))
 
 #corewar includes
 D_COREWAR_INC = includes/
@@ -71,19 +75,23 @@ FLAGS = -Wall -Wextra -Werror
 
 .PHONY : all clean fclean re
 
-all : $(OBJ_DIR) $(ASM) $(COREWAR)
+all : $(D_ASM_OBJ) $(D_COREWAR_OBJ) $(ASM) $(COREWAR)
 
 #forcing Libft makefile
 $(LIBFT) : FORCE
 	@make -C libft
 
 #creating objects dir
-$(OBJ_DIR) :
+$(D_ASM_OBJ) :
+	@mkdir -p $@
+	@printf "\e[94m[OBJ]\e[0m Directory created!\n"
+
+$(D_COREWAR_OBJ) :
 	@mkdir -p $@
 	@printf "\e[94m[OBJ]\e[0m Directory created!\n"
 
 #creating asm objects
-$(OBJ_DIR)%.o : $(D_ASM)%.c $(ASM_INC) | $(OBJ_DIR)
+$(D_ASM_OBJ)%.o : $(D_ASM)%.c $(ASM_INC) | $(D_ASM_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
@@ -93,7 +101,7 @@ $(ASM) : $(ASM_OBJ) $(ASM_INC) $(LIBFT)
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n\r"
 
 #creating corewar objects
-$(OBJ_DIR)%.o : $(D_COREWAR)%.c $(COREWAR_INC) | $(OBJ_DIR)
+$(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) | $(D_COREWAR_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
@@ -104,13 +112,13 @@ $(COREWAR) : $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT)
 
 #cleaning
 clean :
-	@/bin/rm -rf $(OBJ_DIR)
+	@/bin/rm -rf $(D_OBJ)
 	@make clean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"
 
 #deep cleaning
 fclean :
-	@/bin/rm -rf $(OBJ_DIR)	
+	@/bin/rm -rf $(D_OBJ)
 	@/bin/rm -f $(ASM) $(COREWAR)
 	@make fclean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"

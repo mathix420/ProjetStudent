@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 15:23:36 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:03:57 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ t_arena	*create_arena(int ac, char **av)
 	t_arena	*arena;
 	t_map	*pos_champ;
 
-	if (ac == 1 || ac > 5)
-		ft_exit();
 	arena = init_arena(ac - 1);
-	champ = 0;
-	while (++champ < ac)
+	parsing_arguments(ac, av, arena);
+	champ = -1;
+	while (++champ < arena->nb_champs)
 	{
-		pos_champ = arena->map + ((MEM_SIZE * 2) / (ac - 1)) * (champ - 1);
-		create_champ(av[champ], pos_champ, champ, arena);
+		pos_champ = arena->map + ((MEM_SIZE * 2) / arena->nb_champs) * champ;
+		create_champ(av[arena->arg_champ[champ]], pos_champ, champ + 1, arena);
 	}
 	return (arena);
 }

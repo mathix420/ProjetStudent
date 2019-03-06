@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 18:52:57 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/06 17:01:52 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
 
 	if ((champion = (t_champion *)malloc(sizeof(t_champion))) == NULL)
 		ft_exit();
-	champion->name = ft_strdup(name);
-	champion->number = number;
+	parsing_champ(name, champion);
+	champion->number = arena->number_champs[number - 1];
 	champion->last_live = 0;
 	champion->period_live_nb = 0;
 	champion->arena = arena;
@@ -80,14 +80,10 @@ void		create_champ(char *file_name, t_map *map, int color, t_arena *arena)
 	beg_champion = map;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 		ft_exit();
-	if ((lseek(fd, 2192, SEEK_SET)) == -1)
+	if ((lseek(fd, 16 + PROG_NAME_LENGTH + COMMENT_LENGTH, SEEK_SET)) == -1)
 		ft_exit();
 	while ((nb_bytes_read = read(fd, &byte, 1)) > 0)
-	{
-	/*	if (map - beg_champion > CHAMP_MAX_SIZE * 2)
-			ft_exit();*/
 		convert_to_hexa(byte, &map, color);
-	}
 	if ((nb_bytes_read = read(fd, &byte, 1)) == -1)
 		ft_exit();
 	close(fd);

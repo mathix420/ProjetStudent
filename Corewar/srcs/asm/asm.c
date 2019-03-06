@@ -6,13 +6,13 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 12:48:25 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:25:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static inline void				e_error(int cond, int error_code)
+static inline void		e_error(int cond, int error_code)
 {
 	if (!cond)
 		return ;
@@ -21,19 +21,36 @@ static inline void				e_error(int cond, int error_code)
 	exit(1);
 }
 
-static void						p_error(int x, char *line, int code)
+void					p_error(int x, char *line, int code)
 {
 	if (code == NO_NAME_OR_COMMENT)
 		printf("asm:%s No name or comment%s: first commands must \
 be %s and %s\n", COLOR_RED, COLOR_END, NAME_CMD_STRING, COMMENT_CMD_STRING);
 	else if (code == BAD_PARAMETER)
 		printf("asm:%s Bad parameter%s\n", COLOR_RED, COLOR_END);
+	else if (code == BAD_LABEL_NAME)
+		printf("asm:%s Bad label name%s\n", COLOR_RED, COLOR_END);
+	else if (code == BAD_PARAM_NUMBER)
+		printf("asm:%s Bad number of parameters%s\n", COLOR_RED, COLOR_END);
+	else if (code == UNKNOWN_COMMAND)
+		printf("asm:%s Unknown command%s\n", COLOR_RED, COLOR_END);
 	printf("\t`%s`\n", line);
-	printf("\t %s%*s%s\n", COLOR_GREEN, x, "^", COLOR_END);
+	if (x > -1)
+		printf("\t %s%*s%s\n", COLOR_GREEN, x, "^", COLOR_END);
+/*	else if (x == -2)
+	{
+		x = ft_strlen(line);
+		write(1, "\t ", 2);
+		write(1, COLOR_GREEN, 1);
+		while (x-- > 0)
+			write(1, "~", 1);
+		write(1, COLOR_END, 1);
+		write(1, "\n", 1);
+		}*/
 	exit(1);
 }
 
-static inline int				is_space(char c)
+int						is_space(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\v' || c == '\f');
 }
@@ -49,7 +66,7 @@ static int				start_with(char *str, char c)
 	return (0);
 }
 
-static int				is_in_str(char c, char *str)
+int						is_in_str(char c, char *str)
 {
 	while (*str)
 	{
@@ -91,13 +108,23 @@ static inline int		check_params(char *param, uint8_t enc)
 		&& *param != 'r' && !is_nbr_char(*param))
 		return (0);
 	if (*param == DIRECT_CHAR) // and check chars
+	{
+//		printf("DIRECT\n");
 		val |= T_DIR;
-	else if (*param == LABEL_CHAR) // and check chars
+		check_dir_ind(param, 1);
+	}
+	else if (*param == LABEL_CHAR || is_nbr_char(*param)) // and check chars
+	{
+//		printf("INDEIRECT\n");
 		val |= T_IND;
+		check_dir_ind(param, 0);
+	}
 	else if (*param == 'r') // and check chars
+	{
+//		printf("REG\n");
 		val |= T_REG;
-	else if (is_nbr_char(*param)) // and check chars
-		val |= T_DIR;
+		check_reg(param);
+	}
 	if (!(val & enc))
 		p_error(2, param, BAD_PARAMETER);
 	return (1);
@@ -115,11 +142,10 @@ static int				get_param(char *str, int index)
 	count = 0;
 	while (str[++i] || ok >= 0)
 	{
-		if (str[i] == '#')
-			return (1);
-		else if (ok == -1 && check_params(str + i, g_op_tab[index].encodage[count]))
+		if (ok == -1 && check_params(str + i, g_op_tab[index].encodage[count]))
 			ok = i;
-		else if (ok >= 0 && (str[i] == SEPARATOR_CHAR || is_space(str[i]) || str[i] == '\n' || !str[i]))
+		else if (ok >= 0 && (str[i] == SEPARATOR_CHAR || is_space(str[i])
+					|| str[i] == COMMENT_CHAR || !str[i]))
 		{
 			ft_putstr(COLOR_GREEN);
 			ft_putstr(g_op_tab[index].name);
@@ -131,23 +157,37 @@ static int				get_param(char *str, int index)
 			ft_putendl("'");
 			ok = -1;
 			count++;
-			if (!str[i])
+			if (!str[i] && g_op_tab[index].nb_param == count)
 				return (1);
+			else if (!str[i])
+				p_error(-2, str, BAD_PARAM_NUMBER);
 		}
+		if (str[i] == '#' && g_op_tab[index].nb_param == count)
+			return (1);
+		else if (str[i] == '#' || count > g_op_tab[index].nb_param)
+			p_error(-2, str, BAD_PARAM_NUMBER);
 	}
-	return (!!count);
+	if (g_op_tab[index].nb_param != count)
+		p_error(-2, str, BAD_PARAM_NUMBER);
+	return (1);
 }
 
 static int				get_index(char *str)
 {
 	int		i;
+	int		blank;
 
 	i = -1;
+	blank = 0;
 	while (g_op_tab[++i].name)
+	{
+		if (!blank && is_space(str[i]))
+			blank++;
 		if (is_space(str[g_op_tab[i].name_size]) &&
 			!ft_strncmp(g_op_tab[i].name, str, g_op_tab[i].name_size))
-			return (get_param(str + g_op_tab[i].name_size, i)); // need to check params
-	return (-1);
+			return (get_param(str + g_op_tab[i].name_size, i));
+	}
+	return (blank ? -1 : -2);
 }
 
 static void				extract_quotes(char *str, t_header *h, int name)
@@ -202,6 +242,8 @@ static int				parse(char *str, int count, t_header *h)
 			}
 			else if ((id = get_index(str + i)) >= 0)
 				return (1);
+			else if (id < -1)
+				p_error(-2, str, UNKNOWN_COMMAND);
 		}
 	return (1);
 }

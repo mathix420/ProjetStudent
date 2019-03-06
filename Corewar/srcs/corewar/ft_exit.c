@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:58:12 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 19:15:37 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/06 14:03:44 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_exit_parsing(int error, char *file_name)
 		ft_putstr_fd("Error: File ", 2);
 		ft_putstr_fd(file_name, 2);
 		ft_putstr_fd(" has a code size that differ \
-				from what its header says\n", 2);
+from what its header says\n", 2);
 	}
 	exit(0);
 }
@@ -53,6 +53,13 @@ void	ft_exit_size(int error, char *file_name, int size)
 		ft_putnbr_fd(size, 2);
 		ft_putstr_fd(" bytes > 682 bytes)\n", 2);
 	}
+	exit(0);
+}
+
+void	ft_exit_usage(void)
+{
+	ft_putstr_fd("Usage : ./corewar [-dump nbr_cycles] \
+[[-n number] champion1.cor] ...\n", 2);
 	exit(0);
 }
 

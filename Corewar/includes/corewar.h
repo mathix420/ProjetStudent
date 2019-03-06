@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 19:16:48 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/06 14:58:59 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 typedef struct s_champion	t_champion;
 typedef struct s_arena		t_arena;
 
+typedef struct				s_param
+{
+	int						type;
+	int						value;
+}							t_param;
+
 typedef struct				s_map
 {
 	char					hex;
@@ -28,6 +34,10 @@ typedef struct				s_map
 struct						s_arena
 {
 	t_map					map[MEM_SIZE * 2 + 1];
+	int						dump;
+	int						number_champs[4];
+	int						arg_champ[4];
+	int						nb_champs;
 	int						cycle;
 	int						cycle_to_die;
 	int						total_process;
@@ -39,8 +49,9 @@ typedef struct				s_process
 {
 	t_map					*pc;
 	int						registre[REG_NUMBER];
-	int						param[3];
+	t_param					param[3];
 	int						valid_encodage;
+	int						encodage;
 	int						cycle_decount;
 	int						index;
 	int						size_instruction;
@@ -66,6 +77,7 @@ void						create_champ(char *file_name, t_map *map,
 
 void						ft_exit_parsing(int	error, char *file_name);
 void						ft_exit_size(int error, char *file_name, int size);
+void						ft_exit_usage(void);
 void						ft_exit(void);
 
 void						print_map(t_map *map);
@@ -75,6 +87,9 @@ void						print_op_tab(t_arena *arena);
 int							convert_to_int(unsigned char *str);
 int							hex_to_int(char *str, char *base, int len);				
 
+
+void						get_current_instruction(t_process *process);
+void						get_param_instruction(t_process *process);
 void						check_encodage(t_process *process);
 int							no_encodage_needed(t_process *process);
 
@@ -82,6 +97,8 @@ void						parsing_size_file(char *file_name);
 void						parsing_exec_magic(int fd, char *file_name);
 void						parsing_name(int fd, t_champion *champion, char *file_name);
 void						parsing_champ(char *file_name, t_champion *champion);
+
+void						parsing_arguments(int ac, char **av, t_arena *arena);
 
 void						ft_live(t_process *process);
 void						ft_ld(t_process *process);

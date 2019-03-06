@@ -6,7 +6,7 @@
 ;    by: thor <thor@42.fr>                           +#+  +:+       +#+         ;
 ;                                                  +#+#+#+#+#+   +#+            ;
 ;    Created: 2013/06/18 14:01:14 by thor               #+#    #+#              ;
-;    Updated: 2018/12/06 16:14:36 by agissing         ###   ########.fr        ;
+;    Updated: 2019/03/06 17:20:44 by agissing         ###   ########.fr        ;
 ;                                                                               ;
 ;*******************************************************************************;
 
@@ -34,6 +34,17 @@
 (setq-default c-default-style "linux")
 (setq-default tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
 	  		  				 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+
+;; ; New command to split terminal
+
+;; (defun splitting-command ()
+;;   (split-window-right)
+;;   (split-window-right)
+;;   (other-window 2)
+;;   (split-window-below)
+;;   (other-window 2))
+
+;; (global-set-key (kbd "M-g") 'splitting-command)
 
 ; Load user configuration
 
