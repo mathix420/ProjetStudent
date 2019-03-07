@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 16:12:44 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/07 14:13:47 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct				s_process
 	t_map					*pc;
 	int						registre[REG_NUMBER];
 	t_param					param[3];
+	int						alive;
 	int						valid_encodage;
 	int						encodage;
 	int						cycle_decount;

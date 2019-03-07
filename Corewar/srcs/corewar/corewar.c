@@ -6,12 +6,14 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 18:24:32 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/07 11:35:59 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "corewar.h"
+
+#include <unistd.h>
 
 void	ft_print_instruction(t_process *process)
 {
@@ -69,6 +71,10 @@ int		corewar(t_arena *arena)
 		if (arena->cycle % arena->cycle_to_die == 0)
 			break ;
 	}
+	//
+	ft_putstr("\e[1;1H\e[2J");
+	print_map(arena->map);
+	//
 	return (0);
 }
 

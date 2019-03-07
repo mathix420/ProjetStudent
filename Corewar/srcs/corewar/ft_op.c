@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:58:25 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 18:19:41 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/07 14:14:37 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,21 @@
 
 void	ft_live(t_process *process)
 {
+	t_champion	*champion;
+
+	champion = process->arena->champion;
+	while (champion)
+	{
+		if (champion->number == process->param[0].value)
+		{
+			champion->last_live = process->arena->cycle;
+			champion->period_live_nb++;
+		}
+		champion = champion->next;
+	}
+	process->alive = 1;
 	process->pc += process->size_instruction;
-	//ft_putstr("Live\n");
+	ft_putstr("Live\n");
 }
 
 void	ft_ld(t_process *process)

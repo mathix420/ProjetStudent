@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 19:07:56 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/07 14:13:41 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		add_process_from_player(t_arena *arena, t_map *pc, int number)
 	if ((process = (t_process *)malloc(sizeof(t_process))) == NULL)
 		ft_exit();
 	process->pc = pc;
+	process->alive = 0;
 	process->valid_encodage = 1;
 	process->cycle_decount = 0;
 	process->index = 0;
