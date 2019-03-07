@@ -6,12 +6,32 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 14:58:08 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:24:32 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "corewar.h"
+
+void	ft_print_instruction(t_process *process)
+{
+	if (process->index == 16)
+		return ;
+	printf("instruction = %s\n", g_op_tab[process->index].name);
+	for (int i = 0; i < g_op_tab[process->index].nb_param; i++)
+	{
+		printf("Param %d: ", i);
+		if (process->param[i].type == T_REG)
+			printf("REGISTRE:");
+		else if (process->param[i].type == T_DIR)
+			printf("DIRECT:");
+		else if (process->param[i].type == T_IND)
+			printf("INDIRECT:");
+		printf("value = %d\n", process->param[i].value);
+	}
+	printf("\n\n");
+}
+
 
 void	check_process(t_process *process)
 {
@@ -20,6 +40,7 @@ void	check_process(t_process *process)
 	else if (process->cycle_decount == 1)
 	{
 		get_param_instruction(process);
+		ft_print_instruction(process);
 		g_op_tab[process->index].function(process);
 		get_current_instruction(process);
 	}
@@ -51,28 +72,13 @@ int		corewar(t_arena *arena)
 	return (0);
 }
 
-/*void	test(t_arena *arena)
-{
-	int		offset;
-
-	offset = 2;
-	printf("%p\n", arena->map);
-	printf("%p\n", arena->map + 1);
-	printf("%ld\n", (long int)arena->map);
-	printf("%ld\n", ((long int)arena->map + offset) - (long int)arena->map);
-	printf("%p\n", arena->map);
-	printf("%p\n", tmp);
-	arena->map + ((arena->pc + tmp) % MEM_SIZE)
-}*/
-
 int		main(int ac, char **av)
 {
 	t_arena		*arena;
 
 	arena = create_arena(ac, av);
-	//test(arena);
 	corewar(arena);
-	print_map(arena->map);
+	//print_map(arena->map);
 	//print_structure(*arena, arena->map);
 	return (0);
 }

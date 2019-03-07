@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 14:58:59 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:12:44 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct				s_process
 	int						cycle_decount;
 	int						index;
 	int						size_instruction;
+	t_arena					*arena;
 	struct s_process		*next;
 }							t_process;
 

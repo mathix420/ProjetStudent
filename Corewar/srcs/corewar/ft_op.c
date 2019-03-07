@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:58:25 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 13:53:23 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:19:41 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,101 +16,101 @@
 void	ft_live(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Live\n");
+	//ft_putstr("Live\n");
 }
 
 void	ft_ld(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Ld\n");
+	//ft_putstr("Ld\n");
 }
 
 void	ft_st(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("St\n");
+	//ft_putstr("St\n");
 }
 
 void	ft_add(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Add\n");
+	//ft_putstr("Add\n");
 }
 
 void	ft_sub(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Sub\n");
+	//ft_putstr("Sub\n");
 }
 
 void	ft_and(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("And\n");
+	//ft_putstr("And\n");
 }
 
 void	ft_or(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Or\n");
+	//ft_putstr("Or\n");
 }
 
 void	ft_xor(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Xor\n");
+	//ft_putstr("Xor\n");
 }
 
 void	ft_zjmp(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Zjmp\n");
+	//ft_putstr("Zjmp\n");
 }
 
 void	ft_ldi(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Ldi\n");
+	//ft_putstr("Ldi\n");
 }
 
 void	ft_sti(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Sti\n");
+	//ft_putstr("Sti\n");
 }
 
 void	ft_fork(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Fork\n");
+	//ft_putstr("Fork\n");
 }
 
 void	ft_lld(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Lld\n");
+	//ft_putstr("Lld\n");
 }
 
 void	ft_lldi(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Lldi\n");
+	//ft_putstr("Lldi\n");
 }
 
 void	ft_lfork(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Lfork\n");
+	//ft_putstr("Lfork\n");
 }
 
 void	ft_aff(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Aff\n");
+	//ft_putstr("Aff\n");
 }
 
 void	ft_nothing(t_process *process)
 {
 	process->pc += process->size_instruction;
-	ft_putstr("Nothing\n");
+	//ft_putstr("Nothing\n");
 }

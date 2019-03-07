@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 17:01:52 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/06 19:07:56 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		add_process_from_player(t_arena *arena, t_map *pc, int number)
 	process->cycle_decount = 0;
 	process->index = 0;
 	process->size_instruction = 0;
+	process->arena = arena;
 	process->registre[i] = number;
 	while (++i < REG_NUMBER)
 		process->registre[i] = 0;

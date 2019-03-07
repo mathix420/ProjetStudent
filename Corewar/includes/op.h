@@ -1,12 +1,12 @@
-/* ************************************************************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/05 18:01:55 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 14:45:00 by jnoe             ###   ########.fr       */
+/*   Created: 2019/03/07 14:05:16 by agissing          #+#    #+#             */
+/*   Updated: 2019/03/07 14:06:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct					s_header
 }								t_header;
 
 typedef char					t_arg_type;
-typedef struct s_process		t_process;		
+typedef struct s_process		t_process;
 
 typedef struct					s_op
 {
@@ -79,12 +79,15 @@ typedef struct					s_op
 	int					carry;
 	int					direct_size;
 	int					name_size;
-}						t_op;
+}								t_op;
 
 # ifdef MAIN_FILE
-extern t_op				g_op_tab[17];
-# else
-t_op					g_op_tab[17];
-# endif
 
+extern t_op						g_op_tab[17];
+
+# else
+
+t_op							g_op_tab[17];
+
+# endif
 #endif

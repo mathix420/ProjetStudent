@@ -6,19 +6,21 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 16:12:31 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/06 19:07:06 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static void	conv_pc_to_str(t_map *pc, char str[], int size)
+static void	conv_op_to_str(t_process *process, t_map *pc, char str[], int size)
 {
-	int i;
-
-	i = -1;
-	while (++i < size)
-		str[i] = pc[i].hex;
+	int pc_idx;
+	int str_idx;
+	
+	str_idx = -1;
+	pc_idx = (int)(pc - process->arena->map);
+	while (++str_idx < size)
+		str[str_idx] = process->arena->map[pc_idx++ % (MEM_SIZE * 2)].hex;
 }
 
 void		get_param_instruction(t_process *process)
@@ -40,7 +42,7 @@ void		get_param_instruction(t_process *process)
 			size_param = (g_op_tab[process->index].direct_size) ? 4 : 8;
 		else if (process->param[idx_param].type == T_IND)
 			size_param = 4;
-		conv_pc_to_str(tmp_pc, str, size_param);
+		conv_op_to_str(process, tmp_pc, str, size_param);
 		process->param[idx_param].value = hex_to_int(str, hex, size_param);
 		tmp_pc += size_param;
 	}
@@ -51,7 +53,7 @@ void		get_current_instruction(t_process *process)
 	char	str_hex[2];
 	int		index;
 
-	conv_pc_to_str(process->pc, str_hex, 2);
+	conv_op_to_str(process, process->pc, str_hex, 2);
 	index = hex_to_int(str_hex, "0123456789abcdef", 2) - 1;
 	process->index = (index >= 0 && index < 16) ? index : 16;
 	process->valid_encodage = 1;

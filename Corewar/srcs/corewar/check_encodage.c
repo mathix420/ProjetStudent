@@ -6,11 +6,23 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:53:24 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 11:55:06 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/06 17:32:57 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "corewar.h"
+
+void	conv_ocp_to_str(t_process *process, char str[], int size)
+{
+	int pc_idx;
+	int str_idx;
+
+	str_idx = -1;
+	pc_idx = (int)(process->pc - process->arena->map);
+	while (++str_idx < size)
+		str[str_idx] = process->arena->map[(pc_idx++ + 2) % (MEM_SIZE * 2)].hex;
+}
 
 int		no_encodage_needed(t_process *process)
 {
@@ -56,8 +68,7 @@ void	check_encodage(t_process *process)
 	char	str_hex[2];
 	int		param;
 
-	str_hex[0] = process->pc[2].hex;
-	str_hex[1] = process->pc[3].hex;
+	conv_ocp_to_str(process, str_hex, 2);
 	encodage = hex_to_int(str_hex, "0123456789abcdef", 2);
 	process->size_instruction = 4;
 	param = -1;

@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/06 17:33:23 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/07 19:11:51 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -26,6 +26,9 @@ D_COREWAR_OBJ = $(D_OBJ)corewar/
 D_ASM = srcs/asm/
 _SRC_ASM = asm.c \
 			op.c \
+			basic.c \
+			error.c \
+			get_commands.c \
 			check_param.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
 ASM_OBJ = $(addprefix $(D_ASM_OBJ),$(_SRC_ASM:.c=.o))
