@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/07 14:13:41 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/08 15:11:36 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		convert_to_hexa(unsigned char byte, t_map **map, int color)
 	*map += 2;
 }
 
-void		add_process_from_player(t_arena *arena, t_map *pc, int number)
+void		add_process_from_player(t_arena *arena, t_map *pc, int number, int color)
 {
 	t_process	*process;
 	int			i;
@@ -42,13 +42,15 @@ void		add_process_from_player(t_arena *arena, t_map *pc, int number)
 	process->size_instruction = 0;
 	process->arena = arena;
 	process->registre[i] = number;
+	process->color = color;
+	process->carry = 0;
 	while (++i < REG_NUMBER)
 		process->registre[i] = 0;
 	process->next = arena->process;
 	arena->process = process;
 }
 
-void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
+void		init_champion(char *name, int color, t_map *pc, t_arena *arena)
 {
 	t_champion	*champion;
 	t_champion	*tmp_champ;
@@ -56,7 +58,7 @@ void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
 	if ((champion = (t_champion *)malloc(sizeof(t_champion))) == NULL)
 		ft_exit();
 	parsing_champ(name, champion);
-	champion->number = arena->number_champs[number - 1];
+	champion->number = -arena->number_champs[color - 1];
 	champion->last_live = 0;
 	champion->period_live_nb = 0;
 	champion->arena = arena;
@@ -68,7 +70,7 @@ void		init_champion(char *name, int number, t_map *pc, t_arena *arena)
 		arena->champion = champion;
 	else
 		tmp_champ->next = champion;
-	add_process_from_player(arena, pc, number);
+	add_process_from_player(arena, pc, champion->number, color);
 }
 
 void		create_champ(char *file_name, t_map *map, int color, t_arena *arena)

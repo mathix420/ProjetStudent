@@ -6,18 +6,19 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/07 14:13:47 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/08 20:45:03 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COREWAR_H
 # define COREWAR_H
 
+# include <ncurses.h>
 # include "../libft/libft.h"
 # include "op.h"
 
-typedef struct s_champion	t_champion;
-typedef struct s_arena		t_arena;
+struct s_champion;
+struct s_process;
 
 typedef struct				s_param
 {
@@ -31,7 +32,15 @@ typedef struct				s_map
 	int						color;
 }							t_map;
 
-struct						s_arena
+typedef struct				s_ncurses
+{
+	WINDOW					*corewar;
+	WINDOW					*infos;
+	int						width_line;
+	int						height_line;
+}							t_ncurses;
+
+typedef struct				s_arena
 {
 	t_map					map[MEM_SIZE * 2 + 1];
 	int						dump;
@@ -41,9 +50,10 @@ struct						s_arena
 	int						cycle;
 	int						cycle_to_die;
 	int						total_process;
-	t_champion				*champion;
-	t_process				*process;
-};
+	t_ncurses				*ncurses;
+	struct s_champion		*champion;
+	struct s_process		*process;
+}							t_arena;
 
 typedef struct				s_process
 {
@@ -56,11 +66,13 @@ typedef struct				s_process
 	int						cycle_decount;
 	int						index;
 	int						size_instruction;
+	int						color;
+	int						carry;
 	t_arena					*arena;
 	struct s_process		*next;
 }							t_process;
 
-struct						s_champion
+typedef struct				s_champion
 {
 	char					*name;
 	char					*comment;
@@ -70,7 +82,7 @@ struct						s_champion
 	int						period_live_nb;
 	t_arena					*arena;
 	struct s_champion		*next;
-};
+}							t_champion;
 
 t_arena						*create_arena(int ac, char **av);
 
@@ -86,9 +98,13 @@ void						print_map(t_map *map);
 void						print_structure(t_arena arena, t_map *map);
 void						print_op_tab(t_arena *arena);
 
-int							convert_to_int(unsigned char *str);
-int							hex_to_int(char *str, char *base, int len);				
+void						init_graphic(t_arena *arena);
+void						print_graphic_corewar(t_arena *arena);
 
+int							convert_to_int(unsigned char *str);
+int							hex_to_int(char *str, char *base, int len);
+
+void						kill_no_live_process(t_arena *arena);
 
 void						get_current_instruction(t_process *process);
 void						get_param_instruction(t_process *process);
@@ -97,10 +113,10 @@ int							no_encodage_needed(t_process *process);
 
 void						parsing_size_file(char *file_name);
 void						parsing_exec_magic(int fd, char *file_name);
-void						parsing_name(int fd, t_champion *champion, char *file_name);
-void						parsing_champ(char *file_name, t_champion *champion);
+void						parsing_name(int fd, t_champion *champ, char *name);
+void						parsing_champ(char *file_name, t_champion *champ);
 
-void						parsing_arguments(int ac, char **av, t_arena *arena);
+void						parsing_arguments(int c, char **v, t_arena *arena);
 
 void						ft_live(t_process *process);
 void						ft_ld(t_process *process);

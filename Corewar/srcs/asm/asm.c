@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/07 20:50:56 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/08 22:18:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,20 @@ static char				*get_label_name(t_env *e)
 	return (ft_strncpy(out, e->line, e->x));
 }
 
-static int				get_param(t_env *e, int index)
+int						get_param(t_env *e, int index)
 {
 	int		ok;
 	int		count;
-	int		j;
 
 	ok = -1;
 	count = 0;
 	while (e->line[++e->x] || ok >= 0)
 	{
-		if (ok == -1 && check_params(e, g_op_tab[index].encodage[count]))
+		if (ok == -1 && check_params(e, g_op_tab[index].encodage[count], count))
 			ok = e->x;
 		else if (ok >= 0 && (e->line[e->x] == SEPARATOR_CHAR || !e->line[e->x]
 				|| is_space(e->line[e->x]) || e->line[e->x] == COMMENT_CHAR))
 		{
-			ft_putstr(COLOR_GREEN);
-			ft_putstr(g_op_tab[index].name);
-			ft_putstr(COLOR_END);
-			ft_putstr(" :: new param :: '");
-			j = ok;
-			while (j < e->x)
-				write(1, &e->line[j++], 1);
-			ft_putendl("'");
 			ok = -1;
 			count++;
 			if (!e->line[e->x] && g_op_tab[index].nb_param == count)
@@ -85,7 +76,7 @@ static int				get_index(t_env *e)
 		e->x = tmp + g_op_tab[i].name_size;
 		if (is_space(e->line[e->x]) &&
 			!ft_strncmp(g_op_tab[i].name, e->line + tmp, g_op_tab[i].name_size))
-			return (get_param(e, i));
+			return (add_op(e, i));
 	}
 	e->x = tmp;
 	return (-1);
@@ -108,11 +99,7 @@ static int				parse(t_env *e)
 				p_error(e, BAD_LABEL_NAME);
 			else if (e->line[e->x - 1] != DIRECT_CHAR
 				&& (tmp = get_label_name(e)))
-			{
-				printf("%sNEW LABEL :: %s%s\n", COLOR_RED, tmp, COLOR_END);
-				free(tmp);
-				space = 0;
-			}
+				(space = 0) ? 0 : add_new_label(e, tmp);
 		}
 		else if (!space && (id = get_index(e)) != -1)
 			return (1);
@@ -124,18 +111,43 @@ static int				parse(t_env *e)
 	return (0);
 }
 
+static void				put_magic(t_env *e)
+{
+	int		i;
+	int		j;
+	int		size;
+
+	i = COREWAR_EXEC_MAGIC;
+	size = sizeof(i);
+	j = size;
+	while (--j >= 0)
+		e->data.header.magic[size - j - 1] = (i >> (8 * j)) & 0xff;
+}
+
+void					put_size(t_env *e, int end_pos)
+{
+	if (e->i < end_pos)
+		e->i = end_pos;
+	e->data.header.prog_size[0] = (e->i & 0xff000000) >> 24;
+	e->data.header.prog_size[1] = (e->i & 0xff0000) >> 16;
+	e->data.header.prog_size[2] = (e->i & 0xff00) >> 8;
+	e->data.header.prog_size[3] = e->i & 0xff;
+}
+
 int						main(int c, char **v)
 {
 	int			fd;
 	int			ret;
+	int			end_pos;
 	t_env		env;
 
 	fd = 0;
 	ft_bzero(&env, sizeof(t_env));
-	env.data.header.magic = COREWAR_EXEC_MAGIC;
+	put_magic(&env);
 	e_error(c > 2, E2BIG);
 	if (c == 2 && (fd = open(v[1], O_RDONLY)) < 0)
 		e_error(1, 0);
+	env.path = (fd ? v[1] : "stdin");
 	while ((ret = get_next_line(fd, &env.line)) > 0)
 	{
 		env.y++;
@@ -144,6 +156,9 @@ int						main(int c, char **v)
 		free(env.line);
 	}
 	e_error(ret < 0, 0);
-	write(1, (char *)&env.data, sizeof(t_output));
+	end_pos = env.i;
+	put_label_pos(&env);
+	put_size(&env, end_pos);
+	write(1, (char *)&env.data, sizeof(t_header) + env.i);
 	return (0);
 }

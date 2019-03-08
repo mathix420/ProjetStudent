@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:05:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/07 14:06:09 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:11:48 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@
 
 typedef struct					s_header
 {
-	unsigned int				magic;
+	char						magic[sizeof(COREWAR_EXEC_MAGIC)];
 	char						prog_name[PROG_NAME_LENGTH + 4];
-	unsigned int				prog_size;
+	char						prog_size[4];
 	char						comment[COMMENT_LENGTH + 4];
 }								t_header;
 
@@ -79,6 +79,7 @@ typedef struct					s_op
 	int					carry;
 	int					direct_size;
 	int					name_size;
+	int					ocp;
 }								t_op;
 
 # ifdef MAIN_FILE

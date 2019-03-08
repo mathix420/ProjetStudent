@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/07 19:11:51 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/08 18:33:59 by trlevequ         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -27,7 +27,9 @@ D_ASM = srcs/asm/
 _SRC_ASM = asm.c \
 			op.c \
 			basic.c \
+			label.c \
 			error.c \
+			operators.c \
 			get_commands.c \
 			check_param.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
@@ -49,6 +51,8 @@ _SRC_COREWAR = corewar.c \
 			ft_op.c \
 			hexa_to_int.c \
 			op.c \
+			kill_process.c \
+			graphic.c \
 			print_map.c \
 			parsing_header.c \
 			parsing_champion.c \
@@ -71,6 +75,7 @@ LIBFT = libft/libft.a
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+NCURSES_LIB = -lncurses
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -110,7 +115,7 @@ $(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) | $(D_COREWAR_OBJ)
 
 #creating corewar
 $(COREWAR) : $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT)
-	@$(CC) $(FLAGS) $(COREWAR_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
+	@$(CC) $(NCURSES_LIB) $(FLAGS) $(COREWAR_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n"
 
 #cleaning

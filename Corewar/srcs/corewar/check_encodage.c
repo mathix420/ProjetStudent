@@ -6,11 +6,10 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:53:24 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 17:32:57 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:18:16 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	conv_ocp_to_str(t_process *process, char str[], int size)
@@ -40,7 +39,8 @@ int		no_encodage_needed(t_process *process)
 
 void	check_tab_encodage(t_process *process, int param, int type_param)
 {
-	if ((g_op_tab[process->index].encodage[param] & type_param) != type_param)
+	if (!type_param || (g_op_tab[process->index].encodage[param] 
+				& type_param) != type_param)
 		process->valid_encodage = 0;
 	if (type_param == T_REG)
 	{
@@ -58,8 +58,6 @@ void	check_tab_encodage(t_process *process, int param, int type_param)
 		process->param[param].type = T_IND;
 		process->size_instruction += 4;
 	}
-	else
-		process->param[param].type = 0;
 }
 
 void	check_encodage(t_process *process)

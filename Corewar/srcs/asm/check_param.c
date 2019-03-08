@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:01:05 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/07 20:44:52 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/08 21:21:08 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void					check_dir_ind(t_env *e, int direct)
 	else if (!label && e->x == !!direct + prfx)
 		p_error(e, BAD_PARAMETER);
 	e->x = tmp;
+	!direct ? add_ind(e) : add_dir(e);
+	e->x = tmp;
 }
 
 void					check_reg(t_env *e)
@@ -64,10 +66,12 @@ void					check_reg(t_env *e)
 			out = out * 10 + e->line[e->x] - '0';
 	if (e->x == 1 || out < 1 || out > REG_NUMBER)
 		p_error(e, BAD_PARAMETER);
+	e->x = tmp;	
+	add_reg(e);
 	e->x = tmp;
 }
 
-int						check_params(t_env *e, uint8_t enc)
+int						check_params(t_env *e, uint8_t enc, int count)
 {
 	uint8_t		val;
 
@@ -78,19 +82,20 @@ int						check_params(t_env *e, uint8_t enc)
 	if (e->line[e->x] == DIRECT_CHAR)
 	{
 		val |= T_DIR;
+		(e->ocp) ? *e->ocp_char |= 2 << ((3 - count) * 2) : 0;
 		check_dir_ind(e, 1);
 	}
 	else if (e->line[e->x] == LABEL_CHAR || is_nbr_char(e->line[e->x]))
 	{
 		val |= T_IND;
+		(e->ocp) ? *e->ocp_char |= 3 << ((3 - count) * 2) : 0;
 		check_dir_ind(e, 0);
 	}
-	else if (e->line[e->x] == 'r')
+	else if (e->line[e->x] == 'r' && (val |= T_REG))
 	{
-		val |= T_REG;
+		(e->ocp) ? *e->ocp_char |= 1 << ((3 - count) * 2) : 0;
 		check_reg(e);
 	}
-	if (!(val & enc))
-		p_error(e, BAD_PARAMETER);
+	!(val & enc) ? p_error(e, BAD_PARAMETER) : 0;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 16:03:57 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/08 15:07:16 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_map(t_map *map)
 	map[i].hex = '\0';
 }
 
-t_arena	*init_arena(int nb_champ)
+t_arena	*init_arena(void)
 {
 	t_arena		*arena;
 
@@ -35,7 +35,7 @@ t_arena	*init_arena(int nb_champ)
 	init_map(arena->map);
 	arena->cycle = 0;
 	arena->cycle_to_die = CYCLE_TO_DIE;
-	arena->total_process = nb_champ;
+	arena->total_process = 0;
 	arena->champion = NULL;
 	arena->process = NULL;
 	return (arena);
@@ -47,8 +47,9 @@ t_arena	*create_arena(int ac, char **av)
 	t_arena	*arena;
 	t_map	*pos_champ;
 
-	arena = init_arena(ac - 1);
+	arena = init_arena();
 	parsing_arguments(ac, av, arena);
+	arena->total_process = arena->nb_champs;
 	champ = -1;
 	while (++champ < arena->nb_champs)
 	{

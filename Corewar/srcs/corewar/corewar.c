@@ -6,14 +6,13 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/07 11:35:59 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/08 18:36:16 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "corewar.h"
-
 #include <unistd.h>
+#include "corewar.h"
 
 void	ft_print_instruction(t_process *process)
 {
@@ -42,7 +41,7 @@ void	check_process(t_process *process)
 	else if (process->cycle_decount == 1)
 	{
 		get_param_instruction(process);
-		ft_print_instruction(process);
+		//ft_print_instruction(process);
 		g_op_tab[process->index].function(process);
 		get_current_instruction(process);
 	}
@@ -67,14 +66,11 @@ int		corewar(t_arena *arena)
 	while (arena->total_process)
 	{
 		check_all_process(arena);
+		print_graphic_corewar(arena);
 		arena->cycle++;
 		if (arena->cycle % arena->cycle_to_die == 0)
-			break ;
+			kill_no_live_process(arena);
 	}
-	//
-	ft_putstr("\e[1;1H\e[2J");
-	print_map(arena->map);
-	//
 	return (0);
 }
 
@@ -83,8 +79,9 @@ int		main(int ac, char **av)
 	t_arena		*arena;
 
 	arena = create_arena(ac, av);
+	init_graphic(arena);
 	corewar(arena);
-	//print_map(arena->map);
-	//print_structure(*arena, arena->map);
+	usleep(100000);
+	endwin();
 	return (0);
 }

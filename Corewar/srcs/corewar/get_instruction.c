@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/06 19:07:06 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/08 12:23:20 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ void		get_current_instruction(t_process *process)
 	{
 		process->encodage = 1;
 		check_encodage(process);
-		process->cycle_decount = (process->valid_encodage) \
-					? g_op_tab[index].duration : 1;
+		if (process->valid_encodage)
+			process->cycle_decount = g_op_tab[index].duration;
+		else
+		{
+			process->cycle_decount = 1;
+			process->index = 16;
+		}
 	}
 }
