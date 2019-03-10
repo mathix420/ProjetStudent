@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 17:10:07 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 20:41:00 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define BAD_QUOTES 6
 # define BAD_SYNTAXE 7
 # define LABEL_NAME_EXIST 8
+# define LIMIT_SIZE 9
+# define CHAMPION_TO_BIG 10
 
 typedef	struct			s_todo
 {
@@ -80,6 +82,8 @@ int						get_param(t_env *e, int index);
 int						is_in_str(char c, char *str);
 int						is_space(char c);
 int						start_with(char *str, char c);
+void					put_string_tab(t_env *e, char *str);
+void					add_to_champ(t_env *e, uint8_t octet);
 
 /*
 ** Errors

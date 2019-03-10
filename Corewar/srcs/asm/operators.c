@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 14:48:25 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 21:50:28 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 20:49:08 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static inline int		is_end_param(char c)
 int						add_op(t_env *e, int index)
 {
 	e->op_char = &e->data.champ[e->i];
-	e->data.champ[e->i++] = g_op_tab[index].op_code;
+	add_to_champ(e, g_op_tab[index].op_code);
 	if ((e->ocp = g_op_tab[index].ocp))
-		e->ocp_char = &e->data.champ[e->i++];
+		e->ocp_char = &e->data.champ[e->i++]; //check if e->i depasse
 	else
 		e->ocp_char = NULL;
 	e->index = index;
@@ -49,7 +49,7 @@ int						get_value(t_env *e, int nb_oct)
 	{
 		out = (out * 10) + (str[e->x++] - '0');
 		if (out > 4294967295)
-			p_error(e, BAD_PARAM_NUMBER);
+			p_error(e, LIMIT_SIZE);
 	}
 	return ((uint32_t)out * (uint32_t)sign);
 }
@@ -59,8 +59,8 @@ void					add_ind(t_env *e)
 	short	value;
 
 	value = get_value(e, 2);
-	e->data.champ[e->i++] = (value & 0xff00) >> 8;
-	e->data.champ[e->i++] = value & 0xff;
+	add_to_champ(e, (value & 0xff00) >> 8);
+	add_to_champ(e, value & 0xff);
 }
 
 void					add_dir(t_env *e)
@@ -70,20 +70,20 @@ void					add_dir(t_env *e)
 	if (g_op_tab[e->index].direct_size)
 	{
 		value = (short)get_value(e, 2);
-		e->data.champ[e->i++] = (value & 0xff00) >> 8;
-		e->data.champ[e->i++] = value & 0xff;
+		add_to_champ(e, (value & 0xff00) >> 8);
+		add_to_champ(e, value & 0xff);
 	}
 	else
 	{
 		value = get_value(e, 4);
-		e->data.champ[e->i++] = (value & 0xff000000) >> 24;
-		e->data.champ[e->i++] = (value & 0xff0000) >> 16;
-		e->data.champ[e->i++] = (value & 0xff00) >> 8;
-		e->data.champ[e->i++] = value & 0xff;
+		add_to_champ(e, (value & 0xff000000) >> 24);
+		add_to_champ(e, (value & 0xff0000) >> 16);
+		add_to_champ(e, (value & 0xff00) >> 8);
+		add_to_champ(e, value & 0xff);
 	}
 }
 
 void					add_reg(t_env *e)
 {
-	e->data.champ[e->i++] = (uint8_t)get_value(e, 1);
+	add_to_champ(e, get_value(e, 1));
 }

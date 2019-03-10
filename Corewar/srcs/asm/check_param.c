@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:01:05 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 21:21:08 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 18:33:25 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void					check_reg(t_env *e)
 			p_error(e, BAD_PARAMETER);
 		else
 			out = out * 10 + e->line[e->x] - '0';
-	if (e->x == 1 || out < 1 || out > REG_NUMBER)
-		p_error(e, BAD_PARAMETER);
+	if (e->x-- == 1 || out < 1 || out > REG_NUMBER)
+		p_error(e, (e->x == 1) ? BAD_PARAMETER : LIMIT_SIZE);
 	e->x = tmp;	
 	add_reg(e);
 	e->x = tmp;

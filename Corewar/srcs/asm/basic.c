@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:20:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 15:50:42 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 20:39:10 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,31 @@ int						start_with(char *str, char c)
 		if (!is_space(str[i]))
 			return (c == str[i]);
 	return (0);
+}
+
+void					put_string_tab(t_env *e, char *str)
+{
+	int		i;
+	int		max;
+
+	i = -1;
+	max = e->x;
+	while (str[++i])
+		if (str[i] != '\t')
+			write(1, &str[i], 1);
+		else
+		{
+			write(1, "    ", 4);
+			if (max > i)
+				e->x += 3;
+		}
+	write(1, "\n", 1);
+}
+
+void					add_to_champ(t_env *e, uint8_t octet)
+{
+	if (e->i <= CHAMP_MAX_SIZE)
+		e->data.champ[e->i++] = octet;
+	else
+		p_error(e, CHAMPION_TO_BIG);
 }

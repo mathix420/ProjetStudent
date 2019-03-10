@@ -6,7 +6,7 @@
 #    By: agissing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 19:38:41 by agissing          #+#    #+#              #
-#    Updated: 2019/03/02 15:58:27 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/10 18:48:10 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -102,7 +102,7 @@ FLAGS = -Wall -Wextra -Werror $(OPTS)
 
 all: $(NAME)
 
-%.o:		%.c
+%.o:		%.c libft.h
 		@$(CC) $(FLAGS) -o $@ -c $<
 		@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 

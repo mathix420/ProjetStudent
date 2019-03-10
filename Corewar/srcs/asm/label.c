@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 13:00:13 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 17:11:28 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 20:48:09 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void					add_new_label(t_env *e, char *name)
 	t_label		*tmp;
 
 	if (label_exist(e, name))
+	{
+		ft_strdel(&name);
 		p_error(e, LABEL_NAME_EXIST);
+	}
 	e_error(!(new = ft_memalloc(sizeof(t_label))), ENOMEM);
 	new->name = name;
 	new->pos = &e->data.champ[e->i];
@@ -94,11 +97,11 @@ void					put_label_pos(t_env *e)
 			: (short)(label->pos - e->to_put->op_pos);
 		if (e->to_put->nb_oct == 4)
 		{
-			e->data.champ[e->i++] = (val & 0xff000000) >> 24;
-			e->data.champ[e->i++] = (val & 0xff0000) >> 16;
+			add_to_champ(e, (val & 0xff000000) >> 24);
+			add_to_champ(e, (val & 0xff0000) >> 16);
 		}
-		e->data.champ[e->i++] = (val & 0xff00) >> 8;
-		e->data.champ[e->i++] = val & 0xff;
+		add_to_champ(e, (val & 0xff00) >> 8);
+		add_to_champ(e, val & 0xff);
 		free(e->to_put->name);
 		tmp = e->to_put;
 		e->to_put = e->to_put->next;
