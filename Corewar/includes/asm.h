@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 21:23:59 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:10:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int						start_with(char *str, char c);
 */
 void					p_error(t_env *e, int code);
 void					e_error(int cond, int error_code);
+void					custom_error(t_env *e, char *str, int code);
 
 /*
 ** Checks
@@ -114,5 +115,10 @@ int						add_op(t_env *e, int index);
 void					add_ind(t_env *e);
 void					add_dir(t_env *e);
 void					add_reg(t_env *e);
+
+/*
+** Free
+*/
+void					free_struct(t_env *e);
 
 #endif

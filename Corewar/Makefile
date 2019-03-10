@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/08 18:33:59 by trlevequ         ###   ########.fr        #
+#    Updated: 2019/03/10 16:56:45 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -28,6 +28,7 @@ _SRC_ASM = asm.c \
 			op.c \
 			basic.c \
 			label.c \
+			free.c \
 			error.c \
 			operators.c \
 			get_commands.c \
@@ -74,7 +75,7 @@ LIBFT = libft/libft.a
 ################################################################################
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3
 NCURSES_LIB = -lncurses
 
 ################################################################################

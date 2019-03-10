@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/08 22:18:39 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:05:29 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int						get_param(t_env *e, int index)
 			else if (!e->line[e->x])
 				p_error(e, BAD_PARAM_NUMBER);
 		}
-		else if (ok == -1 && !is_space(e->line[e->x]) && e->line[e->x] != '#')
+		else if (ok == -1 && !is_space(e->line[e->x]) && e->line[e->x] != '#'
+			&& e->line[e->x] != SEPARATOR_CHAR)
 			p_error(e, UNKNOWN_COMMAND);
 		if (e->line[e->x] == '#' && g_op_tab[index].nb_param == count)
 			return (1);
@@ -67,15 +68,17 @@ static int				get_index(t_env *e)
 	int		i;
 	int		tmp;
 	int		blank;
+	int		max_size;
 
 	i = -1;
 	tmp = e->x;
 	blank = 0;
+	max_size = ft_strlen(e->line);
 	while (g_op_tab[++i].name)
 	{
 		e->x = tmp + g_op_tab[i].name_size;
-		if (is_space(e->line[e->x]) &&
-			!ft_strncmp(g_op_tab[i].name, e->line + tmp, g_op_tab[i].name_size))
+		if (e->x < max_size && is_space(e->line[e->x])
+		&& !ft_strncmp(g_op_tab[i].name, e->line + tmp, g_op_tab[i].name_size))
 			return (add_op(e, i));
 	}
 	e->x = tmp;
@@ -153,12 +156,13 @@ int						main(int c, char **v)
 		env.y++;
 		if (!start_with(env.line, COMMENT_CHAR))
 			env.true_l += parse(&env);
-		free(env.line);
+		ft_strdel(&env.line);
 	}
 	e_error(ret < 0, 0);
 	end_pos = env.i;
 	put_label_pos(&env);
 	put_size(&env, end_pos);
 	write(1, (char *)&env.data, sizeof(t_header) + env.i);
+	free_struct(&env);
 	return (0);
 }

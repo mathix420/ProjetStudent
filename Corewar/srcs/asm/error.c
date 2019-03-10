@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:21:50 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 14:39:11 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:18:18 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,21 @@ be %s and %s\n";
 	err[7] = "\e[1m%s:%d:%d: asm:%s Label name already exist%s\n";
 	printf(err[code - 1], e->path, e->y, e->x, COLOR_RED, COLOR_END,
 		NAME_CMD_STRING, COMMENT_CMD_STRING);
-	printf("%s\n", e->line);
+	ft_putendl(e->line);
 	if (e->x > -1)
 		printf("%s%*s%s\n", COLOR_GREEN, e->x + 1, "^", COLOR_END);
+	if (e->line)
+		ft_strdel(&e->line);
+	free_struct(e);
+	exit(1);
+}
+
+void					custom_error(t_env *e, char *str, int code)
+{
+	(void)code;
+	printf("\e[1m%s: asm:%s Bad label name%s\n",
+		e->path, COLOR_RED, COLOR_END);
+	ft_putendl(str);
+	free_struct(e);
 	exit(1);
 }

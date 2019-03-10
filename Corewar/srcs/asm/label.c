@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 13:00:13 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 21:48:42 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:11:28 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void					put_label_pos(t_env *e)
 		label = e->labels;
 		while (label && ft_strcmp(label->name, e->to_put->name))
 			label = label->next;
-		(!label) ? p_error(e, BAD_LABEL_NAME) : 0;
+		(!label) ? custom_error(e, e->to_put->name, BAD_LABEL_NAME) : 0;
 		e->i = e->to_put->cursor;
 		val = (e->to_put->nb_oct == 4) ? (int)(label->pos - e->to_put->op_pos)
 			: (short)(label->pos - e->to_put->op_pos);
