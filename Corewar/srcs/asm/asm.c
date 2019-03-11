@@ -6,50 +6,11 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 16:51:31 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 20:01:59 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
-
-static char				*get_label_name(t_env *e)
-{
-	char	*out;
-	int		j;
-
-	j = 0;
-	e->x = 0;
-	while (e->line[e->x] && e->line[e->x] != LABEL_CHAR
-				&& is_in_str(e->line[e->x], LABEL_CHARS))
-		e->x++;
-	if (e->line[e->x] != LABEL_CHAR)
-		p_error(e, BAD_LABEL_NAME);
-	if (!(out = ft_strnew(e->x)))
-		return (NULL);
-	return (ft_strncpy(out, e->line, e->x));
-}
-
-static int				get_index(t_env *e)
-{
-	int		i;
-	int		tmp;
-	int		blank;
-	int		max_size;
-
-	i = -1;
-	tmp = e->x;
-	blank = 0;
-	max_size = ft_strlen(e->line);
-	while (g_op_tab[++i].name)
-	{
-		e->x = tmp + g_op_tab[i].name_size;
-		if (e->x < max_size && is_space(e->line[e->x])
-		&& !ft_strncmp(g_op_tab[i].name, e->line + tmp, g_op_tab[i].name_size))
-			return (add_op(e, i));
-	}
-	e->x = tmp;
-	return (-1);
-}
 
 static int				parse(t_env *e)
 {
@@ -117,18 +78,18 @@ int						main(int c, char **v)
 	if (c == 2 && (fd = open(v[1], O_RDONLY)) < 0)
 		e_error(1, 0);
 	env.path = (fd ? v[1] : "stdin");
-	while ((ret = get_next_line(fd, &env.line)) > 0)
+	while ((ret = get_next_line(fd, &env.line)) > 0 && (env.y++ || 1))
 	{
-		env.y++;
 		if (!start_with(env.line, COMMENT_CHAR))
 			env.true_l += parse(&env);
 		ft_strdel(&env.line);
 	}
 	e_error(ret < 0, 0);
+	close(fd);
 	end_pos = env.i;
 	put_label_pos(&env);
 	put_size(&env, end_pos);
-	write(1, (char *)&env.data, sizeof(t_header) + env.i);
+	put_output(&env);
 	free_struct(&env);
 	return (0);
 }

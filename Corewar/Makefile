@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/11 17:05:26 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/11 19:53:40 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -30,8 +30,12 @@ _SRC_ASM = asm.c \
 			label.c \
 			free.c \
 			error.c \
+			output.c \
 			operators.c \
+			overflow.c \
+			get_op.c \
 			get_commands.c \
+			get_label_name.c \
 			check_param.c \
 			get_param.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))

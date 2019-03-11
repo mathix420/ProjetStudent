@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 14:48:25 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 20:49:08 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:10:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int						add_op(t_env *e, int index)
 	e->op_char = &e->data.champ[e->i];
 	add_to_champ(e, g_op_tab[index].op_code);
 	if ((e->ocp = g_op_tab[index].ocp))
-		e->ocp_char = &e->data.champ[e->i++]; //check if e->i depasse
+		e->ocp_char = &e->data.champ[add_i(e)]; //check if e->i depasse
 	else
 		e->ocp_char = NULL;
 	e->index = index;

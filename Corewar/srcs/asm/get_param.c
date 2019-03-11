@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:41:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 16:52:51 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:54:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,28 @@ static inline int		is_end_param(char c)
 int						get_param(t_env *e, int index)
 {
 	int		ok;
-	int		n_par;
+	int		n;
 
 	ok = -1;
-	n_par = 0;
+	n = 0;
 	while ((e->line[++e->x] || ok >= 0) && e->line[e->x] != COMMENT_CHAR)
 	{
-		if (ok == -1 && check_params(e, g_op_tab[index].encodage[n_par], n_par))
+		if (ok == -1 && check_params(e, g_op_tab[index].encodage[n], n))
 			ok = e->x;
-		else if (ok >= 0 && is_end_param(e->line[e->x]))
+		else if (ok >= 0 && is_end_param(e->line[e->x]) && (ok = -1))
 		{
-			ok = -1;
-			n_par++;
-			if (!e->line[e->x] && g_op_tab[index].nb_param == n_par)
+			n++;
+			if (!e->line[e->x] && g_op_tab[index].nb_param == n)
 				return (1);
 			(!e->line[e->x]) ? p_error(e, BAD_PARAM_NUMBER) : 0;
 		}
 		else if (ok == -1 && !is_end_param(e->line[e->x]))
 			p_error(e, UNKNOWN_COMMAND);
-		if (e->line[e->x] == COMMENT_CHAR && g_op_tab[index].nb_param == n_par)
+		if (e->line[e->x] == COMMENT_CHAR && g_op_tab[index].nb_param == n)
 			return (1);
-		else if (e->line[e->x] == COMMENT_CHAR || n_par > g_op_tab[index].nb_param)
+		else if (e->line[e->x] == COMMENT_CHAR || n > g_op_tab[index].nb_param)
 			p_error(e, BAD_PARAM_NUMBER);
 	}
-	if (g_op_tab[index].nb_param != n_par)
-		p_error(e, BAD_PARAM_NUMBER);
+	(g_op_tab[index].nb_param != n) ? p_error(e, BAD_PARAM_NUMBER) : 0;
 	return (1);
 }

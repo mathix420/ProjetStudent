@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 16:52:42 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 19:39:56 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct			s_env
 	t_output	data;
 }						t_env;
 
-int						get_param(t_env *e, int index);
-
 /*
 ** Basics
 */
@@ -83,7 +81,6 @@ int						is_in_str(char c, char *str);
 int						is_space(char c);
 int						start_with(char *str, char c);
 void					put_string_tab(t_env *e, char *str);
-void					add_to_champ(t_env *e, uint8_t octet);
 
 /*
 ** Errors
@@ -130,5 +127,25 @@ void					free_struct(t_env *e);
 */
 int						get_param(t_env *e, int index);
 
+/*
+** get_op
+*/
+int						get_index(t_env *e);
+
+/*
+** overflow
+*/
+int                     add_i(t_env *e);
+void					add_to_champ(t_env *e, uint8_t octet);
+
+/*
+** get_label_name
+*/
+char					*get_label_name(t_env *e);
+
+/*
+** output
+*/
+void					put_output(t_env *e);
 
 #endif
