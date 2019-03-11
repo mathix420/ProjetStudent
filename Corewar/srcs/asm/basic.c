@@ -6,11 +6,12 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:20:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 20:39:10 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 17:12:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+//#include <sys/ioctl.h>
 
 int						is_space(char c)
 {
@@ -41,9 +42,11 @@ int						start_with(char *str, char c)
 
 void					put_string_tab(t_env *e, char *str)
 {
-	int		i;
-	int		max;
+	int				i;
+	int				max;
+//	struct winsize	w;
 
+//	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	i = -1;
 	max = e->x;
 	while (str[++i])
@@ -55,6 +58,8 @@ void					put_string_tab(t_env *e, char *str)
 			if (max > i)
 				e->x += 3;
 		}
+//	e->x %= w.ws_col;
+//	e->x %= atoi(getenv("COLUMNS"));
 	write(1, "\n", 1);
 }
 

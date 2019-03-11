@@ -6,24 +6,24 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 18:35:13 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/08 18:35:58 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/11 14:16:57 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "corewar.h"
 
-static void	delete_process(t_arena *arena, t_process *process, t_process *prev_process)
+void	delete_process(t_arena *arena, t_process *prcs, t_process *prev_prcs)
 {
-	if (prev_process)
-		prev_process->next = process->next;
+	if (prev_prcs)
+		prev_prcs->next = prcs->next;
 	else
-		arena->process = process->next;
+		arena->process = prcs->next;
 	arena->total_process -= 1;
-	free(process);
+	free(prcs);
 }
 
-void		kill_no_live_process(t_arena *arena)
+void	kill_no_live_process(t_arena *arena)
 {
 	t_process *process;
 	t_process *prev_process;

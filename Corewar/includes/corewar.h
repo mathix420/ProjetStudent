@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/08 20:45:03 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 15:58:45 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ typedef struct				s_map
 {
 	char					hex;
 	int						color;
+	int						bold_decount;
 }							t_map;
 
 typedef struct				s_ncurses
 {
 	WINDOW					*corewar;
 	WINDOW					*infos;
+	int						pause;
+	int						break_step;
 	int						width_line;
 	int						height_line;
 }							t_ncurses;
@@ -78,6 +81,7 @@ typedef struct				s_champion
 	char					*comment;
 	int						size_instructions;
 	int						number;
+	int						color;
 	int						last_live;
 	int						period_live_nb;
 	t_arena					*arena;
@@ -99,7 +103,9 @@ void						print_structure(t_arena arena, t_map *map);
 void						print_op_tab(t_arena *arena);
 
 void						init_graphic(t_arena *arena);
-void						print_graphic_corewar(t_arena *arena);
+void						print_graphic(t_arena *arena);
+void						get_ncurses_commands(t_arena *arena);
+void						print_graphic_infos(t_arena *arena);
 
 int							convert_to_int(unsigned char *str);
 int							hex_to_int(char *str, char *base, int len);

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 20:41:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:52:42 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,11 @@ void					add_reg(t_env *e);
 ** Free
 */
 void					free_struct(t_env *e);
+
+/*
+** get_param
+*/
+int						get_param(t_env *e, int index);
+
 
 #endif

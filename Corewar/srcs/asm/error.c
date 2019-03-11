@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:21:50 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/10 20:35:00 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:49:53 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ be %s and %s\n";
 	err[5] = "\e[1m%s:%d:%d: asm:%s missing terminating `\"`%s\n";
 	err[6] = "\e[1m%s:%d:%d: asm:%s Bad syntaxe%s\n";
 	err[7] = "\e[1m%s:%d:%d: asm:%s Label name already taken%s\n";
-	err[8] = "\e[1m%s:%d:%d: asm:%s Bad number%s\n";
+	err[8] = "\e[1m%s:%d:%d: asm:%s Argument out of bounds%s\n";
 	err[9] = "\e[1m%s:%d:%d: asm:%s Champion too big%s\n";
 	printf(err[code - 1], e->path, e->y, e->x, COLOR_RED, COLOR_END,
 		NAME_CMD_STRING, COMMENT_CMD_STRING);

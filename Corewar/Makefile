@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/10 15:52:02 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/11 17:05:26 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -32,7 +32,8 @@ _SRC_ASM = asm.c \
 			error.c \
 			operators.c \
 			get_commands.c \
-			check_param.c
+			check_param.c \
+			get_param.c
 ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
 ASM_OBJ = $(addprefix $(D_ASM_OBJ),$(_SRC_ASM:.c=.o))
 
@@ -53,12 +54,14 @@ _SRC_COREWAR = corewar.c \
 			hexa_to_int.c \
 			op.c \
 			kill_process.c \
+			init_graphic.c \
+			graphic_infos.c \
+			graphic_commands.c \
 			graphic.c \
 			print_map.c \
 			parsing_header.c \
 			parsing_champion.c \
-			parsing_arguments.c \
-			print_structure.c
+			parsing_arguments.c
 COREWAR_SRC = $(addprefix $(D_COREWAR),$(_SRC_COREWAR))
 COREWAR_OBJ = $(addprefix $(D_COREWAR_OBJ),$(_SRC_COREWAR:.c=.o))
 
@@ -75,7 +78,7 @@ LIBFT = libft/libft.a
 ################################################################################
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3
 NCURSES_LIB = -lncurses
 
 ################################################################################
@@ -100,22 +103,22 @@ $(D_COREWAR_OBJ) :
 	@printf "\e[94m[OBJ]\e[0m Directory created!\n"
 
 #creating asm objects
-$(D_ASM_OBJ)%.o : $(D_ASM)%.c $(ASM_INC) | $(D_ASM_OBJ)
+$(D_ASM_OBJ)%.o : $(D_ASM)%.c $(ASM_INC) Makefile | $(D_ASM_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 #creating asm
-$(ASM) : $(ASM_OBJ) $(ASM_INC) $(LIBFT)
+$(ASM) : $(ASM_OBJ) $(ASM_INC) $(LIBFT) Makefile
 	@$(CC) $(FLAGS) $(ASM_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n\r"
 
 #creating corewar objects
-$(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) | $(D_COREWAR_OBJ)
+$(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) Makefile | $(D_COREWAR_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 #creating corewar
-$(COREWAR) : $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT)
+$(COREWAR) : $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT) Makefile
 	@$(CC) $(NCURSES_LIB) $(FLAGS) $(COREWAR_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n"
 

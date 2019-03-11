@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/10 20:24:38 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:51:31 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,6 @@ static char				*get_label_name(t_env *e)
 	if (!(out = ft_strnew(e->x)))
 		return (NULL);
 	return (ft_strncpy(out, e->line, e->x));
-}
-
-int						get_param(t_env *e, int index)
-{
-	int		ok;
-	int		count;
-
-	ok = -1;
-	count = 0;
-	while (e->line[++e->x] || ok >= 0)
-	{
-		if (ok == -1 && check_params(e, g_op_tab[index].encodage[count], count))
-			ok = e->x;
-		else if (ok >= 0 && (e->line[e->x] == SEPARATOR_CHAR || !e->line[e->x]
-				|| is_space(e->line[e->x]) || e->line[e->x] == COMMENT_CHAR))
-		{
-			ok = -1;
-			count++;
-			if (!e->line[e->x] && g_op_tab[index].nb_param == count)
-				return (1);
-			else if (!e->line[e->x])
-				p_error(e, BAD_PARAM_NUMBER);
-		}
-		else if (ok == -1 && !is_space(e->line[e->x]) && e->line[e->x] != '#'
-			&& e->line[e->x] != SEPARATOR_CHAR)
-			p_error(e, UNKNOWN_COMMAND);
-		if (e->line[e->x] == '#' && g_op_tab[index].nb_param == count)
-			return (1);
-		else if (e->line[e->x] == '#' || count > g_op_tab[index].nb_param)
-			p_error(e, BAD_PARAM_NUMBER);
-	}
-	if (g_op_tab[index].nb_param != count)
-		p_error(e, BAD_PARAM_NUMBER);
-	return (1);
 }
 
 static int				get_index(t_env *e)

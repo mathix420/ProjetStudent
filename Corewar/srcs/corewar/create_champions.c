@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_champions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/27 18:08:42 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/08 15:11:36 by jnoe             ###   ########.fr       */
+/*   Created: 2019/03/11 14:18:07 by trlevequ          #+#    #+#             */
+/*   Updated: 2019/03/11 14:18:46 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include "corewar.h"
 
-void		convert_to_hexa(unsigned char byte, t_map **map, int color)
+void	convert_to_hexa(unsigned char byte, t_map **map, int color)
 {
 	char	base[17];
 
@@ -26,7 +26,7 @@ void		convert_to_hexa(unsigned char byte, t_map **map, int color)
 	*map += 2;
 }
 
-void		add_process_from_player(t_arena *arena, t_map *pc, int number, int color)
+void	add_process_from_player(t_arena *arena, t_map *pc, int nbr, int color)
 {
 	t_process	*process;
 	int			i;
@@ -41,7 +41,7 @@ void		add_process_from_player(t_arena *arena, t_map *pc, int number, int color)
 	process->index = 0;
 	process->size_instruction = 0;
 	process->arena = arena;
-	process->registre[i] = number;
+	process->registre[i] = nbr;
 	process->color = color;
 	process->carry = 0;
 	while (++i < REG_NUMBER)
@@ -50,7 +50,7 @@ void		add_process_from_player(t_arena *arena, t_map *pc, int number, int color)
 	arena->process = process;
 }
 
-void		init_champion(char *name, int color, t_map *pc, t_arena *arena)
+void	init_champion(char *name, int color, t_map *pc, t_arena *arena)
 {
 	t_champion	*champion;
 	t_champion	*tmp_champ;
@@ -61,6 +61,7 @@ void		init_champion(char *name, int color, t_map *pc, t_arena *arena)
 	champion->number = -arena->number_champs[color - 1];
 	champion->last_live = 0;
 	champion->period_live_nb = 0;
+	champion->color = color;
 	champion->arena = arena;
 	champion->next = NULL;
 	tmp_champ = arena->champion;
@@ -73,7 +74,7 @@ void		init_champion(char *name, int color, t_map *pc, t_arena *arena)
 	add_process_from_player(arena, pc, champion->number, color);
 }
 
-void		create_champ(char *file_name, t_map *map, int color, t_arena *arena)
+void	create_champ(char *file_name, t_map *map, int color, t_arena *arena)
 {
 	int				fd;
 	unsigned char	byte;
