@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 20:01:59 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:08:25 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,26 +66,24 @@ void					put_size(t_env *e, int end_pos)
 
 int						main(int c, char **v)
 {
-	int			fd;
 	int			ret;
 	int			end_pos;
 	t_env		env;
 
-	fd = 0;
 	ft_bzero(&env, sizeof(t_env));
 	put_magic(&env);
 	e_error(c > 2, E2BIG);
-	if (c == 2 && (fd = open(v[1], O_RDONLY)) < 0)
+	if (c == 2 && (env.fd = open(v[1], O_RDONLY)) < 0)
 		e_error(1, 0);
-	env.path = (fd ? v[1] : "stdin");
-	while ((ret = get_next_line(fd, &env.line)) > 0 && (env.y++ || 1))
+	env.path = (env.fd ? v[1] : "stdin");
+	while ((ret = get_next_line(env.fd, &env.line)) > 0 && (env.y++ || 1))
 	{
 		if (!start_with(env.line, COMMENT_CHAR))
 			env.true_l += parse(&env);
 		ft_strdel(&env.line);
 	}
 	e_error(ret < 0, 0);
-	close(fd);
+	close(env.fd);
 	end_pos = env.i;
 	put_label_pos(&env);
 	put_size(&env, end_pos);

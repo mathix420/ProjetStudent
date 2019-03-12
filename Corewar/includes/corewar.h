@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/11 15:58:45 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/12 10:39:20 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct				s_arena
 	int						cycle;
 	int						cycle_to_die;
 	int						total_process;
+	int						total_lives;
+	int						last_check;
+	unsigned long			cycle_per_sec;
 	t_ncurses				*ncurses;
 	struct s_champion		*champion;
 	struct s_process		*process;

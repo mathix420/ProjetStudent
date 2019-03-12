@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 13:42:12 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:35:21 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct			s_env
 	int			x;
 	int			y;
 	int			i;
+	int			fd;
 	int			ocp;
 	int			true_l;
 	int			index;
@@ -118,6 +119,11 @@ int						add_op(t_env *e, int index);
 void					add_ind(t_env *e);
 void					add_dir(t_env *e);
 void					add_reg(t_env *e);
+
+/*
+** num_parser
+*/
+uint32_t				get_value(t_env *e, int nb_oct);
 
 /*
 ** Free

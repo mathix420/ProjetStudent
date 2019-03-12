@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 19:10:41 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 15:29:40 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:03:51 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,47 @@ static int				is_cmd(t_env *e)
 	return (0);
 }
 
+static inline void		is_end_or_error(t_env *e)
+{
+	while (e->line[++e->x] && e->line[e->x] != COMMENT_CHAR)
+		if (!is_space(e->line[e->x]))
+			p_error(e, BAD_SYNTAXE);
+}
+
+static inline int		get_new_line(t_env *e)
+{
+	int		ret;
+
+	e->x = 0;
+	ft_strdel(&e->line);
+	e_error((ret = get_next_line(e->fd, &e->line)) < 0, 0);
+	return (ret);
+}
+
 int						get_name_comment(t_env *e)
 {
 	int		j;
 	int		max;
+	int		ret;
 	char	*str;
 
 	j = 0;
-	e->x = 0;
-	if (!is_cmd(e))
+	ret = 1;
+	if (!(e->x = 0) && !is_cmd(e))
 		return (0);
 	while (e->line[e->x] && !is_space(e->line[e->x]))
 		e->x++;
 	while (e->line[e->x] && is_space(e->line[e->x]) && e->line[e->x] != '"')
 		e->x++;
-	(e->line[e->x] != '"') ? p_error(e, BAD_SYNTAXE) : 0;
-	e->x++;
+	(e->line[e->x] != '"') ? p_error(e, BAD_SYNTAXE) : (e->x++);
 	str = (e->true_l) ? e->data.header.comment : e->data.header.prog_name;
 	max = (e->true_l) ? COMMENT_LENGTH : PROG_NAME_LENGTH;
-	while (e->line[e->x] && e->line[e->x] != '"' && j <= max)
-		str[j++] = e->line[e->x++];
+	while (ret > 0 && e->line[e->x] != '"' && j <= max)
+		if (!e->line[e->x] && (ret = get_new_line(e)))
+			str[j++] = '\n';
+		else
+			str[j++] = e->line[e->x++];
 	(e->line[e->x] && j > max && e->x--) ? p_error(e, LIMIT_SIZE) : 0;
-	(e->line[e->x] != '"') ? p_error(e, BAD_QUOTES) : 0;
-	while (e->line[++e->x])
-		if (!is_space(e->line[e->x]))
-			p_error(e, BAD_SYNTAXE);
+	is_end_or_error(e);
 	return (1);
 }

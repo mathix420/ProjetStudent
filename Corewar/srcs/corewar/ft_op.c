@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:58:25 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 15:49:34 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/12 16:53:45 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,29 @@ int		check_registre(t_param param[], int nb_params)
 	return (1);
 }
 
-int		indirect_value(t_process *process, int ind)
+int		indirect_value(t_process *process, short int param, int restr)
 {
 	int pc_idx;
 	char str[9];
 	int i;
 	t_map *pos;
 
-	pc_idx = ((int)(process->pc - process->arena->map) + (ind * 2)) % (MEM_SIZE * 2);
+	if (restr)
+	{
+		pc_idx = (int)(process->pc - process->arena->map) + ((param * 2) % (IDX_MOD * 2));
+		if (pc_idx >= 0)
+			pc_idx = pc_idx % (MEM_SIZE * 2);
+		else
+			pc_idx = (MEM_SIZE * 2) + (pc_idx % (MEM_SIZE * 2));
+	}
+	else
+	{
+		pc_idx = (int)(process->pc - process->arena->map) + ((param * 2) % (MEM_SIZE * 2));
+		if (pc_idx >= 0)
+			pc_idx = pc_idx % (MEM_SIZE * 2);
+		else
+			pc_idx = (MEM_SIZE * 2) + (pc_idx % (MEM_SIZE * 2));
+	} 
 	pos = process->arena->map;
 	i = -1;
 	while (++i < 8)
@@ -64,19 +79,36 @@ void	convert_to_hexa_str(char str[], int param)
 	ft_strrev(str);
 }
 
-void	store_on_map(t_process *process, int ind, int param)
+void	store_on_map(t_process *process, int param, int param2, int restr)
 {
 	int pc_idx;
 	char str[9];
 	int i;
 	t_map *pos;
 
-	pc_idx = ((int)(process->pc - process->arena->map) + (ind * 2)) % (MEM_SIZE * 2);
+	if (restr)
+	{
+		pc_idx = (int)(process->pc - process->arena->map) + (((short int)param * 2) % (IDX_MOD * 2));
+		if (pc_idx >= 0)
+			pc_idx = pc_idx % (MEM_SIZE * 2);
+		else
+			pc_idx = (MEM_SIZE * 2) + (pc_idx % (MEM_SIZE * 2));
+		convert_to_hexa_str(str, param2);
+	}
+	else
+	{
+		pc_idx = (int)(process->pc - process->arena->map) + ((param * 2) % (MEM_SIZE * 2));
+		if (pc_idx >= 0)
+			pc_idx = pc_idx % (MEM_SIZE * 2);
+		else
+			pc_idx = (MEM_SIZE * 2) + (pc_idx % (MEM_SIZE * 2));
+		convert_to_hexa_str(str, param2);
+	} 
 	pos = process->arena->map;
-	convert_to_hexa_str(str, param);
+	//convert_to_hexa_str(str, (short int)param2);
 	/*ft_putendl(str);
-	ft_putnbr(pc_idx);
-	ft_putendl("");*/
+	  ft_putnbr(pc_idx);
+	  ft_putendl("");*/
 	i = -1;
 	while (++i < 8)
 	{
@@ -86,7 +118,7 @@ void	store_on_map(t_process *process, int ind, int param)
 	}
 }
 
-int		recup_param(t_process *process, int idx)
+int		recup_param(t_process *process, int idx, int restr)
 {
 	unsigned int	value;
 
@@ -96,7 +128,7 @@ int		recup_param(t_process *process, int idx)
 	else if (process->param[idx].type == T_DIR)
 		value = process->param[idx].value;
 	else if (process->param[idx].type == T_IND)
-		value = indirect_value(process, process->param[idx].value);
+		value = indirect_value(process, process->param[idx].value, restr);
 	return (value);
 }
 
@@ -124,7 +156,8 @@ void	ft_live(t_process *process)
 		champion = champion->next;
 	}
 	//if (!found_champ)
-		//ft_putstr("Un live a ete effectue sur un joueur qui n'existe pas\n");
+	//ft_putstr("Un live a ete effectue sur un joueur qui n'existe pas\n");
+	process->arena->total_lives++;
 	process->alive = 1;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
@@ -139,7 +172,7 @@ void	ft_ld(t_process *process)
 		process->pc += process->size_instruction;
 		return ;
 	}
-	value = recup_param(process, 0);
+	value = recup_param(process, 0, 1);
 	process->registre[process->param[1].value - 1] = value;
 	process->carry = (!value) ? 1 : 0;
 	process->pc += process->size_instruction;
@@ -156,8 +189,8 @@ void	ft_st(t_process *process)
 	if (process->param[1].type == T_REG)
 		process->registre[process->param[1].value] = process->registre[process->param[0].value];
 	else if (process->param[1].type == T_IND)
-		store_on_map(process, process->param[1].value, process->registre[process->param[0].value - 1]);
-	process->carry = (!process->param[0].value) ? 1 : 0;
+		store_on_map(process, process->param[1].value, process->registre[process->param[0].value - 1], 1);
+//	process->carry = (!process->param[0].value) ? 1 : 0;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
 }
@@ -198,8 +231,8 @@ void	ft_and(t_process *process)
 		process->pc += process->size_instruction;
 		return ;
 	}
-	param1 = recup_param(process, 0);
-	param2 = recup_param(process, 1);
+	param1 = recup_param(process, 0, 1);
+	param2 = recup_param(process, 1, 1);
 	process->registre[process->param[2].value - 1] = param1 & param2;
 	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
@@ -216,8 +249,8 @@ void	ft_or(t_process *process)
 		process->pc += process->size_instruction;
 		return ;
 	}
-	param1 = recup_param(process, 0);
-	param2 = recup_param(process, 1);
+	param1 = recup_param(process, 0, 1);
+	param2 = recup_param(process, 1, 1);
 	process->registre[process->param[2].value - 1] = param1 | param2;
 	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
@@ -234,8 +267,8 @@ void	ft_xor(t_process *process)
 		process->pc += process->size_instruction;
 		return ;
 	}
-	param1 = recup_param(process, 0);
-	param2 = recup_param(process, 1);
+	param1 = recup_param(process, 0, 1);
+	param2 = recup_param(process, 1, 1);
 	process->registre[process->param[2].value - 1] = param1 ^ param2;
 	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
@@ -244,74 +277,164 @@ void	ft_xor(t_process *process)
 
 void	ft_zjmp(t_process *process)
 {
+	int				pc_idx;
+	short int		param;
+
+	param = process->param[0].value;
 	if (process->carry)
-		process->pc += process->param[0].value;
+	{
+		pc_idx = (int)(process->pc - process->arena->map) + ((param * 2) % (MEM_SIZE * 2));
+		if (pc_idx >= 0)
+			pc_idx = pc_idx % (MEM_SIZE * 2);
+		else
+			pc_idx = (MEM_SIZE * 2) + (pc_idx % (MEM_SIZE * 2));
+		process->pc = &process->arena->map[pc_idx];
+		//process->pc += (short int)process->param[0].value * 2;
+	}
 	else
+	{
 		process->pc += process->size_instruction;
-	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
+		process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
+	}
 }
 
 void	ft_ldi(t_process *process)
 {
-/*	unsigned int	value;
-	unsigned int	res;
+	unsigned int	param1;
+	unsigned int	param2;
+
+	if (!check_registre(process->param, 3))
+	{
+		process->pc += process->size_instruction;
+		return ;
+	}
+	param1 = recup_param(process, 0, 1);
+	param2 = recup_param(process, 1, 1);
+	process->registre[process->param[2].value - 1] = indirect_value(process, param1 + param2, 1);
+	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
+	process->pc += process->size_instruction;
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
+}
+
+void	ft_sti(t_process *process)
+{
+	unsigned int	param2;
+	unsigned int	param3;
+
+	if (!check_registre(process->param, 3))
+	{
+		process->pc += process->size_instruction;
+		return ;
+	}
+	param2 = recup_param(process, 1, 1);
+	param3 = recup_param(process, 2, 1);
+	store_on_map(process, param2 + param3, process->registre[process->param[0].value - 1], 1);
+//	process->carry = (!process->registre[process->param[0].value - 1]) ? 1 : 0;
+	process->pc += process->size_instruction;
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
+}
+
+void	add_process_fork(t_process *process_father, short param, int restr)
+{
+	t_process	*process;
+	int			i;
+	int			idx;
+
+	if ((process = (t_process *)malloc(sizeof(t_process))) == NULL)
+		ft_exit();
+	process->arena = process_father->arena;
+	if (restr)
+	{
+		idx = (int)(process_father->pc - process->arena->map) + ((param * 2) % (IDX_MOD * 2));
+		if (idx >= 0)
+			idx = idx % (MEM_SIZE * 2);
+		else
+			idx = (MEM_SIZE * 2) + (idx % (MEM_SIZE * 2));
+	}
+	else
+	{
+		idx = (int)(process_father->pc - process->arena->map) + ((param * 2) % (MEM_SIZE * 2));
+		if (idx >= 0)
+			idx = idx % (MEM_SIZE * 2);
+		else
+			idx = (MEM_SIZE * 2) + (idx % (MEM_SIZE * 2));
+	} 
+	process->pc = &process->arena->map[idx];
+	process->alive = process_father->alive;
+	process->valid_encodage = 1;
+	process->cycle_decount = 0;
+	process->index = 0;
+	process->size_instruction = 0;
+	process->color = process_father->color;
+	process->carry = process_father->carry;
+	i = -1;
+	while (++i < REG_NUMBER)
+		process->registre[i] = process_father->registre[i];
+	process->next = process->arena->process;
+	process->arena->process = process;
+	process->arena->total_process++;
+}
+
+void	ft_fork(t_process *process)
+{
+	add_process_fork(process, process->param[0].value, 1);
+	process->pc += process->size_instruction;
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
+}
+
+void	ft_lld(t_process *process)
+{
+	unsigned int value;
+
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
 		return ;
 	}
-	if (process->param[0].type == T_DIR)
-		res = process->param[0].value;
-	else if (process->param[0].type == T_REG)
-		res = process->registre[process->param[0].value - 1];
-	else
-		res = 
-	value = indirect_value(process, res);
-	process->registre[process->param[3].value - 1] = value;
-	process->carry = (!value) ? 1 : 0;*/
+	value = recup_param(process, 0, 0);
+	process->registre[process->param[1].value - 1] = value;
+	process->carry = (!value) ? 1 : 0;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
-	//ft_putstr("Ldi\n");
-}
-
-void	ft_sti(t_process *process)
-{
-	process->pc += process->size_instruction;
-	//ft_putstr("Sti\n");
-}
-
-void	ft_fork(t_process *process)
-{
-	process->pc += process->size_instruction;
-	//ft_putstr("Fork\n");
-}
-
-void	ft_lld(t_process *process)
-{
-	process->pc += process->size_instruction;
-	//ft_putstr("Lld\n");
 }
 
 void	ft_lldi(t_process *process)
 {
+	unsigned int	param1;
+	unsigned int	param2;
+
+	if (!check_registre(process->param, 3))
+	{
+		process->pc += process->size_instruction;
+		return ;
+	}
+	param1 = recup_param(process, 0, 0);
+	param2 = recup_param(process, 1, 0);
+	process->registre[process->param[2].value - 1] = indirect_value(process, param1 + param2, 0);
+	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
-	//ft_putstr("Lldi\n");
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
 }
 
 void	ft_lfork(t_process *process)
 {
+	add_process_fork(process, process->param[0].value, 0);
 	process->pc += process->size_instruction;
-	//ft_putstr("Lfork\n");
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
 }
 
 void	ft_aff(t_process *process)
 {
+	//ft_putchar((process->param[0].value % 256));
+	process->carry = (!process->param[0].value % 256) ? 1 : 0;
 	process->pc += process->size_instruction;
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
 	//ft_putstr("Aff\n");
 }
 
 void	ft_nothing(t_process *process)
 {
 	process->pc += process->size_instruction;
+	process->pc = &process->arena->map[((int)(process->pc - process->arena->map)) % (MEM_SIZE * 2)];
 	//ft_putstr("Nothing\n");
 }

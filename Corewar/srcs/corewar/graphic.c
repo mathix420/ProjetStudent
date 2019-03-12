@@ -6,12 +6,11 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:06:54 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 16:25:04 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:52:39 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ncurses.h>
-#include <stdlib.h>
 #include "corewar.h"
 
 void				set_attron_color(WINDOW *corewar, t_arena *arena, int i)
@@ -28,7 +27,7 @@ void				set_attron_color(WINDOW *corewar, t_arena *arena, int i)
 		}
 		process = process->next;
 	}
-	if (arena->map[i].color >= 0 && arena->map[i].color <= 4) 
+	if (arena->map[i].color >= 0 && arena->map[i].color <= 4)
 	{
 		if (arena->map[i].bold_decount)
 		{
@@ -83,5 +82,4 @@ void				print_graphic(t_arena *arena)
 	wrefresh(arena->ncurses->corewar);
 	wrefresh(arena->ncurses->infos);
 	get_ncurses_commands(arena);
-	usleep(10000);
 }
