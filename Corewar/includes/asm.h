@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 17:35:21 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/12 20:03:34 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define COLOR_RED		"\e[91m"
 # define COLOR_GREEN	"\e[32m"
 # define COLOR_END		"\e[0m"
+# define FONT_BOLD		"\e[1m"
 
 # define SUFFIX			".cor"
 
@@ -45,6 +46,16 @@ typedef	struct			s_todo
 	int				nb_oct;
 	struct s_todo	*next;
 }						t_todo;
+
+typedef struct			s_mess
+{
+	char			*path;
+	char			*name;
+	char			*err;
+	int				x;
+	int				y;
+	int				cmd;
+}						t_mess;
 
 typedef struct			s_label
 {

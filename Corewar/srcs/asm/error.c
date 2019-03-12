@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:21:50 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 16:49:53 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/12 20:08:19 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,42 @@ void					e_error(int cond, int error_code)
 	exit(1);
 }
 
+static inline void		put_pointer(t_env *e)
+{
+	while (e->x-- > 0)
+		write(1, " ", 1);
+	ft_putstr(COLOR_GREEN);
+	write(1, "^", 1);
+	ft_putendl(COLOR_END);
+}
+
+static inline void		put_message(t_mess message)
+{
+	ft_putstr(e->path);
+	ft_putstr(e->path);
+}
+
 void					p_error(t_env *e, int code)
 {
-	char	*err[10];
+	t_mess	err[10];
 
+	err[0] = {e->path, ": asm:", " No name or comment", e->x, e->y, 1};
 	err[0] = "\e[1m%s:%d:%d: asm:%s No name or comment%s: first commands must \
 be %s and %s\n";
-	err[1] = "\e[1m%s:%d:%d: asm:%s Bad parameter%s\n";
-	err[2] = "\e[1m%s:%d:%d: asm:%s Bad label name%s\n";
-	err[3] = "\e[1m%s:%d:%d: asm:%s Bad number of parameters%s\n";
-	err[4] = "\e[1m%s:%d:%d: asm:%s Unknown command%s\n";
-	err[5] = "\e[1m%s:%d:%d: asm:%s missing terminating `\"`%s\n";
-	err[6] = "\e[1m%s:%d:%d: asm:%s Bad syntaxe%s\n";
-	err[7] = "\e[1m%s:%d:%d: asm:%s Label name already taken%s\n";
-	err[8] = "\e[1m%s:%d:%d: asm:%s Argument out of bounds%s\n";
-	err[9] = "\e[1m%s:%d:%d: asm:%s Champion too big%s\n";
-	printf(err[code - 1], e->path, e->y, e->x, COLOR_RED, COLOR_END,
-		NAME_CMD_STRING, COMMENT_CMD_STRING);
+	err[1] = {e->path, ": asm:", " Bad parameter", e->x, e->y, 0};
+	err[2] = {e->path, ": asm:", " Bad label name", e->x, e->y, 0};
+	err[3] = {e->path, ": asm:", " Bad number of parameters", e->x, e->y, 0};
+	err[4] = {e->path, ": asm:", " Unknown command", e->x, e->y, 0};
+	err[5] = {e->path, ": asm:", " missing terminating `\"`", e->x, e->y, 0};
+	err[6] = {e->path, ": asm:", " Bad syntaxe", e->x, e->y, 0};
+	err[7] = {e->path, ": asm:", " Label name already taken", e->x, e->y, 0};
+	err[8] = {e->path, ": asm:", " Argument out of bounds", e->x, e->y, 0};
+	err[9] = {e->path, ": asm:", " Champion too big", e->x, e->y, 0};
+	put_message(message);
+//	printf(err[code - 1], e->path, e->y, e->x, COLOR_RED, COLOR_END,
+//		NAME_CMD_STRING, COMMENT_CMD_STRING);
 	put_string_tab(e, e->line);
-	printf("%s%*s%s\n", COLOR_GREEN, e->x + 1, "^", COLOR_END);
+	put_pointer(e);
 	if (e->line)
 		ft_strdel(&e->line);
 	free_struct(e);
@@ -49,9 +66,16 @@ be %s and %s\n";
 void					custom_error(t_env *e, char *str, int code)
 {
 	(void)code;
-	printf("\e[1m%s: asm:%s No corresponding label%s\n",
-		e->path, COLOR_RED, COLOR_END);
-	ft_putendl(str);
+	ft_putstr(FONT_BOLD);
+	ft_putstr(e->path);
+	ft_putstr(": asm:");
+	ft_putstr(COLOR_RED);
+	ft_putstr(" No such label: ");
+	ft_putstr(COLOR_END);
+	ft_putstr(FONT_BOLD);
+	ft_putchar('\'');
+	ft_putstr(str);
+	ft_putendl("'");
 	free_struct(e);
 	exit(1);
 }
