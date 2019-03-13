@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:29:56 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/12 13:51:25 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:27:11 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void				print_infos_commands(t_arena *arena, int *i)
 void				print_infos_defines(t_arena *arena, int *i)
 {
 	mvwprintw(arena->ncurses->infos, *i, 2,
-			"CYCLE_TO_DIE : %d", arena->cycle_to_die);
+			"CYCLE_TO_DIE : %-4d", arena->cycle_to_die);
 	*i += 2;
 	mvwprintw(arena->ncurses->infos, *i, 2, "CYCLE_DELTA : %d", CYCLE_DELTA);
 	*i += 2;
 	mvwprintw(arena->ncurses->infos, *i, 2, "NBR_LIVE : %d", NBR_LIVE);
 	*i += 2;
 	mvwprintw(arena->ncurses->infos, *i, 2, "MAX_CHECKS : %d", MAX_CHECKS);
-	*i += 6;
+	*i += 4;
 }
 
 void				print_infos_players(t_arena *arena, int *i)
@@ -76,6 +76,7 @@ void				print_graphic_infos(t_arena *arena)
 	mvwprintw(arena->ncurses->infos, 9, 2, "Processes : %-4d",
 			arena->total_process);
 	print_infos_players(arena, &i);
+	print_infos_live_breakdown(arena, &i);
 	print_infos_defines(arena, &i);
 	print_infos_commands(arena, &i);
 }

@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:58:25 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/12 16:53:45 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/13 17:30:01 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,7 @@ void	add_process_fork(t_process *process_father, short param, int restr)
 	process->next = process->arena->process;
 	process->arena->process = process;
 	process->arena->total_process++;
+	get_current_instruction(process);
 }
 
 void	ft_fork(t_process *process)

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/12 10:39:42 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/13 18:01:34 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ t_arena	*init_arena(void)
 		ft_exit();
 	init_map(arena->map);
 	arena->cycle = 0;
+	arena->cycle_decount = CYCLE_TO_DIE;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->total_process = 0;
 	arena->total_lives = 0;
-	arena->last_check = 0;
+	arena->nb_checks = 0;
 	arena->champion = NULL;
 	arena->process = NULL;
 	arena->cycle_per_sec = 50;

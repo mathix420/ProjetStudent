@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:34:42 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 17:35:06 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:18:28 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline int		is_end_param(char c)
 			|| c == ' ' || c == '\t' || c == '\v' || c == '\f');
 }
 
-uint32_t				get_value(t_env *e, int nb_oct)
+int						get_value(t_env *e, int nb_oct)
 {
 	uint64_t	out;
 	char		*str;

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 20:03:34 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:49:27 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ void					e_error(int cond, int error_code);
 void					custom_error(t_env *e, char *str, int code);
 
 /*
+** Trace
+*/
+void					trace(t_env *e);
+void					put_blank(t_env *e);
+
+/*
 ** Checks
 */
 int						check_params(t_env *e, uint8_t enc, int count);
@@ -134,7 +140,7 @@ void					add_reg(t_env *e);
 /*
 ** num_parser
 */
-uint32_t				get_value(t_env *e, int nb_oct);
+int						get_value(t_env *e, int nb_oct);
 
 /*
 ** Free

@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/12 17:36:00 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/13 14:57:42 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -31,6 +31,7 @@ _SRC_ASM = asm.c \
 			free.c \
 			error.c \
 			output.c \
+			trace.c \
 			operators.c \
 			num_parser.c \
 			overflow.c \
@@ -61,6 +62,7 @@ _SRC_COREWAR = corewar.c \
 			kill_process.c \
 			init_graphic.c \
 			graphic_infos.c \
+			graphic_breakdown.c \
 			graphic_commands.c \
 			graphic.c \
 			print_map.c \

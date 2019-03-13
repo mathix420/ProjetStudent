@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:20:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 19:11:35 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/13 13:33:36 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,6 @@ void					put_string_tab(t_env *e, char *str)
 		if (str[i] != '\t')
 			write(1, &str[i], 1);
 		else
-		{
 			write(1, "    ", 4);
-			if (max > i)
-				e->x += 3;
-		}
 	write(1, "\n", 1);
 }

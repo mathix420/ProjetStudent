@@ -6,24 +6,28 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 18:35:13 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 14:16:57 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:58:47 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "corewar.h"
 
-void	delete_process(t_arena *arena, t_process *prcs, t_process *prev_prcs)
+void	delete_process(t_arena *arena, t_process **prcs, t_process *prev_prcs)
 {
+	t_process	*prcs_next;
+
+	prcs_next = (*prcs)->next;
 	if (prev_prcs)
-		prev_prcs->next = prcs->next;
+		prev_prcs->next = (*prcs)->next;
 	else
-		arena->process = prcs->next;
+		arena->process = (*prcs)->next;
 	arena->total_process -= 1;
-	free(prcs);
+	free(*prcs);
+	*prcs = prcs_next;
 }
 
-void	kill_no_live_process(t_arena *arena)
+void	kill_no_live_processes(t_arena *arena)
 {
 	t_process *process;
 	t_process *prev_process;
@@ -33,10 +37,24 @@ void	kill_no_live_process(t_arena *arena)
 	while (process)
 	{
 		if (!process->alive)
-			delete_process(arena, process, prev_process);
+			delete_process(arena, &process, prev_process);
 		else
+		{
 			process->alive = 0;
-		prev_process = process;
-		process = process->next;
+			prev_process = process;
+			process = process->next;
+		}
+	}
+}
+
+void	fill_zero_period_live(t_arena *arena)
+{
+	t_champion *champion;
+
+	champion = arena->champion;
+	while (champion)
+	{
+		champion->period_live_nb = 0;
+		champion = champion->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:06:54 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/12 13:52:39 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:29:33 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,33 @@ void				print_graphic_corewar(t_arena *arena)
 	}
 }
 
+void				print_graphic_winner(t_arena *arena)
+{
+	t_champion	*champion;
+	t_champion	*winner;
+
+	if (arena->process)
+		return ;
+	champion = arena->champion->next;
+	winner = arena->champion;
+	while (champion)
+	{
+		if (winner->last_live <= champion->last_live)
+			winner = champion;
+		champion = champion->next;
+	}
+	wattron(arena->ncurses->infos, COLOR_PAIR(1));
+	mvwprintw(arena->ncurses->infos, 55, 2, "The winner is : ");
+	wattron(arena->ncurses->infos, COLOR_PAIR(winner->color + 1));
+	mvwprintw(arena->ncurses->infos, 55, 18, "%s", winner->name);
+	wattron(arena->ncurses->infos, COLOR_PAIR(1));
+	mvwprintw(arena->ncurses->infos, 57, 2, "Press any key to finish");
+	wrefresh(arena->ncurses->corewar);
+	wrefresh(arena->ncurses->infos);
+	timeout(1000000);
+	getch();
+}
+
 void				print_graphic(t_arena *arena)
 {
 	print_graphic_corewar(arena);
@@ -82,4 +109,5 @@ void				print_graphic(t_arena *arena)
 	wrefresh(arena->ncurses->corewar);
 	wrefresh(arena->ncurses->infos);
 	get_ncurses_commands(arena);
+	print_graphic_winner(arena);
 }

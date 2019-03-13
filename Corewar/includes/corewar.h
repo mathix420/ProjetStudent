@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/12 10:39:20 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/13 17:57:31 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ typedef struct				s_arena
 	int						number_champs[4];
 	int						arg_champ[4];
 	int						nb_champs;
-	int						cycle;
-	int						cycle_to_die;
 	int						total_process;
 	int						total_lives;
-	int						last_check;
+	int						nb_checks;
+	int						cycle;
+	int						cycle_to_die;
+	int						cycle_decount;
 	unsigned long			cycle_per_sec;
 	t_ncurses				*ncurses;
 	struct s_champion		*champion;
@@ -109,11 +110,13 @@ void						init_graphic(t_arena *arena);
 void						print_graphic(t_arena *arena);
 void						get_ncurses_commands(t_arena *arena);
 void						print_graphic_infos(t_arena *arena);
+void						print_infos_live_breakdown(t_arena *arena, int *i);
 
 int							convert_to_int(unsigned char *str);
 int							hex_to_int(char *str, char *base, int len);
 
-void						kill_no_live_process(t_arena *arena);
+void						fill_zero_period_live(t_arena *arena);
+void						kill_no_live_processes(t_arena *arena);
 
 void						get_current_instruction(t_process *process);
 void						get_param_instruction(t_process *process);
