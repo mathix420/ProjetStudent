@@ -6,50 +6,18 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:12:13 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 17:12:42 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/15 18:10:53 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		number_of_champion(int tab[4], int nb_champ)
-{
-	int	nb;
-	int	i;
-
-	if (nb_champ == 0)
-		return (1);
-	nb = 1;
-	i = -1;
-	while (++i < nb_champ)
-	{
-		if (nb == tab[i])
-		{
-			nb++;
-			i = -1;
-		}
-	}
-	return (nb);
-}
-
-int		ft_str_is_nbr(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	parsing_dump(char **av, t_arena *arena, int *i)
 {
 	if (av[*i] && !ft_strcmp(av[*i], "-dump"))
 	{
+		if (arena->dump != -1 || arena->graphic == 1)
+			ft_exit_usage();
 		(*i)++;
 		if (av[*i] && ft_str_is_nbr(av[*i]))
 		{
@@ -58,6 +26,17 @@ void	parsing_dump(char **av, t_arena *arena, int *i)
 		}
 		else
 			ft_exit_usage();
+	}
+}
+
+void	parsing_ncurse(char **av, t_arena *arena, int *i)
+{
+	if (av[*i] && !ft_strcmp(av[*i], "-v"))
+	{
+		if (arena->dump != -1)
+			ft_exit_usage();
+		(*i)++;
+		arena->graphic = 1;
 	}
 }
 
@@ -91,13 +70,14 @@ void	parsing_arg_champ(char **av, t_arena *arena, int *i, int nb_champ)
 	arena->arg_champ[nb_champ - 1] = *i;
 }
 
-void	parsing_arguments(int ac, char **av, t_arena *arena)
+void	parsing_arguments(char **av, t_arena *arena)
 {
 	int i;
 	int	nb_champ;
 
-	(void)ac;
 	i = 1;
+	parsing_dump(av, arena, &i);
+	parsing_ncurse(av, arena, &i);
 	parsing_dump(av, arena, &i);
 	nb_champ = 0;
 	while (av[i])

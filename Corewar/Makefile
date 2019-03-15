@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/13 14:57:42 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/15 18:11:44 by jnoe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -18,6 +18,11 @@
 
 ASM = asm
 COREWAR = corewar
+
+#includes
+D_INCLUDES = includes/
+
+#objetcs
 D_OBJ = obj/
 D_ASM_OBJ = $(D_OBJ)asm/
 D_COREWAR_OBJ = $(D_OBJ)corewar/
@@ -44,9 +49,8 @@ ASM_SRC = $(addprefix $(D_ASM),$(_SRC_ASM))
 ASM_OBJ = $(addprefix $(D_ASM_OBJ),$(_SRC_ASM:.c=.o))
 
 #asm includes
-D_ASM_INC = includes/
 _ASM_INC = asm.h op.h
-ASM_INC = $(addprefix $(D_ASM_INC),$(_ASM_INC))
+ASM_INC = $(addprefix $(D_INCLUDES),$(_ASM_INC))
 
 #corewar
 D_COREWAR = srcs/corewar/
@@ -56,10 +60,11 @@ _SRC_COREWAR = corewar.c \
 			ft_exit.c \
 			get_instruction.c \
 			check_encodage.c \
-			ft_op.c \
 			hexa_to_int.c \
 			op.c \
 			kill_process.c \
+			delete_arena.c \
+			add_cycle_to_list.c \
 			init_graphic.c \
 			graphic_infos.c \
 			graphic_breakdown.c \
@@ -68,24 +73,37 @@ _SRC_COREWAR = corewar.c \
 			print_map.c \
 			parsing_header.c \
 			parsing_champion.c \
-			parsing_arguments.c
+			parsing_utilities.c \
+			parsing_arguments.c \
+			utilities.c \
+			live.c \
+			ld.c \
+			st.c \
+			operations.c \
+			zjmp.c \
+			fork.c \
+			useless.c 
+
 COREWAR_SRC = $(addprefix $(D_COREWAR),$(_SRC_COREWAR))
 COREWAR_OBJ = $(addprefix $(D_COREWAR_OBJ),$(_SRC_COREWAR:.c=.o))
 
 #corewar includes
-D_COREWAR_INC = includes/
 _COREWAR_INC = corewar.h op.h
-COREWAR_INC = $(addprefix $(D_COREWAR_INC),$(_COREWAR_INC))
+COREWAR_INC = $(addprefix $(D_INCLUDES),$(_COREWAR_INC))
 
 #libft
 LIBFT = libft/libft.a
+
+#Header check
+DEFINE_CHECKER_SRC = parsing/define_parser.py
+DOT_HEADER = .headers
 
 ################################################################################
 #####                           COMPILER OPTIONS                           #####
 ################################################################################
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g3 -Wall -Wextra -Werror
 NCURSES_LIB = -lncurses
 
 ################################################################################
@@ -95,6 +113,10 @@ NCURSES_LIB = -lncurses
 .PHONY : all clean fclean re
 
 all : $(D_ASM_OBJ) $(D_COREWAR_OBJ) $(ASM) $(COREWAR)
+
+#checking all defines
+$(DOT_HEADER) : $(ASM_INC) $(COREWAR_INC)
+	@if ! python3 $(DEFINE_CHECKER_SRC); then exit 1; fi;
 
 #forcing Libft makefile
 $(LIBFT) : FORCE
@@ -110,35 +132,35 @@ $(D_COREWAR_OBJ) :
 	@printf "\e[94m[OBJ]\e[0m Directory created!\n"
 
 #creating asm objects
-$(D_ASM_OBJ)%.o : $(D_ASM)%.c $(ASM_INC) Makefile | $(D_ASM_OBJ)
+$(D_ASM_OBJ)%.o : $(D_ASM)%.c $(ASM_INC) $(DOT_HEADER) Makefile | $(D_ASM_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 #creating asm
-$(ASM) : $(ASM_OBJ) $(ASM_INC) $(LIBFT) Makefile
+$(ASM) : $(LIBFT) $(ASM_OBJ) $(ASM_INC) Makefile
 	@$(CC) $(FLAGS) $(ASM_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n\r"
 
 #creating corewar objects
-$(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) Makefile | $(D_COREWAR_OBJ)
+$(D_COREWAR_OBJ)%.o : $(D_COREWAR)%.c $(COREWAR_INC) $(DOT_HEADER) Makefile | $(D_COREWAR_OBJ)
 	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 #creating corewar
-$(COREWAR) : $(COREWAR_OBJ) $(COREWAR_INC) $(LIBFT) Makefile
+$(COREWAR) : $(LIBFT) $(COREWAR_OBJ) $(COREWAR_INC) Makefile
 	@$(CC) $(NCURSES_LIB) $(FLAGS) $(COREWAR_OBJ) -o $@ -Iincludes -Ilibft -Llibft -lft
 	@printf "\e[2K\e[94m[PRG]\e[0m $@ done!\n"
 
 #cleaning
 clean :
-	@/bin/rm -rf $(D_OBJ)
+	@/bin/rm -rf $(D_OBJ) $(DOT_HEADER)
 	@make clean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"
 
 #deep cleaning
 fclean :
 	@/bin/rm -rf $(D_OBJ)
-	@/bin/rm -f $(ASM) $(COREWAR)
+	@/bin/rm -f $(ASM) $(COREWAR) $(DOT_HEADER)
 	@make fclean -C libft
 	@echo "\033[33m[PRG]\033[0m Cleaning done"
 

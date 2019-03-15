@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:06:54 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/13 14:29:33 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:30:42 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,24 @@
 
 void				set_attron_color(WINDOW *corewar, t_arena *arena, int i)
 {
-	t_process	*process;
-
-	process = arena->process;
-	while (process)
+	if (arena->map[i].bold_decount)
 	{
-		if (&(arena->map[i]) == process->pc)
-		{
-			wattron(corewar, COLOR_PAIR(arena->map[i].color + 6));
-			return ;
-		}
-		process = process->next;
+		wattron(corewar, COLOR_PAIR(arena->map[i].color + 1) | A_BOLD);
+		arena->map[i].bold_decount--;
 	}
-	if (arena->map[i].color >= 0 && arena->map[i].color <= 4)
-	{
-		if (arena->map[i].bold_decount)
-		{
-			wattron(corewar, COLOR_PAIR(arena->map[i].color + 1) | A_BOLD);
-			arena->map[i].bold_decount--;
-			arena->map[i + 1].bold_decount--;
-		}
-		else
-			wattron(corewar, COLOR_PAIR(arena->map[i].color + 1));
-	}
+	else
+		wattron(corewar, COLOR_PAIR(arena->map[i].color + 1));
 }
 
 static inline void	end_of_line(t_arena *arena, int *j, int *k)
 {
 	if ((*j + 3) >= arena->ncurses->width_line - 1)
 	{
-		*j = -3;
+		*j = 0;
 		++(*k);
 	}
 	else
-	{
-		wattron(arena->ncurses->corewar, COLOR_PAIR(1));
-		mvwaddch(arena->ncurses->corewar, *k + 1, *j + 4, ' ');
-	}
-	*j += 3;
+		*j += 3;
 }
 
 void				print_graphic_corewar(t_arena *arena)
@@ -102,12 +82,12 @@ void				print_graphic_winner(t_arena *arena)
 	getch();
 }
 
-void				print_graphic(t_arena *arena)
+void				print_graphic(t_arena **arena)
 {
-	print_graphic_corewar(arena);
-	print_graphic_infos(arena);
-	wrefresh(arena->ncurses->corewar);
-	wrefresh(arena->ncurses->infos);
+	print_graphic_corewar(*arena);
+	print_graphic_infos(*arena);
+	wrefresh((*arena)->ncurses->corewar);
+	wrefresh((*arena)->ncurses->infos);
 	get_ncurses_commands(arena);
-	print_graphic_winner(arena);
+	print_graphic_winner(*arena);
 }

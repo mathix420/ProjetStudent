@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/08 12:23:20 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/15 18:02:02 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		get_current_instruction(t_process *process)
 			process->cycle_decount = g_op_tab[index].duration;
 		else
 		{
-			process->cycle_decount = 1;
+			process->cycle_decount = g_op_tab[index].duration;
 			process->index = 16;
 		}
 	}

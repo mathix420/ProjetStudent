@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:58:12 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/06 14:03:44 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/14 18:32:23 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_exit_size(int error, char *file_name, int size)
 void	ft_exit_usage(void)
 {
 	ft_putstr_fd("Usage : ./corewar [-dump nbr_cycles] \
+[[-n number] champion1.cor] ...\n", 2);
+	ft_putstr_fd("        ./corewar [-v] \
 [[-n number] champion1.cor] ...\n", 2);
 	exit(0);
 }

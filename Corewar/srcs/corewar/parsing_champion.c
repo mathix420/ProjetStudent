@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:53:48 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/05 19:16:23 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/15 14:52:20 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ void	parsing_instructions(int fd, t_champion *champion, char *file_name)
 	{
 		if (res == -1)
 			ft_exit_parsing(0, file_name);
-		free(name);
+		ft_bzero(name, CHAMP_MAX_SIZE + 1);
 		size += res;
-		if ((name = ft_strnew(CHAMP_MAX_SIZE)) == NULL)
-			ft_exit_parsing(1, file_name);
 	}
 	if (size != champion->size_instructions)
 		ft_exit_parsing(4, file_name);
 	else if (size > CHAMP_MAX_SIZE)
 		ft_exit_size(6, file_name, size);
+	champion->size = size;
+	free(name);
 }
 
 void	parsing_champ(char *file_name, t_champion *champion)

@@ -6,26 +6,26 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:29:56 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/13 14:27:11 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:07:46 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ncurses.h>
 #include "corewar.h"
 
-void				print_infos_commands(t_arena *arena, int *i)
+void		print_infos_commands(t_arena *arena, int *i)
 {
 	mvwprintw(arena->ncurses->infos, *i, 2, "** Commands **", MAX_CHECKS);
 	*i += 2;
-	if (arena->ncurses->break_step)
-		mvwprintw(arena->ncurses->infos, *i, 2, "Cycle mode (key='m') : space");
+	if (arena->ncurses->pause)
+		mvwprintw(arena->ncurses->infos, *i, 2, "Cycle mode (key='m'): arrow");
 	else
-		mvwprintw(arena->ncurses->infos, *i, 2, "Cycle mode (key='m') : auto ");
+		mvwprintw(arena->ncurses->infos, *i, 2, "Cycle mode (key='m'): auto ");
 	*i += 2;
-	mvwprintw(arena->ncurses->infos, *i, 2, "Cycle_per_sec (key='UP/DOWN')");
+	mvwprintw(arena->ncurses->infos, *i, 2, "Cycle_per_sec (key=q|w|e|r)");
 }
 
-void				print_infos_defines(t_arena *arena, int *i)
+void		print_infos_defines(t_arena *arena, int *i)
 {
 	mvwprintw(arena->ncurses->infos, *i, 2,
 			"CYCLE_TO_DIE : %-4d", arena->cycle_to_die);
@@ -38,7 +38,7 @@ void				print_infos_defines(t_arena *arena, int *i)
 	*i += 4;
 }
 
-void				print_infos_players(t_arena *arena, int *i)
+void		print_infos_players(t_arena *arena, int *i)
 {
 	t_champion	*champion;
 
@@ -60,7 +60,7 @@ void				print_infos_players(t_arena *arena, int *i)
 	(*i) += 2;
 }
 
-void				print_graphic_infos(t_arena *arena)
+void		print_graphic_infos(t_arena *arena)
 {
 	int			i;
 
@@ -72,7 +72,7 @@ void				print_graphic_infos(t_arena *arena)
 		mvwprintw(arena->ncurses->infos, 2, 1, "** RUNNING **");
 	mvwprintw(arena->ncurses->infos, 5, 2, "Cycles_per_second : %-4d",
 			arena->cycle_per_sec);
-	mvwprintw(arena->ncurses->infos, 7, 2, "Cycle : %d", arena->cycle);
+	mvwprintw(arena->ncurses->infos, 7, 2, "Cycle : %-8d", arena->cycle);
 	mvwprintw(arena->ncurses->infos, 9, 2, "Processes : %-4d",
 			arena->total_process);
 	print_infos_players(arena, &i);

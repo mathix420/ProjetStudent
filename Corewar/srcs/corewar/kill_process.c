@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 18:35:13 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/13 14:58:47 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:31:32 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	delete_process(t_arena *arena, t_process **prcs, t_process *prev_prcs)
 	else
 		arena->process = (*prcs)->next;
 	arena->total_process -= 1;
+	if (arena->map[(int)((*prcs)->pc - arena->map)].color >= 5)
+		arena->map[(int)((*prcs)->pc - arena->map)].color -= 5;
 	free(*prcs);
 	*prcs = prcs_next;
 }

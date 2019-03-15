@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 19:10:41 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 17:03:51 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:40:41 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ static inline int		get_new_line(t_env *e)
 
 int						get_name_comment(t_env *e)
 {
-	int		j;
-	int		max;
-	int		ret;
-	char	*str;
+	uint64_t	j;
+	int			ret;
+	char		*str;
+	uint64_t	max;
 
 	j = 0;
 	ret = 1;

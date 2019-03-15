@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/13 18:00:53 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:02:17 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	check_process(t_process *process)
 	else if (process->cycle_decount == 1)
 	{
 		get_param_instruction(process);
+		if (process->arena->map[(int)(process->pc - process->arena->map)].color >= 5)
+			process->arena->map[(int)(process->pc - process->arena->map)].color -= 5;
 		g_op_tab[process->index].function(process);
+		if (process->arena->map[(int)(process->pc - process->arena->map)].color < 5)
+			process->arena->map[(int)(process->pc - process->arena->map)].color += 5;
 		get_current_instruction(process);
 	}
 	else if (process->cycle_decount == 0)
@@ -60,26 +64,110 @@ void	cycle_to_die_verif(t_arena *arena)
 	arena->cycle_decount = arena->cycle_to_die;
 }
 
-int		corewar(t_arena *arena)
+int		corewar_graphic(t_arena **arena)
 {
 	clock_t current_clock;
 
 	current_clock = clock();
-	while (arena->total_process)
+	while ((*arena)->total_process)
 	{
-		if (clock() - current_clock >= (1000000) / arena->cycle_per_sec)
+		if (clock() - current_clock >= (1000000) / (*arena)->cycle_per_sec)
 		{
 			current_clock = clock();
-			check_all_process(arena);
+			check_all_process(*arena);
 			print_graphic(arena);
-			arena->cycle++;
-			if (arena->cycle_decount <= 0)
-				cycle_to_die_verif(arena);
+			add_cycle_to_list(arena);
+			(*arena)->cycle++;
+			if ((*arena)->cycle_decount <= 0)
+				cycle_to_die_verif(*arena);
 			else
-				arena->cycle_decount--;
+				(*arena)->cycle_decount--;
 		}
 	}
 	return (0);
+}
+
+int		corewar(t_arena *arena)
+{
+	while (arena->total_process)
+	{
+		if (arena->dump == arena->cycle)
+		{
+			print_map(arena->map);
+			ft_putstr("\nDump at cycle ");
+			ft_putnbr(arena->cycle);
+			ft_putendl("");
+			arena->dump = -1;
+			break ;
+		}
+		check_all_process(arena);
+		arena->cycle++;
+		if (arena->cycle_decount <= 0)
+			cycle_to_die_verif(arena);
+		else
+			arena->cycle_decount--;
+	}
+	if (arena->dump != -1)
+	{
+		print_map(arena->map);
+		ft_putstr("\nDump at cycle ");
+		ft_putnbr(arena->cycle);
+		ft_putendl("");
+	}
+	return (0);
+}
+
+void	introducing_champs(t_arena *arena)
+{
+	t_champion	*champion;
+	int			i;
+
+	champion = arena->champion;
+	ft_putendl("Introducing contestants...");
+	i = 1;
+	while (champion)
+	{
+		ft_putstr("* Player ");
+		ft_putnbr(i);
+		ft_putstr(", weighing ");
+		ft_putnbr(champion->size);
+		ft_putstr(" bytes, \"");
+		ft_putstr(champion->name);
+		ft_putstr("\", (\"");
+		ft_putstr(champion->comment);
+		ft_putstr("\") !\n");
+		champion = champion->next;
+		i++;
+	}
+	ft_putendl("");
+}
+
+void	gagnant(t_arena *arena)
+{
+	t_champion	*champion;
+	t_champion	*gagnant;
+	int			i;
+
+	champion = arena->champion;
+	gagnant = champion;
+	while (champion)
+	{
+		if (gagnant->last_live <= champion->last_live)
+			gagnant = champion;
+		champion = champion->next;
+	}
+	i = 1;
+	champion = arena->champion;
+	while (champion != gagnant)
+	{
+		i++;
+		champion = champion->next;
+	}
+	ft_putstr("Contestant ");
+	ft_putnbr(i);
+	ft_putstr(", \"");
+	ft_putstr(gagnant->name);
+	ft_putstr("\", has won !\n");
 }
 
 int		main(int ac, char **av)
@@ -87,9 +175,20 @@ int		main(int ac, char **av)
 	t_arena		*arena;
 
 	arena = create_arena(ac, av);
-	init_graphic(arena);
-	corewar(arena);
-	print_graphic(arena);
-	endwin();
+	if (arena->graphic)
+	{
+		init_graphic(arena);
+		corewar_graphic(&arena);
+		print_graphic(&arena);
+		endwin();
+		delete_list_arena(arena);
+	}
+	else
+	{
+		introducing_champs(arena);
+		corewar(arena);
+		gagnant(arena);
+		delete_list_arena(arena);
+	}
 	return (0);
 }

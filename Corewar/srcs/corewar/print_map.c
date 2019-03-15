@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:59:56 by jnoe              #+#    #+#             */
-/*   Updated: 2019/02/27 17:01:11 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/15 11:36:55 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ void	print_map(t_map *map)
 	int		i;
 
 	i = 0;
+	ft_putendl("");
 	while (map[i].hex)
 	{
-		if (i % 128)
+		if (i % 64)
 			ft_putchar(' ');
 		put_color(map[i].color);
 		ft_putchar(map[i++].hex);
 		ft_putchar(map[i++].hex);
 		put_color(0);
-		if (!(i % 128))
+		if (!(i % 64))
 			ft_putchar('\n');
 	}
 }

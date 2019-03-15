@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:05:16 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/08 18:11:48 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/14 17:46:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-# define REGISTRE				1 << 6
-# define DIRECT					1 << 7
-# define INDIRECT				3 << 6
+# define REGISTRE				(1 << 6)
+# define DIRECT					(1 << 7)
+# define INDIRECT				(3 << 6)
 
 typedef struct					s_header
 {

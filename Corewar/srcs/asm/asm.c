@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 18:12:00 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/12 17:08:25 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/15 16:23:35 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int						main(int c, char **v)
 	ft_bzero(&env, sizeof(t_env));
 	put_magic(&env);
 	e_error(c > 2, E2BIG);
-	if (c == 2 && (env.fd = open(v[1], O_RDONLY)) < 0)
-		e_error(1, 0);
+	e_error(c == 2 && (env.fd = open(v[1], O_RDONLY)) < 0, 0);
 	env.path = (env.fd ? v[1] : "stdin");
 	while ((ret = get_next_line(env.fd, &env.line)) > 0 && (env.y++ || 1))
 	{

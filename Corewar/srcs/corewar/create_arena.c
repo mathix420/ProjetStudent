@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_arena.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/27 18:01:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/13 18:01:34 by trlevequ         ###   ########.fr       */
+/*   Created: 2019/03/14 17:49:46 by trlevequ          #+#    #+#             */
+/*   Updated: 2019/03/15 18:26:16 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ void	init_map(t_map *map)
 t_arena	*init_arena(void)
 {
 	t_arena		*arena;
+	int			*size_list;
 
 	if ((arena = (t_arena *)malloc(sizeof(t_arena))) == NULL)
 		ft_exit();
+	if (!(size_list = (int *)malloc(sizeof(int))))
+		ft_exit();
+	*size_list = 1;
 	init_map(arena->map);
 	arena->cycle = 0;
+	arena->dump = -1;
+	arena->graphic = 0;
 	arena->cycle_decount = CYCLE_TO_DIE;
 	arena->cycle_to_die = CYCLE_TO_DIE;
 	arena->total_process = 0;
@@ -43,6 +49,10 @@ t_arena	*init_arena(void)
 	arena->champion = NULL;
 	arena->process = NULL;
 	arena->cycle_per_sec = 50;
+	arena->max_size_list = 1000;
+	arena->size_list = size_list;
+	arena->ncurses = NULL;
+	arena->next = NULL;
 	return (arena);
 }
 
@@ -52,8 +62,9 @@ t_arena	*create_arena(int ac, char **av)
 	t_arena	*arena;
 	t_map	*pos_champ;
 
+	(void)ac;
 	arena = init_arena();
-	parsing_arguments(ac, av, arena);
+	parsing_arguments(av, arena);
 	arena->total_process = arena->nb_champs;
 	champ = -1;
 	while (++champ < arena->nb_champs)

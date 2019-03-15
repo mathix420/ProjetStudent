@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/13 17:57:31 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:35:29 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct				s_ncurses
 	WINDOW					*corewar;
 	WINDOW					*infos;
 	int						pause;
-	int						break_step;
 	int						width_line;
 	int						height_line;
 }							t_ncurses;
@@ -47,6 +46,7 @@ typedef struct				s_arena
 {
 	t_map					map[MEM_SIZE * 2 + 1];
 	int						dump;
+	int						graphic;
 	int						number_champs[4];
 	int						arg_champ[4];
 	int						nb_champs;
@@ -58,8 +58,11 @@ typedef struct				s_arena
 	int						cycle_decount;
 	unsigned long			cycle_per_sec;
 	t_ncurses				*ncurses;
+	int						max_size_list;
+	int						*size_list;
 	struct s_champion		*champion;
 	struct s_process		*process;
+	struct s_arena			*next;
 }							t_arena;
 
 typedef struct				s_process
@@ -84,6 +87,7 @@ typedef struct				s_champion
 	char					*name;
 	char					*comment;
 	int						size_instructions;
+	int						size;
 	int						number;
 	int						color;
 	int						last_live;
@@ -107,10 +111,16 @@ void						print_structure(t_arena arena, t_map *map);
 void						print_op_tab(t_arena *arena);
 
 void						init_graphic(t_arena *arena);
-void						print_graphic(t_arena *arena);
-void						get_ncurses_commands(t_arena *arena);
+void						print_graphic(t_arena **arena);
+void						get_ncurses_commands(t_arena **arena);
 void						print_graphic_infos(t_arena *arena);
+void						print_graphic_corewar(t_arena *arena);
 void						print_infos_live_breakdown(t_arena *arena, int *i);
+
+void						delete_arena(t_arena *arena);
+void						delete_list_arena(t_arena *arena);
+void						delete_last_arena(t_arena *arena);
+void						add_cycle_to_list(t_arena **arena);
 
 int							convert_to_int(unsigned char *str);
 int							hex_to_int(char *str, char *base, int len);
@@ -128,7 +138,9 @@ void						parsing_exec_magic(int fd, char *file_name);
 void						parsing_name(int fd, t_champion *champ, char *name);
 void						parsing_champ(char *file_name, t_champion *champ);
 
-void						parsing_arguments(int c, char **v, t_arena *arena);
+int							number_of_champion(int tab[4], int nb_champ);
+int							ft_str_is_nbr(char *str);
+void						parsing_arguments(char **av, t_arena *arena);
 
 void						ft_live(t_process *process);
 void						ft_ld(t_process *process);
@@ -147,5 +159,11 @@ void						ft_lldi(t_process *process);
 void						ft_lfork(t_process *process);
 void						ft_aff(t_process *process);
 void						ft_nothing(t_process *process);
+
+int							check_registre(t_param param[], int nb_params);
+int							pc_index(t_process *process, int param, int restr);
+int							indirect_value(t_process *process, int param, int restr);
+void						convert_to_hexa_str(char str[], int param);
+int							recup_param(t_process *process, int idx, int restr);
 
 #endif

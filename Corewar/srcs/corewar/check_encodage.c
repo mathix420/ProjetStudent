@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:53:24 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 14:22:42 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 16:31:43 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	check_encodage(t_process *process)
 	{
 		if ((INDIRECT >> (param * 2) & encodage) == (INDIRECT >> (param * 2)))
 			check_tab_encodage(process, param, T_IND);
-		else if ((REGISTRE >> (param * 2) & encodage) == (
-					REGISTRE >> (param * 2)))
+		else if ((REGISTRE >> (param * 2) & encodage)
+				== (REGISTRE >> (param * 2)))
 			check_tab_encodage(process, param, T_REG);
 		else if ((DIRECT >> (param * 2) & encodage) == (DIRECT >> (param * 2)))
 			check_tab_encodage(process, param, T_DIR);

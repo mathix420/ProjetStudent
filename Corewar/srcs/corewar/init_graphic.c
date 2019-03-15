@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:25:17 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/11 14:14:42 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:08:19 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void				create_ncurses_struct(t_arena *arena)
 	arena->ncurses->infos = subwin(stdscr, arena->ncurses->height_line + 2,
 			50, 0, arena->ncurses->width_line + 4);
 	arena->ncurses->pause = 1;
-	arena->ncurses->break_step = 0;
 }
 
 void				init_graphic(t_arena *arena)
