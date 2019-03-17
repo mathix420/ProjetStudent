@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/13 16:49:27 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/17 17:41:39 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define LABEL_NAME_EXIST		8
 # define LIMIT_SIZE				9
 # define CHAMPION_TO_BIG		10
+# define CHAMPION_TO_SMALL		11
 
 typedef	struct			s_todo
 {

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:01:05 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/11 15:41:30 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/17 18:51:20 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void					check_dir_ind(t_env *e, int direct)
 	}
 	if (label && e->x == label + !!direct)
 		p_error(e, BAD_LABEL_NAME);
-	else if (!label && e->x == !!direct + prfx)
+	else if (!label && e->x == !!direct + prfx + tmp)
 		p_error(e, BAD_PARAMETER);
 	e->x = tmp;
 	!direct ? add_ind(e) : add_dir(e);

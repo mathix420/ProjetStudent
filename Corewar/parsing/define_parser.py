@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 17:44:57 by agissing          #+#    #+#              #
-#    Updated: 2019/03/15 14:03:03 by agissing         ###   ########.fr        #
+#    Updated: 2019/03/17 17:43:03 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ limits = {
     'BAD_SYNTAXE': [7],
     'LABEL_NAME_EXIST': [8],
     'LIMIT_SIZE': [9],
-    'CHAMPION_TO_BIG': [10]
+    'CHAMPION_TO_BIG': [10],
+    'CHAMPION_TO_SMALL': [11]
 }
 
 def do_op(tab, calcul):

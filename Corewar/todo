@@ -1,8 +1,0 @@
-;; This buffer is for text that is not saved, and for Lisp evaluation.
-;; To create a file, visit it with C-x C-f and enter text in its buffer.
-
-- corriger les " " non termines
-
-- corriger les fichiers ne contenant pas au moins une insyricut
-
-- tests en ligne

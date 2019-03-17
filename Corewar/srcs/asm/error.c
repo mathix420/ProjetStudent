@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 14:21:50 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/13 16:55:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/17 17:59:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static inline void				put_message(t_mess message)
 	{
 		ft_putstr(": first commands must be ");
 		ft_putstr(NAME_CMD_STRING);
-		ft_putstr(" or ");
+		ft_putstr(" then ");
 		ft_putstr(COMMENT_CMD_STRING);
 	}
 	ft_putchar('\n');
@@ -64,7 +64,7 @@ void							p_error(t_env *e, int code)
 {
 	t_mess		*err;
 
-	err = (t_mess[10]){
+	err = (t_mess[11]){
 		{e->path, ": asm:", " No name or comment", e->x, e->y, 1},
 		{e->path, ": asm:", " Bad parameter", e->x, e->y, 0},
 		{e->path, ": asm:", " Bad label name", e->x, e->y, 0},
@@ -74,16 +74,16 @@ void							p_error(t_env *e, int code)
 		{e->path, ": asm:", " Bad syntaxe", e->x, e->y, 0},
 		{e->path, ": asm:", " Label name already taken", e->x, e->y, 0},
 		{e->path, ": asm:", " Argument out of bounds", e->x, e->y, 0},
-		{e->path, ": asm:", " Champion too big", e->x, e->y, 0}
+		{e->path, ": asm:", " Champion too big", e->x, e->y, 0},
+		{e->path, ": asm:", " Champion too small", e->x, e->y, 0}
 	};
 	put_message(err[code - 1]);
-	put_string_tab(e, e->line);
-	if (code == UNKNOWN_COMMAND)
-		trace(e);
-	else
-		put_pointer(e);
 	if (e->line)
+	{
+		put_string_tab(e, e->line);
+		(code == UNKNOWN_COMMAND) ? trace(e) : put_pointer(e);
 		ft_strdel(&e->line);
+	}
 	free_struct(e);
 	exit(1);
 }
