@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 19:23:37 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/12 17:40:24 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/17 14:13:58 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void					put_output(t_env *e)
 	char	*filename;
 
 	filename = dot_cor_name(e);
-	e_error((fd = open(filename, O_RDWR | O_CREAT, 0644)) < 0, 0);
+	e_error((fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0, 0);
+	printf("%d\n", e->i);
 	e_error(write(fd, (char *)&e->data, sizeof(t_header) + e->i) < 0, 0);
 	close(fd);
 	ft_putstr("Writing output program to ");
