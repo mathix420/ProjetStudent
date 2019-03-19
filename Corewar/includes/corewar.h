@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 18:35:29 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 13:25:21 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int							hex_to_int(char *str, char *base, int len);
 void						fill_zero_period_live(t_arena *arena);
 void						kill_no_live_processes(t_arena *arena);
 
+void						get_current_instruction_in_instr(t_process *process);
 void						get_current_instruction(t_process *process);
 void						get_param_instruction(t_process *process);
 void						check_encodage(t_process *process);

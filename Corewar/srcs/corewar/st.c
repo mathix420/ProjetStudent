@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:08:47 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 18:01:45 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/18 17:47:22 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	store_on_map(t_process *process, int param, int param2, int restr)
 
 void	ft_st(t_process *process)
 {
-	get_current_instruction(process);
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
@@ -56,7 +55,6 @@ void	ft_sti(t_process *process)
 	unsigned int	param2;
 	unsigned int	param3;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;

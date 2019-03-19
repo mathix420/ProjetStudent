@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:59:23 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 18:18:55 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 18:18:16 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,12 @@ void		delete_list_arena(t_arena *arena)
 		if (!arena->next)
 		{
 			free(arena->size_list);
-			free(arena->champion->name);
-			free(arena->champion->comment);
+			while (arena->champion)
+			{
+				free(arena->champion->name);
+				free(arena->champion->comment);
+				arena->champion = arena->champion->next;
+			}
 			if (arena->ncurses && arena->ncurses->corewar && arena->ncurses->infos)
 			{
 				free_corewar = arena->ncurses->corewar;

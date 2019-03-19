@@ -6,16 +6,14 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:07:12 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 17:46:32 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/18 17:48:50 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	ft_add(t_process *process)
 {
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -32,7 +30,6 @@ void	ft_add(t_process *process)
 
 void	ft_sub(t_process *process)
 {
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -52,7 +49,6 @@ void	ft_and(t_process *process)
 	unsigned int	param1;
 	unsigned int	param2;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -72,7 +68,6 @@ void	ft_or(t_process *process)
 	unsigned int	param1;
 	unsigned int	param2;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -84,7 +79,7 @@ void	ft_or(t_process *process)
 	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc
-				- process->arena->map)) % ((int)MEM_SIZE * 2)];
+		- process->arena->map)) % ((int)MEM_SIZE * 2)];
 }
 
 void	ft_xor(t_process *process)
@@ -92,7 +87,6 @@ void	ft_xor(t_process *process)
 	unsigned int	param1;
 	unsigned int	param2;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -104,5 +98,5 @@ void	ft_xor(t_process *process)
 	process->carry = (!process->registre[process->param[2].value - 1]) ? 1 : 0;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc
-				- process->arena->map)) % ((int)MEM_SIZE * 2)];
+		- process->arena->map)) % ((int)MEM_SIZE * 2)];
 }

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:06:01 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 17:45:35 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/18 17:49:56 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_ld(t_process *process)
 {
 	unsigned int value;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
@@ -36,7 +35,6 @@ void	ft_ldi(t_process *process)
 	unsigned int	param1;
 	unsigned int	param2;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
@@ -56,7 +54,6 @@ void	ft_lld(t_process *process)
 {
 	unsigned int value;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
@@ -75,7 +72,6 @@ void	ft_lldi(t_process *process)
 	unsigned int	param1;
 	unsigned int	param2;
 
-	get_current_instruction(process);
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;

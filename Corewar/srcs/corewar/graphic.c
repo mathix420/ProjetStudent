@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:06:54 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 17:30:42 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 16:08:57 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,26 @@ static inline void	end_of_line(t_arena *arena, int *j, int *k)
 		*j += 3;
 }
 
+void				print_graphic_pc(t_arena *arena)
+{
+	t_process	*process;
+	int			index;
+	int			i;
+	int			j;
+
+	process = arena->process;
+	while (process)
+	{
+		index = (int)(process->pc - arena->map);
+		i = (index / 128);
+		j = (index % 128) + ((index % 128) / 2);
+		wattron(arena->ncurses->corewar, COLOR_PAIR(arena->map[index].color + 6));
+		mvwaddch(arena->ncurses->corewar, i + 1, j + 2, arena->map[index].hex);
+		mvwaddch(arena->ncurses->corewar, i + 1, j + 3, arena->map[index + 1].hex);
+		process = process->next;
+	}
+}
+
 void				print_graphic_corewar(t_arena *arena)
 {
 	int	i;
@@ -53,6 +73,7 @@ void				print_graphic_corewar(t_arena *arena)
 		i += 2;
 		end_of_line(arena, &j, &k);
 	}
+	print_graphic_pc(arena);
 }
 
 void				print_graphic_winner(t_arena *arena)

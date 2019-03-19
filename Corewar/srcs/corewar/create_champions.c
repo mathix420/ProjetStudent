@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:18:07 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 14:06:02 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 16:09:49 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,8 @@ void	create_champ(char *file_name, t_map *map, int color, t_arena *arena)
 		ft_exit();
 	if ((lseek(fd, sizeof(t_header), SEEK_SET)) == -1)
 		ft_exit();
-	color += 5;
 	while ((nb_bytes_read = read(fd, &byte, 1)) > 0)
-	{
 		convert_to_hexa(byte, &map, color);
-		color = (color >= 6) ? color - 5 : color;
-	}
 	if ((nb_bytes_read = read(fd, &byte, 1)) == -1)
 		ft_exit();
 	close(fd);

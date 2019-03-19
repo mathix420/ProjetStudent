@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 18:02:17 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 18:21:50 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,34 @@
 #include <unistd.h>
 #include "corewar.h"
 
+void	launch_valid_function(t_process *process)
+{
+	if (!process->encodage)
+	{
+		get_param_instruction(process);
+		g_op_tab[process->index].function(process);
+	}
+	else
+	{
+		process->valid_encodage = 1;
+		check_encodage(process);
+		if (process->valid_encodage)
+		{
+			get_param_instruction(process);
+			g_op_tab[process->index].function(process);
+		}
+		else
+			g_op_tab[16].function(process);
+	}
+}
+
 void	check_process(t_process *process)
 {
 	if (process->cycle_decount > 1)
 		process->cycle_decount--;
 	else if (process->cycle_decount == 1)
 	{
-		get_param_instruction(process);
-		if (process->arena->map[(int)(process->pc - process->arena->map)].color >= 5)
-			process->arena->map[(int)(process->pc - process->arena->map)].color -= 5;
-		g_op_tab[process->index].function(process);
-		if (process->arena->map[(int)(process->pc - process->arena->map)].color < 5)
-			process->arena->map[(int)(process->pc - process->arena->map)].color += 5;
+		launch_valid_function(process);
 		get_current_instruction(process);
 	}
 	else if (process->cycle_decount == 0)
@@ -55,12 +71,12 @@ void	cycle_to_die_verif(t_arena *arena)
 	else
 		arena->nb_checks++;
 	fill_zero_period_live(arena);
-	arena->total_lives = 0;
 	if (arena->nb_checks == MAX_CHECKS)
 	{
 		arena->cycle_to_die -= CYCLE_DELTA;
 		arena->nb_checks = 0;
 	}
+	arena->total_lives = 0;
 	arena->cycle_decount = arena->cycle_to_die;
 }
 
@@ -78,7 +94,7 @@ int		corewar_graphic(t_arena **arena)
 			print_graphic(arena);
 			add_cycle_to_list(arena);
 			(*arena)->cycle++;
-			if ((*arena)->cycle_decount <= 0)
+			if ((*arena)->cycle_decount <= 1)
 				cycle_to_die_verif(*arena);
 			else
 				(*arena)->cycle_decount--;
@@ -102,7 +118,7 @@ int		corewar(t_arena *arena)
 		}
 		check_all_process(arena);
 		arena->cycle++;
-		if (arena->cycle_decount <= 0)
+		if (arena->cycle_decount <= 1)
 			cycle_to_die_verif(arena);
 		else
 			arena->cycle_decount--;

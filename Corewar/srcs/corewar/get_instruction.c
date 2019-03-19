@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 18:02:02 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 17:44:08 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void		get_current_instruction(t_process *process)
 	conv_op_to_str(process, process->pc, str_hex, 2);
 	index = hex_to_int(str_hex, "0123456789abcdef", 2) - 1;
 	process->index = (index >= 0 && index < 16) ? index : 16;
-	process->valid_encodage = 1;
 	process->encodage = 0;
 	if (process->index == 16)
 	{
@@ -68,13 +67,6 @@ void		get_current_instruction(t_process *process)
 	else
 	{
 		process->encodage = 1;
-		check_encodage(process);
-		if (process->valid_encodage)
-			process->cycle_decount = g_op_tab[index].duration;
-		else
-		{
-			process->cycle_decount = g_op_tab[index].duration;
-			process->index = 16;
-		}
+		process->cycle_decount = g_op_tab[index].duration;
 	}
 }

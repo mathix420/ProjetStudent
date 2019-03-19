@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:29:56 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 17:07:46 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/18 18:38:57 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void		print_infos_players(t_arena *arena, int *i)
 		mvwprintw(arena->ncurses->infos, (*i)++, 2, champion->name);
 		wattron(arena->ncurses->infos, COLOR_PAIR(1) | A_BOLD);
 		mvwprintw(arena->ncurses->infos, (*i)++, 5,
-				"Last live : %d", champion->last_live);
+				"Last live : %-6d", champion->last_live);
 		mvwprintw(arena->ncurses->infos, (*i)++, 5,
-				"Lives in current period : %-4d", champion->period_live_nb);
+				"Lives in current period : %-6d", champion->period_live_nb);
 		++(*i);
 		champion = champion->next;
 	}
@@ -73,7 +73,7 @@ void		print_graphic_infos(t_arena *arena)
 	mvwprintw(arena->ncurses->infos, 5, 2, "Cycles_per_second : %-4d",
 			arena->cycle_per_sec);
 	mvwprintw(arena->ncurses->infos, 7, 2, "Cycle : %-8d", arena->cycle);
-	mvwprintw(arena->ncurses->infos, 9, 2, "Processes : %-4d",
+	mvwprintw(arena->ncurses->infos, 9, 2, "Processes : %-6d",
 			arena->total_process);
 	print_infos_players(arena, &i);
 	print_infos_live_breakdown(arena, &i);

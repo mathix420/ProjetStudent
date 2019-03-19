@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:10:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 17:47:36 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/18 17:46:33 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	ft_aff(t_process *process)
 {
-	get_current_instruction(process);
 	if (!process->arena->graphic)
 		ft_putchar((process->param[0].value % 256));
 	process->carry = (!process->param[0].value % 256) ? 1 : 0;
