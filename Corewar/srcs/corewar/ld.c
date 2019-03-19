@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:06:01 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:49:56 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/19 19:08:50 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_ld(t_process *process)
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	value = recup_param(process, 0, 1);
@@ -38,6 +40,8 @@ void	ft_ldi(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param1 = recup_param(process, 0, 1);
@@ -57,6 +61,8 @@ void	ft_lld(t_process *process)
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	value = recup_param(process, 0, 0);
@@ -75,6 +81,8 @@ void	ft_lldi(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param1 = recup_param(process, 0, 0);

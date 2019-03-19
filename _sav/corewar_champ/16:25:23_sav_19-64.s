@@ -1,15 +1,6 @@
-.name "TVA 10%"
-.comment "Faux passer a la caisse maintenant"
-
-recover:
-	st		r13, -10
-	st		r1, 18
-	xor		%420, r1, r16
-	zjmp    %:clear
-	ld		%1, r13
-	and		%0, r1, r1
-	zjmp    %:skip
-
+.name "goinfre"
+.comment "I will erase you like a CryptoLocker"
+	
 clear:
 	#if r16 = 0x69CACA69 alors go to skip
 	#else:
@@ -17,7 +8,7 @@ clear:
 	st		r1, 6
 	live	%42
 	ld		-4, r13
-	ld %0, r1
+	ld %202116108, r1
 	st r1, -22
 	st r1, -21
 	st r1, -20
@@ -38,7 +29,18 @@ clear:
 	ld %0, r15
 	ld %0, r16
 
+shit:
+	ld %202116108, r1
+	st r1, -143
+    st r1, -153
+    st r1, -163
+    st r1, -173
+	
 skip:
+	st r1, -100
+    st r1, -200
+    st r1, -300
+    st r1, -400
 	st r13, 6
 	live %42
 	st r13, 6
@@ -48,7 +50,7 @@ skip:
 	st r13, 6
 	live %42
 	ld %0, r1
-	zjmp %:skip
+	zjmp %-147 #= :skip
 	st r13, 6
 	live %42
 	st r13, 6
@@ -58,4 +60,17 @@ skip:
 	st r13, 6
 	live %42
 	ld %0, r1
-	zjmp %:skip
+	zjmp %-147
+	st r13, 6
+	live %42
+	st r13, 6
+	live %42
+	st r13, 6
+	live %42
+	st r13, 6
+	live %42
+	ld %0, r1
+	zjmp %-147
+	zjmp %-147
+	zjmp %-147
+	

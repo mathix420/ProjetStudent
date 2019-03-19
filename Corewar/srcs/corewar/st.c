@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:08:47 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:47:22 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/19 19:09:45 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ void	ft_st(t_process *process)
 	if (!check_registre(process->param, 2))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	if (process->param[1].type == T_REG)
-		process->registre[process->param[1].value] = process->registre[
-			process->param[0].value];
+		process->registre[process->param[1].value - 1] = process->registre[
+			process->param[0].value - 1];
 	else if (process->param[1].type == T_IND)
 		store_on_map(process, process->param[1].value,
 				process->registre[process->param[0].value - 1], 1);
@@ -58,6 +60,8 @@ void	ft_sti(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param2 = recup_param(process, 1, 1);

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:22:21 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 18:03:06 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/19 18:10:41 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		pc_index(t_process *process, int param, int restr)
 	if (restr)
 	{
 		pc_idx = (int)(process->pc - process->arena->map)
-			+ (((short int)param * 2) % ((int)IDX_MOD * 2));
+			+ ((param * 2) % ((int)IDX_MOD * 2));
 		if (pc_idx >= 0)
 			pc_idx = pc_idx % ((int)MEM_SIZE * 2);
 		else

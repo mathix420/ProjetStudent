@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:41:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/18 17:59:27 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/19 15:35:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int						get_param(t_env *e, int id)
 		else if (e->line[e->x] == SEPARATOR_CHAR && e->line[e->x + 1])
 			e->x++;
 	}
+	(n != g_op_tab[id].nb_param) ? p_error(e, BAD_PARAM_NUMBER) : 0;
 	return (1);
 }

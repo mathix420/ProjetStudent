@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 17:44:08 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/19 18:13:43 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void		get_param_instruction(t_process *process)
 		else if (process->param[idx_param].type == T_IND)
 			size_param = 4;
 		conv_op_to_str(process, tmp_pc, str, size_param);
-		process->param[idx_param].value = hex_to_int(str, hex, size_param);
+		if ((process->param[idx_param].type == T_DIR && g_op_tab[process->index].direct_size) || process->param[idx_param].type == T_IND)
+			process->param[idx_param].value = (short int)hex_to_int(str, hex, size_param);
+		else
+			process->param[idx_param].value = hex_to_int(str, hex, size_param);
 		tmp_pc += size_param;
 	}
 }

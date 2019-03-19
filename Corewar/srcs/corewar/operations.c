@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:07:12 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:48:50 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/19 19:09:10 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_add(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	process->registre[process->param[2].value - 1] = process->registre[
@@ -33,6 +35,8 @@ void	ft_sub(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	process->registre[process->param[2].value - 1] = process->registre[
@@ -52,6 +56,8 @@ void	ft_and(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param1 = recup_param(process, 0, 1);
@@ -71,6 +77,8 @@ void	ft_or(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param1 = recup_param(process, 0, 1);
@@ -90,6 +98,8 @@ void	ft_xor(t_process *process)
 	if (!check_registre(process->param, 3))
 	{
 		process->pc += process->size_instruction;
+		process->pc = &process->arena->map[((int)(process->pc
+				- process->arena->map)) % ((int)MEM_SIZE * 2)];
 		return ;
 	}
 	param1 = recup_param(process, 0, 1);
