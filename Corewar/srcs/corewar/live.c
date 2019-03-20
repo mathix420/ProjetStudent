@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:04:59 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:49:33 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:10:41 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,16 @@ void			ft_live(t_process *process)
 {
 	t_champion	*champion;
 	int			found_champ;
+	static int	last_cycle = 0;
+	static int	last_alive = 0;
 
+	if (last_cycle != process->arena->cycle)
+	{
+		last_alive = 0;
+		last_cycle = process->arena->cycle;
+	}
+	else
+		last_alive++;
 	champion = process->arena->champion;
 	found_champ = 0;
 	while (champion)
@@ -37,6 +46,7 @@ void			ft_live(t_process *process)
 		if (champion->number == process->param[0].value)
 		{
 			champion->last_live = process->arena->cycle;
+			champion->last_alive = last_alive;
 			champion->period_live_nb++;
 			print_live(process, champion);
 			found_champ = 1;

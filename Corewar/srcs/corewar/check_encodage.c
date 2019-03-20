@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 15:53:24 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 17:12:40 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 10:03:32 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	conv_ocp_to_str(t_process *process, char str[], int size)
 	str_idx = -1;
 	pc_idx = (int)(process->pc - process->arena->map);
 	while (++str_idx < size)
-		str[str_idx] = process->arena->map[(pc_idx++ + 2) % (MEM_SIZE * 2)].hex;
+		str[str_idx] = process->arena->map[
+			(pc_idx++ + 2) % ((int)MEM_SIZE * 2)].hex;
 }
 
 int		no_encodage_needed(t_process *process)

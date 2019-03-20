@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:10:52 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:46:33 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 12:20:50 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_aff(t_process *process)
 {
 	if (!process->arena->graphic)
 		ft_putchar((process->param[0].value % 256));
-	process->carry = (!process->param[0].value % 256) ? 1 : 0;
 	process->pc += process->size_instruction;
 	process->pc = &process->arena->map[((int)(process->pc
 				- process->arena->map)) % ((int)MEM_SIZE * 2)];

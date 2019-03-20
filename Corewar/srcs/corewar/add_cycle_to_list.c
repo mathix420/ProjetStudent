@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:28:05 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 17:31:17 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:06:56 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	create_new_arena(t_arena **arena)
 
 void	copy_map(t_arena *arena)
 {
-	t_arena *elmt_src;
-	int             i;
+	t_arena		*elmt_src;
+	int			i;
 
 	elmt_src = arena->next;
 	i = -1;
@@ -58,55 +58,11 @@ void	copy_simple_data(t_arena *arena)
 	arena->size_list = elmt_src->size_list;
 }
 
-void	copy_tab_process(t_process *new_process, t_process *src_process)
-{
-	int i;
-
-	i = -1;
-	while (++i < REG_NUMBER)
-		new_process->registre[i] = src_process->registre[i];
-	i = -1;
-	while (++i < 3)
-		new_process->param[i] = src_process->param[i];
-}
-
-void	copy_processes(t_arena *arena)
-{
-	t_process       *src_process;
-	t_process       *new_process;
-	t_process       *prev_process;
-
-	src_process = arena->next->process;
-	while (src_process)
-	{
-		if (!(new_process = (t_process *)malloc(sizeof(t_process))))
-			ft_exit();
-		new_process->pc = arena->map + (src_process->pc - arena->next->map);
-		copy_tab_process(new_process, src_process);
-		new_process->alive = src_process->alive;
-		new_process->valid_encodage = src_process->encodage;
-		new_process->encodage = src_process->encodage;
-		new_process->cycle_decount = src_process->cycle_decount;
-		new_process->index = src_process->index;
-		new_process->size_instruction = src_process->size_instruction;
-		new_process->color = src_process->color;
-		new_process->carry = src_process->carry;
-		new_process->arena = arena;
-		if (!arena->process)
-			arena->process = new_process;
-		else
-			prev_process->next = new_process;
-		prev_process = new_process;
-		src_process = src_process->next;
-	}
-	new_process->next = NULL;
-}
-
 void	copy_champions(t_arena *arena)
 {
-	t_champion      *src_champion;
-	t_champion      *new_champion;
-	t_champion      *prev_champion;
+	t_champion		*src_champion;
+	t_champion		*new_champion;
+	t_champion		*prev_champion;
 
 	src_champion = arena->next->champion;
 	while (src_champion)

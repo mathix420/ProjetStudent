@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/15 18:11:44 by jnoe             ###   ########.fr        #
+#    Updated: 2019/03/20 14:06:22 by trlevequ         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -64,11 +64,14 @@ _SRC_COREWAR = corewar.c \
 			op.c \
 			kill_process.c \
 			delete_arena.c \
+			delete_list_arena.c \
 			add_cycle_to_list.c \
+			copy_processes.c \
 			init_graphic.c \
 			graphic_infos.c \
 			graphic_breakdown.c \
 			graphic_commands.c \
+			graphic_winner.c \
 			graphic.c \
 			print_map.c \
 			parsing_header.c \

@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:11:20 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/19 18:13:43 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 10:12:10 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,25 @@ static void	conv_op_to_str(t_process *process, t_map *pc, char str[], int size)
 {
 	int pc_idx;
 	int str_idx;
-	
+
 	str_idx = -1;
 	pc_idx = (int)(pc - process->arena->map);
 	while (++str_idx < size)
-		str[str_idx] = process->arena->map[pc_idx++ % (MEM_SIZE * 2)].hex;
+		str[str_idx] = process->arena->map[pc_idx++ % ((int)MEM_SIZE * 2)].hex;
+}
+
+static int	param_size(t_process *process, int idx_param)
+{
+	int		size_param;
+
+	size_param = 0;
+	if (process->param[idx_param].type == T_REG)
+		size_param = 2;
+	else if (process->param[idx_param].type == T_DIR)
+		size_param = (g_op_tab[process->index].direct_size) ? 4 : 8;
+	else if (process->param[idx_param].type == T_IND)
+		size_param = 4;
+	return (size_param);
 }
 
 void		get_param_instruction(t_process *process)
@@ -36,15 +50,13 @@ void		get_param_instruction(t_process *process)
 	idx_param = -1;
 	while (++idx_param < g_op_tab[process->index].nb_param)
 	{
-		if (process->param[idx_param].type == T_REG)
-			size_param = 2;
-		else if (process->param[idx_param].type == T_DIR)
-			size_param = (g_op_tab[process->index].direct_size) ? 4 : 8;
-		else if (process->param[idx_param].type == T_IND)
-			size_param = 4;
+		size_param = param_size(process, idx_param);
 		conv_op_to_str(process, tmp_pc, str, size_param);
-		if ((process->param[idx_param].type == T_DIR && g_op_tab[process->index].direct_size) || process->param[idx_param].type == T_IND)
-			process->param[idx_param].value = (short int)hex_to_int(str, hex, size_param);
+		if ((process->param[idx_param].type == T_DIR
+					&& g_op_tab[process->index].direct_size)
+				|| process->param[idx_param].type == T_IND)
+			process->param[idx_param].value = (short int)hex_to_int(
+					str, hex, size_param);
 		else
 			process->param[idx_param].value = hex_to_int(str, hex, size_param);
 		tmp_pc += size_param;

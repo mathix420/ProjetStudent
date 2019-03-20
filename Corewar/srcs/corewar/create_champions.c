@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:18:07 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 16:09:49 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 14:16:18 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	init_champion(char *name, int color, t_map *pc, t_arena *arena)
 	parsing_champ(name, champion);
 	champion->number = -arena->number_champs[color - 1];
 	champion->last_live = 0;
+	champion->last_alive = color;
 	champion->period_live_nb = 0;
 	champion->color = color;
 	champion->arena = arena;

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 13:25:21 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 15:25:40 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct				s_champion
 	int						number;
 	int						color;
 	int						last_live;
+	int						last_alive;
 	int						period_live_nb;
 	t_arena					*arena;
 	struct s_champion		*next;
@@ -113,14 +114,17 @@ void						print_op_tab(t_arena *arena);
 void						init_graphic(t_arena *arena);
 void						print_graphic(t_arena **arena);
 void						get_ncurses_commands(t_arena **arena);
+t_champion					*winner(t_arena *arena);
 void						print_graphic_infos(t_arena *arena);
 void						print_graphic_corewar(t_arena *arena);
+void						print_graphic_winner(t_arena *arena, t_champion *champion);
 void						print_infos_live_breakdown(t_arena *arena, int *i);
 
 void						delete_arena(t_arena *arena);
 void						delete_list_arena(t_arena *arena);
 void						delete_last_arena(t_arena *arena);
 void						add_cycle_to_list(t_arena **arena);
+void						copy_processes(t_arena *arena);
 
 int							convert_to_int(unsigned char *str);
 int							hex_to_int(char *str, char *base, int len);
@@ -128,7 +132,7 @@ int							hex_to_int(char *str, char *base, int len);
 void						fill_zero_period_live(t_arena *arena);
 void						kill_no_live_processes(t_arena *arena);
 
-void						get_current_instruction_in_instr(t_process *process);
+void						get_current_instruction_in_instr(t_process *prcs);
 void						get_current_instruction(t_process *process);
 void						get_param_instruction(t_process *process);
 void						check_encodage(t_process *process);
@@ -136,7 +140,7 @@ int							no_encodage_needed(t_process *process);
 
 void						parsing_size_file(char *file_name);
 void						parsing_exec_magic(int fd, char *file_name);
-void						parsing_name(int fd, t_champion *champ, char *name);
+void						parsing_name(int fd, t_champion *cp, char *name);
 void						parsing_champ(char *file_name, t_champion *champ);
 
 int							number_of_champion(int tab[4], int nb_champ);
@@ -162,8 +166,8 @@ void						ft_aff(t_process *process);
 void						ft_nothing(t_process *process);
 
 int							check_registre(t_param param[], int nb_params);
-int							pc_index(t_process *process, int param, int restr);
-int							indirect_value(t_process *process, int param, int restr);
+int							pc_index(t_process *process, int param, int rstr);
+int							indirect_value(t_process *prcs, int prm, int restr);
 void						convert_to_hexa_str(char str[], int param);
 int							recup_param(t_process *process, int idx, int restr);
 

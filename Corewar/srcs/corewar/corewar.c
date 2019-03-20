@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 18:21:50 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:27:53 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,23 +158,14 @@ void	introducing_champs(t_arena *arena)
 	ft_putendl("");
 }
 
-void	gagnant(t_arena *arena)
+void	print_winner(t_arena *arena, t_champion *winner)
 {
-	t_champion	*champion;
-	t_champion	*gagnant;
 	int			i;
+	t_champion	*champion;
 
-	champion = arena->champion;
-	gagnant = champion;
-	while (champion)
-	{
-		if (gagnant->last_live <= champion->last_live)
-			gagnant = champion;
-		champion = champion->next;
-	}
 	i = 1;
 	champion = arena->champion;
-	while (champion != gagnant)
+	while (champion != winner)
 	{
 		i++;
 		champion = champion->next;
@@ -182,8 +173,31 @@ void	gagnant(t_arena *arena)
 	ft_putstr("Contestant ");
 	ft_putnbr(i);
 	ft_putstr(", \"");
-	ft_putstr(gagnant->name);
+	ft_putstr(winner->name);
 	ft_putstr("\", has won !\n");
+}
+
+t_champion	*winner(t_arena *arena)
+{
+	t_champion	*champion;
+	t_champion	*winner;
+
+	champion = arena->champion;
+	winner = champion;
+	while (champion)
+	{
+		if (winner->last_live <= champion->last_live)
+			winner = champion;
+		champion = champion->next;
+	}
+	champion = arena->champion;
+	while (champion)
+	{
+		if (winner->last_live == champion->last_live && winner->last_alive < champion->last_alive)
+			winner = champion;
+		champion = champion->next;
+	}
+	return (winner);
 }
 
 int		main(int ac, char **av)
@@ -203,7 +217,7 @@ int		main(int ac, char **av)
 	{
 		introducing_champs(arena);
 		corewar(arena);
-		gagnant(arena);
+		print_winner(arena, winner(arena));
 		delete_list_arena(arena);
 	}
 	return (0);

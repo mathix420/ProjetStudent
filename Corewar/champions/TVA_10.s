@@ -9,7 +9,6 @@ recover:
 	ld		%1, r13
 	and		%0, r1, r1
 	zjmp    %:skip
-
 clear:
 	#if r16 = 0x69CACA69 alors go to skip
 	#else:

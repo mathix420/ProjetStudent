@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 10:06:54 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 16:08:57 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:23:20 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void				print_graphic_pc(t_arena *arena)
 		index = (int)(process->pc - arena->map);
 		i = (index / 128);
 		j = (index % 128) + ((index % 128) / 2);
-		wattron(arena->ncurses->corewar, COLOR_PAIR(arena->map[index].color + 6));
+		wattron(arena->ncurses->corewar,
+				COLOR_PAIR(arena->map[index].color + 6));
 		mvwaddch(arena->ncurses->corewar, i + 1, j + 2, arena->map[index].hex);
-		mvwaddch(arena->ncurses->corewar, i + 1, j + 3, arena->map[index + 1].hex);
+		mvwaddch(arena->ncurses->corewar, i + 1, j + 3,
+				arena->map[index + 1].hex);
 		process = process->next;
 	}
 }
@@ -76,39 +78,14 @@ void				print_graphic_corewar(t_arena *arena)
 	print_graphic_pc(arena);
 }
 
-void				print_graphic_winner(t_arena *arena)
-{
-	t_champion	*champion;
-	t_champion	*winner;
-
-	if (arena->process)
-		return ;
-	champion = arena->champion->next;
-	winner = arena->champion;
-	while (champion)
-	{
-		if (winner->last_live <= champion->last_live)
-			winner = champion;
-		champion = champion->next;
-	}
-	wattron(arena->ncurses->infos, COLOR_PAIR(1));
-	mvwprintw(arena->ncurses->infos, 55, 2, "The winner is : ");
-	wattron(arena->ncurses->infos, COLOR_PAIR(winner->color + 1));
-	mvwprintw(arena->ncurses->infos, 55, 18, "%s", winner->name);
-	wattron(arena->ncurses->infos, COLOR_PAIR(1));
-	mvwprintw(arena->ncurses->infos, 57, 2, "Press any key to finish");
-	wrefresh(arena->ncurses->corewar);
-	wrefresh(arena->ncurses->infos);
-	timeout(1000000);
-	getch();
-}
-
 void				print_graphic(t_arena **arena)
 {
 	print_graphic_corewar(*arena);
 	print_graphic_infos(*arena);
 	wrefresh((*arena)->ncurses->corewar);
 	wrefresh((*arena)->ncurses->infos);
-	get_ncurses_commands(arena);
-	print_graphic_winner(*arena);
+	if (!(*arena)->process)
+		print_graphic_winner(*arena, winner(*arena));
+	else
+		get_ncurses_commands(arena);
 }

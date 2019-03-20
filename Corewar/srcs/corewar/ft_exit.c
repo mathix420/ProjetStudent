@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:58:12 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/14 18:32:23 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 15:20:24 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void	ft_exit_size(int error, char *file_name, int size)
 		ft_putstr_fd(file_name, 2);
 		ft_putstr_fd(" has a too large code (", 2);
 		ft_putnbr_fd(size, 2);
-		ft_putstr_fd(" bytes > 682 bytes)\n", 2);
+		ft_putstr_fd(" bytes > ", 2);
+		ft_putnbr_fd(CHAMP_MAX_SIZE, 2);
+		ft_putstr_fd(" bytes)\n", 2);
 	}
 	exit(0);
 }

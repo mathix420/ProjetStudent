@@ -6,11 +6,12 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 16:59:23 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/18 18:18:16 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 12:35:00 by trlevequ         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <ncurses.h>
 #include "corewar.h"
 
 static void	delete_process(t_process *process)
@@ -57,34 +58,4 @@ void		delete_last_arena(t_arena *arena)
 	last_arena = last_arena->next;
 	delete_arena(last_arena);
 	tmp_arena->next = NULL;
-}
-
-void		delete_list_arena(t_arena *arena)
-{
-	t_arena		*tmp_arena;
-	WINDOW		*free_corewar;
-	WINDOW		*free_infos;
-
-	while (arena)
-	{
-		tmp_arena = arena->next;
-		if (!arena->next)
-		{
-			free(arena->size_list);
-			while (arena->champion)
-			{
-				free(arena->champion->name);
-				free(arena->champion->comment);
-				arena->champion = arena->champion->next;
-			}
-			if (arena->ncurses && arena->ncurses->corewar && arena->ncurses->infos)
-			{
-				free_corewar = arena->ncurses->corewar;
-				free_infos = arena->ncurses->infos;
-				free(arena->ncurses);
-			}
-		}
-		delete_arena(arena);
-		arena = tmp_arena;
-	}
 }
