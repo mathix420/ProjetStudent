@@ -6,7 +6,7 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:56:52 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/20 15:27:53 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:09:54 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,51 +33,6 @@ void	launch_valid_function(t_process *process)
 		else
 			g_op_tab[16].function(process);
 	}
-}
-
-void	check_process(t_process *process)
-{
-	if (process->cycle_decount > 1)
-		process->cycle_decount--;
-	else if (process->cycle_decount == 1)
-	{
-		launch_valid_function(process);
-		get_current_instruction(process);
-	}
-	else if (process->cycle_decount == 0)
-		get_current_instruction(process);
-}
-
-void	check_all_process(t_arena *arena)
-{
-	t_process	*process;
-
-	process = arena->process;
-	while (process)
-	{
-		check_process(process);
-		process = process->next;
-	}
-}
-
-void	cycle_to_die_verif(t_arena *arena)
-{
-	kill_no_live_processes(arena);
-	if (arena->total_lives >= NBR_LIVE)
-	{
-		arena->cycle_to_die -= CYCLE_DELTA;
-		arena->nb_checks = 0;
-	}
-	else
-		arena->nb_checks++;
-	fill_zero_period_live(arena);
-	if (arena->nb_checks == MAX_CHECKS)
-	{
-		arena->cycle_to_die -= CYCLE_DELTA;
-		arena->nb_checks = 0;
-	}
-	arena->total_lives = 0;
-	arena->cycle_decount = arena->cycle_to_die;
 }
 
 int		corewar_graphic(t_arena **arena)
@@ -118,10 +73,8 @@ int		corewar(t_arena *arena)
 		}
 		check_all_process(arena);
 		arena->cycle++;
-		if (arena->cycle_decount <= 1)
-			cycle_to_die_verif(arena);
-		else
-			arena->cycle_decount--;
+		(arena->cycle_decount <= 1) ? cycle_to_die_verif(arena)
+			: arena->cycle_decount--;
 	}
 	if (arena->dump != -1)
 	{
@@ -156,48 +109,6 @@ void	introducing_champs(t_arena *arena)
 		i++;
 	}
 	ft_putendl("");
-}
-
-void	print_winner(t_arena *arena, t_champion *winner)
-{
-	int			i;
-	t_champion	*champion;
-
-	i = 1;
-	champion = arena->champion;
-	while (champion != winner)
-	{
-		i++;
-		champion = champion->next;
-	}
-	ft_putstr("Contestant ");
-	ft_putnbr(i);
-	ft_putstr(", \"");
-	ft_putstr(winner->name);
-	ft_putstr("\", has won !\n");
-}
-
-t_champion	*winner(t_arena *arena)
-{
-	t_champion	*champion;
-	t_champion	*winner;
-
-	champion = arena->champion;
-	winner = champion;
-	while (champion)
-	{
-		if (winner->last_live <= champion->last_live)
-			winner = champion;
-		champion = champion->next;
-	}
-	champion = arena->champion;
-	while (champion)
-	{
-		if (winner->last_live == champion->last_live && winner->last_alive < champion->last_alive)
-			winner = champion;
-		champion = champion->next;
-	}
-	return (winner);
 }
 
 int		main(int ac, char **av)

@@ -6,16 +6,16 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 18:10:35 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 18:11:25 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 15:31:13 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		number_of_champion(int tab[4], int nb_champ)
+int		number_of_champion(unsigned int tab[4], int nb_champ)
 {
-	int	nb;
-	int	i;
+	unsigned int	nb;
+	int				i;
 
 	if (nb_champ == 0)
 		return (1);

@@ -6,11 +6,10 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:22:21 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/19 18:10:41 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 16:28:23 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 int		check_registre(t_param param[], int nb_params)

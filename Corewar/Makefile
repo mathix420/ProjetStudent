@@ -6,7 +6,7 @@
 #    By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/05 18:04:52 by trlevequ          #+#    #+#              #
-#    Updated: 2019/03/20 14:06:22 by trlevequ         ###   ########.fr        #
+#    Updated: 2019/03/20 16:08:37 by jnoe             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                            MF-GEN MAKEFILE                           *** #
@@ -63,6 +63,8 @@ _SRC_COREWAR = corewar.c \
 			hexa_to_int.c \
 			op.c \
 			kill_process.c \
+			corewar_check.c \
+			winner.c \
 			delete_arena.c \
 			delete_list_arena.c \
 			add_cycle_to_list.c \
@@ -106,7 +108,7 @@ DOT_HEADER = .headers
 ################################################################################
 
 CC = gcc
-FLAGS = -g3 -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 NCURSES_LIB = -lncurses
 
 ################################################################################

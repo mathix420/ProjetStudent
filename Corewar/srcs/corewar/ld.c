@@ -6,11 +6,10 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:06:01 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/20 12:30:39 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 16:27:53 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	ft_ld(t_process *process)

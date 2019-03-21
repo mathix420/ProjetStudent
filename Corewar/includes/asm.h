@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 11:47:26 by agissing          #+#    #+#             */
-/*   Updated: 2019/03/17 17:41:39 by agissing         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:59:44 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int						get_index(t_env *e);
 /*
 ** overflow
 */
-int                     add_i(t_env *e);
+int						add_i(t_env *e);
 void					add_to_champ(t_env *e, uint8_t octet);
 
 /*

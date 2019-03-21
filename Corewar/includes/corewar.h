@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:19:53 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/20 15:25:40 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:10:04 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 struct s_champion;
 struct s_process;
+typedef WINDOW				t_win;
 
 typedef struct				s_param
 {
@@ -45,9 +46,9 @@ typedef struct				s_ncurses
 typedef struct				s_arena
 {
 	t_map					map[MEM_SIZE * 2 + 1];
-	int						dump;
+	long long				dump;
 	int						graphic;
-	int						number_champs[4];
+	unsigned int			number_champs[4];
 	int						arg_champ[4];
 	int						nb_champs;
 	int						total_process;
@@ -117,8 +118,17 @@ void						get_ncurses_commands(t_arena **arena);
 t_champion					*winner(t_arena *arena);
 void						print_graphic_infos(t_arena *arena);
 void						print_graphic_corewar(t_arena *arena);
-void						print_graphic_winner(t_arena *arena, t_champion *champion);
+void						print_graphic_winner(t_arena *arena,
+							t_champion *champion);
 void						print_infos_live_breakdown(t_arena *arena, int *i);
+
+void						print_winner(t_arena *arena, t_champion *winner);
+t_champion					*winner(t_arena *arena);
+
+void						launch_valid_function(t_process *process);
+void						cycle_to_die_verif(t_arena *arena);
+void						check_all_process(t_arena *arena);
+void						check_process(t_process *process);
 
 void						delete_arena(t_arena *arena);
 void						delete_list_arena(t_arena *arena);
@@ -143,7 +153,7 @@ void						parsing_exec_magic(int fd, char *file_name);
 void						parsing_name(int fd, t_champion *cp, char *name);
 void						parsing_champ(char *file_name, t_champion *champ);
 
-int							number_of_champion(int tab[4], int nb_champ);
+int							number_of_champion(unsigned tab[4], int nb_champ);
 int							ft_str_is_nbr(char *str);
 void						parsing_arguments(char **av, t_arena *arena);
 

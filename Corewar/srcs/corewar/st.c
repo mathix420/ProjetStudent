@@ -6,11 +6,10 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:08:47 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/19 19:09:45 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 16:28:07 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	store_on_map(t_process *process, int param, int param2, int restr)

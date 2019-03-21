@@ -6,11 +6,10 @@
 /*   By: trlevequ <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:59 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/15 18:32:08 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:29:16 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <ncurses.h>
 #include "corewar.h"
 

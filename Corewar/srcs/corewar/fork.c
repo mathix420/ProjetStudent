@@ -6,11 +6,10 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:10:15 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:50:19 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:29:07 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	add_process_fork(t_process *process_father, int param, int restr)

@@ -6,7 +6,7 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 11:12:13 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/15 18:10:53 by jnoe             ###   ########.fr       */
+/*   Updated: 2019/03/20 15:42:42 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	parsing_dump(char **av, t_arena *arena, int *i)
 {
+	unsigned long long	number;
+
 	if (av[*i] && !ft_strcmp(av[*i], "-dump"))
 	{
 		if (arena->dump != -1 || arena->graphic == 1)
@@ -21,7 +23,9 @@ void	parsing_dump(char **av, t_arena *arena, int *i)
 		(*i)++;
 		if (av[*i] && ft_str_is_nbr(av[*i]))
 		{
-			arena->dump = ft_atoi(av[*i]);
+			if ((number = ft_atoi(av[*i])) > 4294967296)
+				ft_exit_usage();
+			arena->dump = number;
 			(*i)++;
 		}
 		else
@@ -42,12 +46,16 @@ void	parsing_ncurse(char **av, t_arena *arena, int *i)
 
 void	parsing_nb_champ(char **av, t_arena *arena, int *i, int nb_champ)
 {
+	unsigned long long	number;
+
 	if (av[*i] && !ft_strcmp(av[*i], "-n"))
 	{
 		(*i)++;
 		if (av[*i] && ft_str_is_nbr(av[*i]))
 		{
-			arena->number_champs[nb_champ] = ft_atoi(av[*i]);
+			if ((number = ft_atoi(av[*i])) > 4294967296)
+				ft_exit_usage();
+			arena->number_champs[nb_champ] = number;
 			(*i)++;
 		}
 		else

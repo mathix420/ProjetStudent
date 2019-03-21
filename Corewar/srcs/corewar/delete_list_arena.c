@@ -6,7 +6,7 @@
 /*   By: trlevequ <trlevequ@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 12:34:33 by trlevequ          #+#    #+#             */
-/*   Updated: 2019/03/20 12:34:51 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:49:14 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void		delete_data_champions(t_arena *arena)
 
 void		delete_list_arena(t_arena *arena)
 {
-	t_arena		*tmp_arena;
-	WINDOW		*free_corewar;
-	WINDOW		*free_infos;
+	t_arena			*tmp_arena;
+	t_win			*free_corewar;
+	t_win			*free_infos;
 
 	while (arena)
 	{

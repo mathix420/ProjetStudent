@@ -6,11 +6,10 @@
 /*   By: jnoe <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 17:08:10 by jnoe              #+#    #+#             */
-/*   Updated: 2019/03/18 17:46:40 by trlevequ         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:28:39 by jnoe             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "corewar.h"
 
 void	ft_zjmp(t_process *process)
