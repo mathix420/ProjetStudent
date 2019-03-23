@@ -1,0 +1,99 @@
+body {
+    background-color: #000000;
+}
+body > h1 {
+    color: #e8ecf1;
+}
+img {
+    width: 380px;
+    display: block;
+    margin: auto;
+}
+table {
+    width: 75%;
+}
+.card {
+    border-color: #e8ecf1;
+    font-family: 'Lato', sans-serif;
+    margin: 0.2em;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0.3em;
+}
+.card.jmp h1 {
+    font-size: 0.8vw;
+    color: #e8ecf1;
+    line-height: 5em;
+    height: 100%;
+}
+.card h1 {
+    font-size: 1.2vw;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.7em;
+    margin: 0;
+}
+.card h3 {
+    font-size: 0.7vw;
+    text-align: left;
+    vertical-align: top;
+    width: 97%;
+    margin: 0;
+}
+.card h5 {
+    font-size: 0.7vw;
+    font-family: 'Roboto', sans-serif;
+    text-align: right;
+    vertical-align: top;
+    margin: 0;
+}
+.nonmetal {
+    border-color: #3fc380;
+    background-color: #7befb2;
+    color: #2e3131;
+}
+.noblegas {
+    border-color: #8c14fc;
+    background-color: #d5b8ff;
+    color: #2e3131;
+}
+.alkalimetal {
+    border-color: #cf000f;
+    background-color: #e74c3c;
+    color: #2e3131;
+}
+.alkalineearthmetal {
+    border-color: #f7ca18;
+    background-color: #ffec8b;
+    color: #2e3131;
+}
+.transitionmetal , .post-transitionmetal {
+    border-color: #d24d57;
+    background-color: #f1a9a0;
+    color: #2e3131;
+}
+.metalloid {
+    border-color: #f9690e;
+    background-color: #fabe58;
+    color: #2e3131;
+}
+.halogen {
+    border-color: #f89406;
+    background-color: #fcd670;
+    color: #2e3131;
+}
+.metal {
+    border-color: #bdc3c7;
+    background-color: #ececec;
+    color: #2e3131;
+}
+.lanthanoid {
+    border-color: #963694;
+    background-color: #9b59b6;
+    color: #2e3131;
+}
+.actinoid {
+    border-color: #663399;
+    background-color: #674172;
+    color: #2e3131;
+}

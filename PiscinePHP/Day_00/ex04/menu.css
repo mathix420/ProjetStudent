@@ -1,0 +1,95 @@
+body {
+    text-align: center;
+}
+
+img {
+    width: 300px;
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+div {
+    display: inline-table;
+}
+
+label {
+    position: relative;
+    display: block;
+    padding: 0 18px 0 12px;
+    line-height: 3em;
+    transition: background 0.3s;
+    cursor: pointer;
+    width: 168px;
+    margin: auto;
+    border: solid;
+    border-width: 1px;
+}
+
+label:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    right: 5px;
+    width: 0;
+    height: 0;
+    border-top: 4px solid rgba(255, 255, 255, .5);
+    border-bottom: 0 solid rgba(255, 255, 255, .5);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    transition: border-bottom .1s, border-top .1s .1s;
+}
+
+label:hover,
+input:checked ~ label {
+    background: rgba(44, 150, 238, 0.62);
+}
+
+input:checked ~ label:after {
+    border-top: 0 solid rgba(255, 255, 255, .5);
+    border-bottom: 4px solid rgba(255, 255, 255, .5);
+    transition: border-top .1s, border-bottom .1s .1s;
+}
+
+input {
+    display: none
+}
+
+ul {
+    text-align: center;
+    display: block;
+    width: 200px;
+    margin: auto;
+}
+
+input:checked ~ ul.submenu {
+    max-height: 300px;
+    transition: max-height 0.5s ease-in;
+    width: 200px;
+}
+
+ul.submenu {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
+    background: #2c96ee;
+    transition: max-height 0.5s ease-out;
+    position: absolute;
+    width: 200px;
+}
+
+ul.submenu li a {
+    display: block;
+    padding: 12px;
+    color: rgb(29, 26, 28);
+    text-decoration: none;
+    box-shadow: 0 -1px rgba(29, 26, 28, .5) inset;
+    transition: background .3s;
+    white-space: nowrap;
+}
+
+ul.submenu li a:hover {
+    background: rgba(0, 0, 0, .3);
+}

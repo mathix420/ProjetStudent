@@ -4,35 +4,53 @@
   <meta charset="utf-8">
   <title>Periodic table</title>
   <link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
-  <!-- ['nonmetal', 'noblegas', 'alkalimetal', 'alkalineearthmetal',
-  'metalloid', 'halogen', 'metal', 'transitionmetal', 'lanthanoid',
-  'actinoid', 'post-transitionmetal'] -->
   <style media="screen">
+    body {
+      background-color: #000000;
+    }
+    body > h1 {
+      color: #e8ecf1;
+    }
+    img {
+      width: 380px;
+      display: block;
+      margin: auto;
+    }
+    table {
+      width: 75%;
+    }
     .card {
-      height: 6.2em;
-      width: 6.2em;
-      margin: 2px;
+      border-color: #e8ecf1;
+      font-family: 'Lato', sans-serif;
+      margin: 0.2em;
       border-style: solid;
       border-width: 2px;
       border-radius: 0.3em;
     }
+    .card.jmp h1 {
+      font-size: 0.8vw;
+      color: #e8ecf1;
+      line-height: 5em;
+      height: 100%;
+    }
     .card h1 {
-      font-family: 'Lato', sans-serif;
+      font-size: 1.2vw;
       text-align: center;
       vertical-align: middle;
       line-height: 1.7em;
       margin: 0;
     }
     .card h3 {
-      font-family: 'Lato', sans-serif;
-      text-align: right;
+      font-size: 0.7vw;
+      text-align: left;
       vertical-align: top;
       width: 97%;
       margin: 0;
     }
     .card h5 {
+      font-size: 0.7vw;
       font-family: 'Roboto', sans-serif;
-      text-align: center;
+      text-align: right;
       vertical-align: top;
       margin: 0;
     }
@@ -47,607 +65,673 @@
       color: #2e3131;
     }
     .alkalimetal {
+      border-color: #cf000f;
+      background-color: #e74c3c;
+      color: #2e3131;
+    }
+    .alkalineearthmetal {
+      border-color: #f7ca18;
+      background-color: #ffec8b;
+      color: #2e3131;
+    }
+    .transitionmetal , .post-transitionmetal {
       border-color: #d24d57;
       background-color: #f1a9a0;
       color: #2e3131;
     }
-    .alkalineearthmetal {
-      border-color: #d24d57;
-      background-color: #f1a9a0;
+    .metalloid {
+      border-color: #f9690e;
+      background-color: #fabe58;
+      color: #2e3131;
+    }
+    .halogen {
+      border-color: #f89406;
+      background-color: #fcd670;
+      color: #2e3131;
+    }
+    .metal {
+      border-color: #bdc3c7;
+      background-color: #ececec;
+      color: #2e3131;
+    }
+    .lanthanoid {
+      border-color: #963694;
+      background-color: #9b59b6;
+      color: #2e3131;
+    }
+    .actinoid {
+      border-color: #663399;
+      background-color: #674172;
       color: #2e3131;
     }
   </style>
 </head>
 <body>
-  <div class="card nonmetal">
-    <h3>1</h3>
-    <h1>H</h1>
-    <h5>1.00794(4)</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>2</h3>
-    <h1>He</h1>
-    <h5>4.002602(2)</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>3</h3>
-    <h1>Li</h1>
-    <h5>6.941(2)</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>4</h3>
-    <h1>Be</h1>
-    <h5>9.012182(3)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>5</h3>
-    <h1>B</h1>
-    <h5>10.811(7)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>6</h3>
-    <h1>C</h1>
-    <h5>12.0107(8)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>7</h3>
-    <h1>N</h1>
-    <h5>14.0067(2)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>8</h3>
-    <h1>O</h1>
-    <h5>15.9994(3)</h5>
-  </div>
-  <div class="card halogen">
-    <h3>9</h3>
-    <h1>F</h1>
-    <h5>18.9984032(5)</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>10</h3>
-    <h1>Ne</h1>
-    <h5>20.1797(6)</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>11</h3>
-    <h1>Na</h1>
-    <h5>22.98976928(2)</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>12</h3>
-    <h1>Mg</h1>
-    <h5>24.3050(6)</h5>
-  </div>
-  <div class="card metal">
-    <h3>13</h3>
-    <h1>Al</h1>
-    <h5>26.9815386(8)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>14</h3>
-    <h1>Si</h1>
-    <h5>28.0855(3)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>15</h3>
-    <h1>P</h1>
-    <h5>30.973762(2)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>16</h3>
-    <h1>S</h1>
-    <h5>32.065(5)</h5>
-  </div>
-  <div class="card halogen">
-    <h3>17</h3>
-    <h1>Cl</h1>
-    <h5>35.453(2)</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>18</h3>
-    <h1>Ar</h1>
-    <h5>39.948(1)</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>19</h3>
-    <h1>K</h1>
-    <h5>39.0983(1)</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>20</h3>
-    <h1>Ca</h1>
-    <h5>40.078(4)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>21</h3>
-    <h1>Sc</h1>
-    <h5>44.955912(6)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>22</h3>
-    <h1>Ti</h1>
-    <h5>47.867(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>23</h3>
-    <h1>V</h1>
-    <h5>50.9415(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>24</h3>
-    <h1>Cr</h1>
-    <h5>51.9961(6)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>25</h3>
-    <h1>Mn</h1>
-    <h5>54.938045(5)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>26</h3>
-    <h1>Fe</h1>
-    <h5>55.845(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>27</h3>
-    <h1>Co</h1>
-    <h5>58.933195(5)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>28</h3>
-    <h1>Ni</h1>
-    <h5>58.6934(4)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>29</h3>
-    <h1>Cu</h1>
-    <h5>63.546(3)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>30</h3>
-    <h1>Zn</h1>
-    <h5>65.38(2)</h5>
-  </div>
-  <div class="card metal">
-    <h3>31</h3>
-    <h1>Ga</h1>
-    <h5>69.723(1)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>32</h3>
-    <h1>Ge</h1>
-    <h5>72.64(1)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>33</h3>
-    <h1>As</h1>
-    <h5>74.92160(2)</h5>
-  </div>
-  <div class="card nonmetal">
-    <h3>34</h3>
-    <h1>Se</h1>
-    <h5>78.96(3)</h5>
-  </div>
-  <div class="card halogen">
-    <h3>35</h3>
-    <h1>Br</h1>
-    <h5>79.904(1)</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>36</h3>
-    <h1>Kr</h1>
-    <h5>83.798(2)</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>37</h3>
-    <h1>Rb</h1>
-    <h5>85.4678(3)</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>38</h3>
-    <h1>Sr</h1>
-    <h5>87.62(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>39</h3>
-    <h1>Y</h1>
-    <h5>88.90585(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>40</h3>
-    <h1>Zr</h1>
-    <h5>91.224(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>41</h3>
-    <h1>Nb</h1>
-    <h5>92.90638(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>42</h3>
-    <h1>Mo</h1>
-    <h5>95.96(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>43</h3>
-    <h1>Tc</h1>
-    <h5>[98]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>44</h3>
-    <h1>Ru</h1>
-    <h5>101.07(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>45</h3>
-    <h1>Rh</h1>
-    <h5>102.90550(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>46</h3>
-    <h1>Pd</h1>
-    <h5>106.42(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>47</h3>
-    <h1>Ag</h1>
-    <h5>107.8682(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>48</h3>
-    <h1>Cd</h1>
-    <h5>112.411(8)</h5>
-  </div>
-  <div class="card metal">
-    <h3>49</h3>
-    <h1>In</h1>
-    <h5>114.818(3)</h5>
-  </div>
-  <div class="card metal">
-    <h3>50</h3>
-    <h1>Sn</h1>
-    <h5>118.710(7)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>51</h3>
-    <h1>Sb</h1>
-    <h5>121.760(1)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>52</h3>
-    <h1>Te</h1>
-    <h5>127.60(3)</h5>
-  </div>
-  <div class="card halogen">
-    <h3>53</h3>
-    <h1>I</h1>
-    <h5>126.90447(3)</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>54</h3>
-    <h1>Xe</h1>
-    <h5>131.293(6)</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>55</h3>
-    <h1>Cs</h1>
-    <h5>132.9054519(2)</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>56</h3>
-    <h1>Ba</h1>
-    <h5>137.327(7)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>57</h3>
-    <h1>La</h1>
-    <h5>138.90547(7)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>58</h3>
-    <h1>Ce</h1>
-    <h5>140.116(1)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>59</h3>
-    <h1>Pr</h1>
-    <h5>140.90765(2)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>60</h3>
-    <h1>Nd</h1>
-    <h5>144.242(3)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>61</h3>
-    <h1>Pm</h1>
-    <h5>[145]</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>62</h3>
-    <h1>Sm</h1>
-    <h5>150.36(2)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>63</h3>
-    <h1>Eu</h1>
-    <h5>151.964(1)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>64</h3>
-    <h1>Gd</h1>
-    <h5>157.25(3)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>65</h3>
-    <h1>Tb</h1>
-    <h5>158.92535(2)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>66</h3>
-    <h1>Dy</h1>
-    <h5>162.500(1)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>67</h3>
-    <h1>Ho</h1>
-    <h5>164.93032(2)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>68</h3>
-    <h1>Er</h1>
-    <h5>167.259(3)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>69</h3>
-    <h1>Tm</h1>
-    <h5>168.93421(2)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>70</h3>
-    <h1>Yb</h1>
-    <h5>173.054(5)</h5>
-  </div>
-  <div class="card lanthanoid first-row">
-    <h3>71</h3>
-    <h1>Lu</h1>
-    <h5>174.9668(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>72</h3>
-    <h1>Hf</h1>
-    <h5>178.49(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>73</h3>
-    <h1>Ta</h1>
-    <h5>180.94788(2)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>74</h3>
-    <h1>W</h1>
-    <h5>183.84(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>75</h3>
-    <h1>Re</h1>
-    <h5>186.207(1)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>76</h3>
-    <h1>Os</h1>
-    <h5>190.23(3)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>77</h3>
-    <h1>Ir</h1>
-    <h5>192.217(3)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>78</h3>
-    <h1>Pt</h1>
-    <h5>195.084(9)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>79</h3>
-    <h1>Au</h1>
-    <h5>196.966569(4)</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>80</h3>
-    <h1>Hg</h1>
-    <h5>200.59(2)</h5>
-  </div>
-  <div class="card metal">
-    <h3>81</h3>
-    <h1>Tl</h1>
-    <h5>204.3833(2)</h5>
-  </div>
-  <div class="card metal">
-    <h3>82</h3>
-    <h1>Pb</h1>
-    <h5>207.2(1)</h5>
-  </div>
-  <div class="card metal">
-    <h3>83</h3>
-    <h1>Bi</h1>
-    <h5>208.98040(1)</h5>
-  </div>
-  <div class="card metalloid">
-    <h3>84</h3>
-    <h1>Po</h1>
-    <h5>[209]</h5>
-  </div>
-  <div class="card halogen">
-    <h3>85</h3>
-    <h1>At</h1>
-    <h5>[210]</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>86</h3>
-    <h1>Rn</h1>
-    <h5>[222]</h5>
-  </div>
-  <div class="card alkalimetal">
-    <h3>87</h3>
-    <h1>Fr</h1>
-    <h5>[223]</h5>
-  </div>
-  <div class="card alkalineearthmetal">
-    <h3>88</h3>
-    <h1>Ra</h1>
-    <h5>[226]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>89</h3>
-    <h1>Ac</h1>
-    <h5>[227]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>90</h3>
-    <h1>Th</h1>
-    <h5>232.03806(2)</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>91</h3>
-    <h1>Pa</h1>
-    <h5>231.03588(2)</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>92</h3>
-    <h1>U</h1>
-    <h5>238.02891(3)</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>93</h3>
-    <h1>Np</h1>
-    <h5>[237]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>94</h3>
-    <h1>Pu</h1>
-    <h5>[244]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>95</h3>
-    <h1>Am</h1>
-    <h5>[243]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>96</h3>
-    <h1>Cm</h1>
-    <h5>[247]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>97</h3>
-    <h1>Bk</h1>
-    <h5>[247]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>98</h3>
-    <h1>Cf</h1>
-    <h5>[251]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>99</h3>
-    <h1>Es</h1>
-    <h5>[252]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>100</h3>
-    <h1>Fm</h1>
-    <h5>[257]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>101</h3>
-    <h1>Md</h1>
-    <h5>[258]</h5>
-  </div>
-  <div class="card actinoid second-row">
-    <h3>102</h3>
-    <h1>No</h1>
-    <h5>[259]</h5>
-  </div>
-  <div class="card transitionmetal second-row">
-    <h3>103</h3>
-    <h1>Lr</h1>
-    <h5>[262]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>104</h3>
-    <h1>Rf</h1>
-    <h5>[267]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>105</h3>
-    <h1>Db</h1>
-    <h5>[268]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>106</h3>
-    <h1>Sg</h1>
-    <h5>[271]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>107</h3>
-    <h1>Bh</h1>
-    <h5>[272]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>108</h3>
-    <h1>Hs</h1>
-    <h5>[270]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>109</h3>
-    <h1>Mt</h1>
-    <h5>[276]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>110</h3>
-    <h1>Ds</h1>
-    <h5>[281]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>111</h3>
-    <h1>Rg</h1>
-    <h5>[280]</h5>
-  </div>
-  <div class="card transitionmetal">
-    <h3>112</h3>
-    <h1>Cn</h1>
-    <h5>[285]</h5>
-  </div>
-  <div class="card post-transitionmetal">
-    <h3>113</h3>
-    <h1>Nh</h1>
-    <h5>[284]</h5>
-  </div>
-  <div class="card post-transitionmetal">
-    <h3>114</h3>
-    <h1>Fl</h1>
-    <h5>[289]</h5>
-  </div>
-  <div class="card post-transitionmetal">
-    <h3>115</h3>
-    <h1>Mc</h1>
-    <h5>[288]</h5>
-  </div>
-  <div class="card post-transitionmetal">
-    <h3>116</h3>
-    <h1>Lv</h1>
-    <h5>[293]</h5>
-  </div>
-  <div class="card post-transitionmetal">
-    <h3>117</h3>
-    <h1>Ts</h1>
-    <h5>[294]</h5>
-  </div>
-  <div class="card noblegas">
-    <h3>118</h3>
-    <h1>Og</h1>
-    <h5>[294]</h5>
-  </div>
+  <table align='center' contenteditable="true">
+    <tr class="row">
+      <td class="card nonmetal">
+        <h5>1.00794</h5>
+        <h1>H</h1>
+        <h3>1</h3>
+      </td>
+      <td colspan="16"></td>
+      <td class="card noblegas">
+        <h5>4.002602</h5>
+        <h1>He</h1>
+        <h3>2</h3>
+      </td>
+    </tr>
+    <tr class="row">
+      <td class="card alkalimetal">
+        <h5>6.941</h5>
+        <h1>Li</h1>
+        <h3>3</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>9.012</h5>
+        <h1>Be</h1>
+        <h3>4</h3>
+      </td>
+      <td colspan="10"></td>
+      <td class="card metalloid">
+        <h5>10.811</h5>
+        <h1>B</h1>
+        <h3>5</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>12.0107</h5>
+        <h1>C</h1>
+        <h3>6</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>14.0067</h5>
+        <h1>N</h1>
+        <h3>7</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>15.9994</h5>
+        <h1>O</h1>
+        <h3>8</h3>
+      </td>
+      <td class="card halogen">
+        <h5>18.9984032</h5>
+        <h1>F</h1>
+        <h3>9</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>20.1797</h5>
+        <h1>Ne</h1>
+        <h3>10</h3>
+      </td>
+    </tr>
+    <tr class="row">
+      <td class="card alkalimetal">
+        <h5>22.99</h5>
+        <h1>Na</h1>
+        <h3>11</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>24.3050</h5>
+        <h1>Mg</h1>
+        <h3>12</h3>
+      </td>
+      <td colspan="10"></td>
+      <td class="card metal">
+        <h5>26.98</h5>
+        <h1>Al</h1>
+        <h3>13</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>28.0855</h5>
+        <h1>Si</h1>
+        <h3>14</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>30.973762</h5>
+        <h1>P</h1>
+        <h3>15</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>32.065</h5>
+        <h1>S</h1>
+        <h3>16</h3>
+      </td>
+      <td class="card halogen">
+        <h5>35.453</h5>
+        <h1>Cl</h1>
+        <h3>17</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>39.948</h5>
+        <h1>Ar</h1>
+        <h3>18</h3>
+      </td>
+    </tr>
+    <tr class="row full">
+      <td class="card alkalimetal">
+        <h5>39.0983</h5>
+        <h1>K</h1>
+        <h3>19</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>40.078</h5>
+        <h1>Ca</h1>
+        <h3>20</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>44.955912</h5>
+        <h1>Sc</h1>
+        <h3>21</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>47.867</h5>
+        <h1>Ti</h1>
+        <h3>22</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>50.9415</h5>
+        <h1>V</h1>
+        <h3>23</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>51.9961</h5>
+        <h1>Cr</h1>
+        <h3>24</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>54.938045</h5>
+        <h1>Mn</h1>
+        <h3>25</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>55.845</h5>
+        <h1>Fe</h1>
+        <h3>26</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>58.93</h5>
+        <h1>Co</h1>
+        <h3>27</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>58.6934</h5>
+        <h1>Ni</h1>
+        <h3>28</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>63.546</h5>
+        <h1>Cu</h1>
+        <h3>29</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>65.38</h5>
+        <h1>Zn</h1>
+        <h3>30</h3>
+      </td>
+      <td class="card metal">
+        <h5>69.723</h5>
+        <h1>Ga</h1>
+        <h3>31</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>72.64</h5>
+        <h1>Ge</h1>
+        <h3>32</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>74.92160</h5>
+        <h1>As</h1>
+        <h3>33</h3>
+      </td>
+      <td class="card nonmetal">
+        <h5>78.96</h5>
+        <h1>Se</h1>
+        <h3>34</h3>
+      </td>
+      <td class="card halogen">
+        <h5>79.904</h5>
+        <h1>Br</h1>
+        <h3>35</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>83.798</h5>
+        <h1>Kr</h1>
+        <h3>36</h3>
+      </td>
+    </tr>
+    <tr class="row full">
+      <td class="card alkalimetal">
+        <h5>85.4678</h5>
+        <h1>Rb</h1>
+        <h3>37</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>87.62</h5>
+        <h1>Sr</h1>
+        <h3>38</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>88.90585</h5>
+        <h1>Y</h1>
+        <h3>39</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>91.224</h5>
+        <h1>Zr</h1>
+        <h3>40</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>92.90638</h5>
+        <h1>Nb</h1>
+        <h3>41</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>95.96</h5>
+        <h1>Mo</h1>
+        <h3>42</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[98]</h5>
+        <h1>Tc</h1>
+        <h3>43</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>101.07</h5>
+        <h1>Ru</h1>
+        <h3>44</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>102.90550</h5>
+        <h1>Rh</h1>
+        <h3>45</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>106.42</h5>
+        <h1>Pd</h1>
+        <h3>46</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>107.8682</h5>
+        <h1>Ag</h1>
+        <h3>47</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>112.411</h5>
+        <h1>Cd</h1>
+        <h3>48</h3>
+      </td>
+      <td class="card metal">
+        <h5>114.818</h5>
+        <h1>In</h1>
+        <h3>49</h3>
+      </td>
+      <td class="card metal">
+        <h5>118.710</h5>
+        <h1>Sn</h1>
+        <h3>50</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>121.760</h5>
+        <h1>Sb</h1>
+        <h3>51</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>127.60</h5>
+        <h1>Te</h1>
+        <h3>52</h3>
+      </td>
+      <td class="card halogen">
+        <h5>126.90447</h5>
+        <h1>I</h1>
+        <h3>53</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>131.293</h5>
+        <h1>Xe</h1>
+        <h3>54</h3>
+      </td>
+    </tr>
+    <tr class="row full">
+      <td class="card alkalimetal">
+        <h5>132.90</h5>
+        <h1>Cs</h1>
+        <h3>55</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>137.327</h5>
+        <h1>Ba</h1>
+        <h3>56</h3>
+      </td>
+      <td class="card jmp lanthanoid">
+        <h1>55-71</h1>
+      </td>
+      <td class="card transitionmetal">
+        <h5>178.49</h5>
+        <h1>Hf</h1>
+        <h3>72</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>180.95</h5>
+        <h1>Ta</h1>
+        <h3>73</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>183.84</h5>
+        <h1>W</h1>
+        <h3>74</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>186.207</h5>
+        <h1>Re</h1>
+        <h3>75</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>190.23</h5>
+        <h1>Os</h1>
+        <h3>76</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>192.217</h5>
+        <h1>Ir</h1>
+        <h3>77</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>195.084</h5>
+        <h1>Pt</h1>
+        <h3>78</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>196.966569</h5>
+        <h1>Au</h1>
+        <h3>79</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>200.59</h5>
+        <h1>Hg</h1>
+        <h3>80</h3>
+      </td>
+      <td class="card metal">
+        <h5>204.3833</h5>
+        <h1>Tl</h1>
+        <h3>81</h3>
+      </td>
+      <td class="card metal">
+        <h5>207.2</h5>
+        <h1>Pb</h1>
+        <h3>82</h3>
+      </td>
+      <td class="card metal">
+        <h5>208.98</h5>
+        <h1>Bi</h1>
+        <h3>83</h3>
+      </td>
+      <td class="card metalloid">
+        <h5>[209]</h5>
+        <h1>Po</h1>
+        <h3>84</h3>
+      </td>
+      <td class="card halogen">
+        <h5>[210]</h5>
+        <h1>At</h1>
+        <h3>85</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>[222]</h5>
+        <h1>Rn</h1>
+        <h3>86</h3>
+      </td>
+    </tr>
+    <tr class="row full">
+      <td class="card alkalimetal">
+        <h5>[223]</h5>
+        <h1>Fr</h1>
+        <h3>87</h3>
+      </td>
+      <td class="card alkalineearthmetal">
+        <h5>[226]</h5>
+        <h1>Ra</h1>
+        <h3>88</h3>
+      </td>
+      <td class="card jmp actinoid">
+        <h1>89-103</h1>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[267]</h5>
+        <h1>Rf</h1>
+        <h3>104</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[268]</h5>
+        <h1>Db</h1>
+        <h3>105</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[271]</h5>
+        <h1>Sg</h1>
+        <h3>106</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[272]</h5>
+        <h1>Bh</h1>
+        <h3>107</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[270]</h5>
+        <h1>Hs</h1>
+        <h3>108</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[276]</h5>
+        <h1>Mt</h1>
+        <h3>109</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[281]</h5>
+        <h1>Ds</h1>
+        <h3>110</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[280]</h5>
+        <h1>Rg</h1>
+        <h3>111</h3>
+      </td>
+      <td class="card transitionmetal">
+        <h5>[285]</h5>
+        <h1>Cn</h1>
+        <h3>112</h3>
+      </td>
+      <td class="card post-transitionmetal">
+        <h5>[284]</h5>
+        <h1>Nh</h1>
+        <h3>113</h3>
+      </td>
+      <td class="card post-transitionmetal">
+        <h5>[289]</h5>
+        <h1>Fl</h1>
+        <h3>114</h3>
+      </td>
+      <td class="card post-transitionmetal">
+        <h5>[288]</h5>
+        <h1>Mc</h1>
+        <h3>115</h3>
+      </td>
+      <td class="card post-transitionmetal">
+        <h5>[293]</h5>
+        <h1>Lv</h1>
+        <h3>116</h3>
+      </td>
+      <td class="card post-transitionmetal">
+        <h5>[294]</h5>
+        <h1>Ts</h1>
+        <h3>117</h3>
+      </td>
+      <td class="card noblegas">
+        <h5>[294]</h5>
+        <h1>Og</h1>
+        <h3>118</h3>
+      </td>
+    </tr>
+    <br>
+    <tr class="row">
+
+    </tr>
+    <tr class="row">
+      <td colspan="3"></td>
+      <td class="card lanthanoid first-row">
+        <h5>138.91</h5>
+        <h1>La</h1>
+        <h3>57</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>140.116</h5>
+        <h1>Ce</h1>
+        <h3>58</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>140.908</h5>
+        <h1>Pr</h1>
+        <h3>59</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>144.242</h5>
+        <h1>Nd</h1>
+        <h3>60</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>[145]</h5>
+        <h1>Pm</h1>
+        <h3>61</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>150.36</h5>
+        <h1>Sm</h1>
+        <h3>62</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>151.964</h5>
+        <h1>Eu</h1>
+        <h3>63</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>157.25</h5>
+        <h1>Gd</h1>
+        <h3>64</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>158.92535</h5>
+        <h1>Tb</h1>
+        <h3>65</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>162.500</h5>
+        <h1>Dy</h1>
+        <h3>66</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>164.93032</h5>
+        <h1>Ho</h1>
+        <h3>67</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>167.259</h5>
+        <h1>Er</h1>
+        <h3>68</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>168.93</h5>
+        <h1>Tm</h1>
+        <h3>69</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>173.054</h5>
+        <h1>Yb</h1>
+        <h3>70</h3>
+      </td>
+      <td class="card lanthanoid first-row">
+        <h5>174.9668</h5>
+        <h1>Lu</h1>
+        <h3>71</h3>
+      </td>
+    </tr>
+    <tr class="row">
+      <td colspan="3"></td>
+      <td class="card actinoid second-row">
+        <h5>[227]</h5>
+        <h1>Ac</h1>
+        <h3>89</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>232.04</h5>
+        <h1>Th</h1>
+        <h3>90</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>231.03588</h5>
+        <h1>Pa</h1>
+        <h3>91</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>238.02891</h5>
+        <h1>U</h1>
+        <h3>92</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[237]</h5>
+        <h1>Np</h1>
+        <h3>93</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[244]</h5>
+        <h1>Pu</h1>
+        <h3>94</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[243]</h5>
+        <h1>Am</h1>
+        <h3>95</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[247]</h5>
+        <h1>Cm</h1>
+        <h3>96</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[247]</h5>
+        <h1>Bk</h1>
+        <h3>97</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[251]</h5>
+        <h1>Cf</h1>
+        <h3>98</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[252]</h5>
+        <h1>Es</h1>
+        <h3>99</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[257]</h5>
+        <h1>Fm</h1>
+        <h3>100</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[258]</h5>
+        <h1>Md</h1>
+        <h3>101</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[259]</h5>
+        <h1>No</h1>
+        <h3>102</h3>
+      </td>
+      <td class="card actinoid second-row">
+        <h5>[262]</h5>
+        <h1>Lr</h1>
+        <h3>103</h3>
+      </td>
+    </tr>
+  </table>
+  <img src="https://medias.pourlascience.fr/api/v1/images/view/5b3e1d923e45466e416681b2/wide_1300/image.jpg" alt="New elements">
 </body>
 </html>
