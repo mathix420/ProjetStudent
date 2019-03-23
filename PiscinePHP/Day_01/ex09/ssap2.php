@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 function cmp_mod($str1, $str2) {
     $new_ascii = array_merge(

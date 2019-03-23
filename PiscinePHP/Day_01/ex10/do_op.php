@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
     if ($argc != 4 || !is_numeric(trim($argv[1])) || !is_numeric(trim($argv[3])))
         exit("Incorrect Parameters\n");
@@ -24,3 +25,4 @@
         default:
             exit("Incorrect Parameters\n");
     }
+ ?>

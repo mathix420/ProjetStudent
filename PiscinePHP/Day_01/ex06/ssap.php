@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
     $array = array();
     foreach ($argv as $index => $value) {

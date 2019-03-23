@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 function do_op($val1, $val2, $op) {
     if ($val1 === "" || $val2 === "")
@@ -49,3 +50,4 @@ $val2 = trim(join("", $array));
 if ($i !== strlen($str))
     exit("Syntax Error\n");
 do_op($val1, $val2, $op);
+?>

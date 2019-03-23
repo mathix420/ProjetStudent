@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
     if (count($argv) < 2)
         exit("Not enough parameters!\n");

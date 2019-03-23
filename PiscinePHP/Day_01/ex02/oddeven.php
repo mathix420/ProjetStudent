@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 while (true) {
     echo "Entrez un nombre: ";
