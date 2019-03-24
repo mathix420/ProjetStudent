@@ -12,7 +12,7 @@
     <session id="-1259635811">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.2" value="1" />
@@ -53,26 +53,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Day_02/ex05/deni.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Day_02/ex06/srt.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -160,30 +141,7 @@
             <path>
               <item name="PiscinePHP" type="b2602c69:ProjectViewProjectNode" />
               <item name="PiscinePHP" type="462c0819:PsiDirectoryNode" />
-              <item name="Day_01" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PiscinePHP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PiscinePHP" type="462c0819:PsiDirectoryNode" />
-              <item name="Day_01" type="462c0819:PsiDirectoryNode" />
-              <item name="ex01" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PiscinePHP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PiscinePHP" type="462c0819:PsiDirectoryNode" />
-              <item name="Day_01" type="462c0819:PsiDirectoryNode" />
-              <item name="ex02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PiscinePHP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PiscinePHP" type="462c0819:PsiDirectoryNode" />
               <item name="Day_02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PiscinePHP" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PiscinePHP" type="462c0819:PsiDirectoryNode" />
-              <item name="Day_02" type="462c0819:PsiDirectoryNode" />
-              <item name="ex04" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -260,12 +218,12 @@
       <workItem from="1553261819045" duration="18086000" />
       <workItem from="1553337739994" duration="6932000" />
       <workItem from="1553348574293" duration="11298000" />
-      <workItem from="1553430252739" duration="19180000" />
+      <workItem from="1553430252739" duration="19403000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57300000" />
+    <option name="totallyTimeSpent" value="57523000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -278,9 +236,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1153" y="0" width="1407" height="1440" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16630037" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16630037" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -293,7 +250,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18980798" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18980798" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -492,17 +449,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Day_02/ex06/srt.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="2" lean-forward="true" selection-start-line="24" selection-start-column="2" selection-end-line="24" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Day_02/ex05/deni.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Day_02/ex06/srt.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
         </state>
       </provider>
     </entry>
