@@ -84,7 +84,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Auto clean
-/bin/rm -rf $HOME/Library/Caches
+/bin/rm -rf "$HOME/Library/Caches" ".Trash/*"
 
 # User configuration
 
