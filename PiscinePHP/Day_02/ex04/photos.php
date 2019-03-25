@@ -13,6 +13,7 @@
                 if (!preg_match("/^https?:\/\//", $url))
                     $url = join("/", array(trim($argv[1], '/'), trim($url, '/')));
                 $infos = pathinfo(parse_url($url)['path']);
+                $i = 0;
                 while (file_exists($split['host']."/".$infos['basename']))
                     $infos['basename'] = $infos['filename'] . $i++ . "." . $infos['extension'];
                 $image = copy($url, $split['host']."/".$infos['basename']);

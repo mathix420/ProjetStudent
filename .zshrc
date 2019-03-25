@@ -83,6 +83,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Auto clean
+/bin/rm -rf $HOME/Library/Caches
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -135,3 +138,4 @@ alias sav="~/42-utilities/sav.sh"
 alias norm='find . -type f -name "*.c" -or -name "*.h" | xargs norminette | grep "^Error" || echo "\n\e[92mAll files are correctly normed!\n\e[0m"'
 alias mf-gen="/bin/sh ~/42-utilities/update.sh; python3 ~/42-utilities/mf-gen.py"
 alias proto-list="/bin/sh ~/42-utilities/update.sh; sh ~/42-utilities/proto-list.sh"
+alias mamp="open $HOME/MAMP/manager-osx.app"
