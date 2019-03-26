@@ -28,6 +28,8 @@ function do_op($val1, $val2, $op) {
 
 if ($argc !== 2)
     exit("Incorrect Parameters\n");
+if (!preg_match("/^[ \t]*[-+]?\d+[ \t]*[-+*\/%][ \t]*[-+]?\d+[ \t]*$/", $argv[1]))
+    exit("Syntax Error\n");
 $ops = array('+', '-', '*', '/%');
 $str = trim($argv[1]);
 $array = array();
