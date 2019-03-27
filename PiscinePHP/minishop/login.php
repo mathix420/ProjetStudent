@@ -23,8 +23,8 @@
     <meta charset="UTF-8">
     <title>Erreur</title>
 </head>
-<body bgcolor="#2A363B" style="color: white;">
+<body bgcolor="#2e3131" style="color: white;">
     <h1 align='center'><?= $error_message ?></h1>
-    <p align='center'><img src='img/<?= $error_image ?>' alt="error"></p>
+    <p align='center'><img src='/img/<?= $error_image ?>' alt="error"></p>
 </body>
 </html>

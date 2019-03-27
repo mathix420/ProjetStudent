@@ -1,23 +1,22 @@
 .font {
     font-family: 'Abel', sans-serif;
     font-size: 15px;
-    margin: 5px;
+    border-radius: 5px;
 }
 .title {
     font-family: 'Abel', sans-serif;
-    font-size: 3em;
-    margin-top: 10px;
+    font-size: 2em;
     position: relative;
-    display: flex;
-    justify-content: center;
-    color: white;
+    margin-top: 75px;
+    margin-bottom: 0px;
+    text-align: center;
+    color: #000000;
 }
 .headtitle {
-     font-family: 'Abel', sans-serif;
-     font-size: 3em;
-     margin-top: 30px;
-     margin-left: -75%;
-     color: white;
+    font-family: 'Abel', sans-serif;
+    margin: 0;
+    font-size: 3em;
+    color: #2e3131;
  }
 .login-page {
     width: 360px;
@@ -25,34 +24,58 @@
     margin: auto;
 }
 .box {
-    position: relative;
+    display: inline-grid;
     z-index: 1;
-    background: #99B898;
-    max-width: 380px;
-    margin: 0 auto 50px;
-    padding: 50px;
-    text-align: center;
+    background: #FFFFFF;
+    width: 450px;
+    height: 450px;
     color: #556654;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+#mv {
+    margin-left: 75px;
 }
 .button {
-    background-color: #FF847C;
-    border: none;
-    color: #556654;
-    padding: 8px 20px;
-    margin-top: 15px;
+    padding: 6px;
     font-size: 14px;
-    width: 160px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    width: 300px;
+    background-color: #d24d57;
+    color: #ffffff;
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 .button:hover {
     background-color: #FFABA6;
     color: #556654;
 }
 .head {
-    width: 100%;
-    height: 150px;
+    padding: 15px;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    background: #FFFFFF;
+}
+input {
+    padding: 5px;
+    width: 290px;
+    border: solid 0.5px #CCCCCC;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.login-page a {
     margin: 0;
-    position: absolute;
-    background: #99B898;
+    size: auto;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+a {
+    outline: none;
+    text-decoration: none;
+    color: white;
 }
