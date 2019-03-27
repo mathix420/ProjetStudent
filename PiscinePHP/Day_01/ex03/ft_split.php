@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
     function ft_split($string) {
         $split = explode(" ", trim(preg_replace("/ +/", ' ', $string)));

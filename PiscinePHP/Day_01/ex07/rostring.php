@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
     if (count($argv) < 2)
-        exit("Not enough parameters!\n");
+        exit();
     $string = preg_replace("/\s+/", " ", trim($argv[1]));
     $array = explode(" ", $string);
     foreach ($array as $index => $value){

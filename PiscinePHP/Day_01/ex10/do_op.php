@@ -2,7 +2,7 @@
 <?php
     if ($argc != 4 || !is_numeric(trim($argv[1])) || !is_numeric(trim($argv[3])))
         exit("Incorrect Parameters\n");
-    switch ($argv[2][0]) {
+    switch (trim($argv[2])[0]) {
         case '+':
             echo intval(trim($argv[1])) + intval(trim($argv[3])), "\n";
             break;
