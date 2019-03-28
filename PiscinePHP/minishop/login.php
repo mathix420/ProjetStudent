@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include('check_login.php');
     include('ft_log.php');
     $error_image = "respond.jpg";
@@ -9,7 +10,10 @@
         }
         elseif (check_pair($_POST['login'], $_POST['passwd'])) {
             log_user($_POST['login']);
-            header("Location: index.php");
+            if (empty($_SESSION['HTTP_REFERER']))
+                header("Location: index.php");
+            else
+                header("Location: " . $_SESSION['HTTP_REFERER']);
         }
         else {
             $error_message = "Erreur de connexion !<br>Veuillez vérifier votre pseudo et votre mot de passe.";

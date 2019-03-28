@@ -8,7 +8,7 @@
                 return preg_replace_callback(
                         "/$regex/",
                         function ($matches) {
-                            return strtoupper($matches[0]);
+                            return mb_strtoupper($matches[0]);
                         },
                         $matches[0]
                 );

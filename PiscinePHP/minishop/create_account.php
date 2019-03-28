@@ -25,19 +25,25 @@
                 $fake_db[$_POST['login']] = $user_credential;
                 file_put_contents("private/users", serialize($fake_db));
                 log_user($_POST['login']);
-                header("Location: index.php");
+                if (empty($_SESSION['HTTP_REFERER']))
+                    header("Location: index.php");
+                else
+                    header("Location: " . $_SESSION['HTTP_REFERER']);
             }
         }
     }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Erreur</title>
 </head>
+
 <body bgcolor="#2e3131" style="color: white;">
     <h1 align='center'><?= $error_message ?></h1>
     <p align='center'><img src='/img/<?= $error_image ?>' alt="error"></p>
 </body>
+
 </html>

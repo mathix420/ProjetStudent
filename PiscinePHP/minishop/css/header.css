@@ -48,10 +48,10 @@ html,body{
 input {
     padding: 5px;
     width: 200px;
-    border: solid 0.5px #FFFFFF;
+    border: solid 1px #AAAAAA;
     text-align: center;
     margin-bottom: 10px;
-    background-color: #AAAAAA;
+    background-color: #2e3131;
     color: white;
 }
 .logout:hover {background-color: #ce6a72;

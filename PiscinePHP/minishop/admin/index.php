@@ -1,12 +1,11 @@
 <?php
-include("../ft_log.php");
 session_start();
 if (!file_exists("../private"))
     mkdir("../private");
 $fake_db = array();
 if (file_exists("../private/users"))
     $fake_db = array_filter(unserialize(file_get_contents("../private/users")));
-if ($fake_db[$_SESSION['login']]['rights'] != -2) {
+if ($fake_db[$_SESSION['login']]['rights'] !== -2) {
     header("HTTP/1.0 403 Forbidden");
     exit("<h1 align='center'>403 FORBIDDEN</h1>");
 }
@@ -23,8 +22,8 @@ if (isset($_GET['delete'])) {
     flock($f, LOCK_UN);
     fclose($f);
     header("Location: index.php");
-} elseif (isset($_FILES['image'], $_POST['price'], $_POST['description'], $_POST['name'], $_POST['categorie'])
-    && $_POST['submit'] == "OK") {
+} elseif (!empty($_FILES["image"]["tmp_name"]) && isset($_FILES['image'], $_POST['price'], $_POST['description'], $_POST['name'], $_POST['categorie'])
+    && $_POST['submit'] == "OK" && $_POST['price'] >= 0) {
     $tab['name'] = substr($_POST['name'], 0, 30);
     $tab['price'] = substr($_POST['price'], 0, 7);
     $tab['description'] = substr($_POST['description'], 0, 100);
@@ -45,7 +44,7 @@ if (isset($_GET['delete'])) {
         exit ("<h1 align='center'>Désolé, une erreur est survenue pendant le téléchargement.</h1>");
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        exit ("<h1 align='center'>Désolé, une erreur est survenue pendant le téléchargement.</h1>");
         $uploadOk = 0;
     }
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -61,74 +60,125 @@ if (isset($_GET['delete'])) {
     flock($f, LOCK_UN);
     fclose($f);
     header("Location: index.php");
-} else if (!isset($_POST['image'], $_POST['price'], $_POST['description'], $_POST['name'], $_POST['categorie'])) {
-    $error_message = "Tout les champs doivent êtres remplis !";
+} elseif (isset($_POST['submit'])) {
+    $error_message = "Veuillez vérifier les champs !";
     $error_image = "respond.jpg";
 }
 ?>
-<html lang="en">
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/admin.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/admin.css" />
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
 </head>
+
 <body bgcolor="#2e3131" style="margin: 0;">
-<div class="head">
-    <a href="/index.php"><h1 class="headtitle">El Marketo</h1></a>
-    <div class="cont">
-        <a href="/admin/user.php">
-            <button class="cart">Users menu</button>
+    <div class="head">
+        <a href="/index.php">
+            <h1 class="headtitle">El Marketo</h1>
         </a>
-        <a href="/logout.php">
-            <button class="logout">Se déconnecter</button>
-        </a>
+        <div class="cont">
+            <a href="/admin/user.php">
+                <button class="cart">Users menu</button>
+            </a>
+            <a href="/logout.php">
+                <button class="logout">Se déconnecter</button>
+            </a>
+        </div>
     </div>
-</div>
-<div class="admintab">
-    <div>
-        <form method="post" action="../admin/index.php" enctype="multipart/form-data">
-            <h2 class="texte">Ajoutez un article</h2>
-            <input placeholder="name" type="text" name="name" size="27" class="info" maxlength="30">
-            <input placeholder="description" type="text" name="description" size="27" class="info" maxlength="100">
-            <input placeholder="price" type="number" name="price" size="27" class="info" min="0.00" max="99999.99" step="0.01">
-            <section>
-                <div class="select-group">
-                    <select name="categorie">
-                        <option>Avions</option>
-                        <option>Bateaux</option>
-                        <option>Voitures</option>
-                    </select>
-                    <div class="arrow">▼</div>
+     <?php if (!isset($error_message)) { ?> <div class="admintab">
+        <div>
+            <form method="post" action="../admin/index.php" enctype="multipart/form-data">
+                <h2 class="texte">Ajoutez un article</h2>
+                <div id="toolb">
+                    <input placeholder="name" type="text" name="name" size="27" class="info" maxlength="30">
+                    <input placeholder="description" type="text" name="description" size="27" class="info"
+                        maxlength="100">
+                    <input placeholder="price" type="number" name="price" size="27" class="info" min="0.00"
+                        max="99999.99" step="0.01">
+                    <section>
+                        <div class="select-group">
+                            <select name="categorie">
+                                <option>Sneaker</option>
+                                <option>Running</option>
+                                <option>Skate</option>
+                            </select>
+                            <div class="arrow">▼</div>
+                        </div>
+                    </section>
+                    <input type="file" name="image" size="27" class="info" id="image">
+                    <button type="submit" value="OK" name="submit" class="post">Créer</button>
                 </div>
-            </section>
-            <input type="file" name="image" size="27" class="info" id="image">
-            <button type="submit" value="OK" name="submit" class="post">Créer</button>
-        </form>
-    </div>
-</div>
-<?php
-if (count($articles_db)) { ?>
-<div class="admin-tab-center">
-    <table>
-        <tbody>
+            </form>
+        </div>
+        </div>
         <?php
+if (count($articles_db)) { ?>
+        <div class="admin-tab-center">
+            <table>
+                <tbody>
+                    <?php
         foreach ($articles_db as $id => $article) { ?>
-            <tr>
-                <td class="admintab-texte" align="center"><?= htmlspecialchars($article['name']) ?></td>
-                <td class="admintab-texte" align="center"><?= htmlspecialchars($article['description']) ?></td>
-                <td class="admintab-texte" align="center"><?= htmlspecialchars($article['price']) ?>€</td>
-                <td class="admintab-texte" align="center"><?= htmlspecialchars($article['categorie']) ?></td>
-                <td class="admintab-texte" align="center"><img src="<?= htmlspecialchars($article['image']) ?>"></td>
-                <td class="admintab-texte" align="center"><a href="/admin/index.php?delete=<?= $id ?>">❌</a></td>
-            </tr>
-            <?php
+                    <form method="post" action="../admin/edit.php" enctype="multipart/form-data">
+                        <tr>
+                            <td align="center">
+                                <input class="admintab-texte" value="<?= htmlspecialchars($article['name']) ?>"
+                                    name="name">
+                            </td>
+                            <td align="center">
+                                <input class="admintab-texte" value="<?= htmlspecialchars($article['description']) ?>"
+                                    name="description">
+                            </td>
+                            <td align="center">
+                                <input type="number" name="price" min="0.00" max="99999.99" step="0.01"
+                                    class="admintab-texte" value="<?= htmlspecialchars($article['price']) ?>">
+                            </td>
+                            <td align="center">
+                                <section>
+                                    <div>
+                                        <select name="categorie" id="noborder"
+                                            selected="<?= htmlspecialchars($article['categorie'])?>">
+                                            <option selected="selected"><?= htmlspecialchars($article['categorie']) ?>
+                                            </option>
+                                            <option value="Sneaker">Sneaker</option>
+                                            <option value="Running">Running</option>
+                                            <option value="Skate">Skate</option>
+                                        </select>
+                                    </div>
+                                </section>
+                            </td>
+                            <td align="center">
+                                <label for="imageedit">
+                                    <img src="<?= htmlspecialchars($article['image']) ?>" />
+                                </label>
+                                <input style="display: none;" type="file" id="imageedit" name="image">
+                            </td>
+                            <td align="center">
+                                <a href="/admin/index.php?delete=<?= urlencode($id) ?>">❌</a>
+                            </td>
+                            <td align="center">
+                                <input type="hidden" name="article_id" value="<?= $id ?>">
+                                <button type="submit" name="submit" value="OK" id="editbutton">Editer</button>
+                            </td>
+                        </tr>
+                    </form>
+                    <?php
         }
         }
         ?>
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+        <?php }else{ ?>
+        <h1 align='center'><?= $error_message ?></h1>
+        <p align='center'><img src='/img/<?= $error_image ?>' alt="error"></p>
+        <?php } ?>
+        <footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
 </body>
+
 </html>

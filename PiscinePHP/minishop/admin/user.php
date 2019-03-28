@@ -27,10 +27,12 @@ if (isset($_GET['delete'])) {
     <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/header.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/admin.css"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
 </head>
 <body bgcolor="#2e3131" style="margin: 0;">
 <div class="head">
-    <a href="/index.php"><h1 class="headtitle">El Marketo</h1></ahref>
+    <a href="/index.php"><h1 class="headtitle">El Marketo</h1></a>
     <div class="cont">
         <a href="/admin/index.php">
             <button class="cart">Home admin</button>
@@ -56,7 +58,7 @@ if (count($users_db)) { ?>
             if ($article['rights'] !== -2) { ?>
                 <tr>
                     <td class="admintab-texte" align="center"><?= htmlspecialchars($id) ?></td>
-                    <td class="admintab-texte" align="center"><a href="/admin/user.php?delete=<?= $id ?>">❌</a></td>
+                    <td class="admintab-texte" align="center"><a href="/admin/user.php?delete=<?= urlencode($id) ?>">❌</a></td>
                 </tr>
                 <?php
             }}
@@ -65,5 +67,6 @@ if (count($users_db)) { ?>
         </tbody>
     </table>
 </div>
+<footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
 </body>
 </html>

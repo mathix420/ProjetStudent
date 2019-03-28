@@ -2,8 +2,9 @@
 #shopping-cart {
 	max-width: 80%;
 	margin: auto;
+	font-family: 'Abel', sans-serif;
 }
-.btnRemoveAction {
+.btnAction {
 	text-decoration: none;
 }
 #shopping-cart table {
@@ -17,13 +18,29 @@
 }
 #btnEmpty {
 	border: #d24d57 1px solid;
-	padding: 5px 10px;
 	font-size: 1.3em;
 	color: #d24d57;
 	float: right;
 	text-decoration: none;
 	border-radius: 3px;
 	margin: 10px 0;
+	width: 145px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 6px;
+}
+#btnValidate {
+	border: #3fc380 1px solid;
+	font-size: 1.3em;
+	color: #3fc380;
+	float: right;
+	text-decoration: none;
+	border-radius: 3px;
+	margin: 10px 0;
+	width: 145px;
+	text-align: center;
+	padding-top: 4px;
+	padding-bottom: 6px;
 }
 .tbl-cart {
 	font-size: 1em;
@@ -44,4 +61,13 @@
     padding: 5px;
     vertical-align: middle;
     margin-right: 15px;
+}
+footer {
+	position:fixed;
+	bottom:0;
+	font-size: .8em;
+	font-family: 'Abel', sans-serif;
+	width:100%;
+	display:block;
+	color: #CCCCCC;
 }

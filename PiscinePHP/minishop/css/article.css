@@ -1,29 +1,31 @@
 /* CONTAINER */
 .boutique {
     display: flex;
+    margin: 10px 0;
     width: 100%;
     justify-content: space-evenly;
     flex-wrap: wrap;
     font-family: 'Quicksand', sans-serif;
-    color: #ffffff;
-    font-size: 1em;
+    color: #000000;
+    font-size: 1.1em;
     padding: 0;
 }
 
 /* CARD */
 
 .card {
-    margin: 5px;
-    background: linear-gradient(to right bottom, #648880, #293f50);
+    margin: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #FFFFFF, #AAAAAA);
 }
 
 .article-card {
     z-index: 5;
+    border-radius: 5px;
     box-shadow: 1px 5px 15px #000000;
     height: 350px;
     width: 300px;
     display: block;
-    border-radius: 5px;
     position: relative;
     text-align: center;
 }
@@ -60,7 +62,7 @@
 /* PRICE PANEL */
 
 .article-card.price-div {
-    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.5), rgba(41, 63, 80, 1));
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.5), rgba(65, 47, 17, 0.5));
     border: none;
     display: flex;
     flex-direction: column;
@@ -85,7 +87,8 @@
     /* width: 10%; */
     /* display: block; */
     font-family: 'Quicksand', sans-serif;
-    color: #ffffff;
+    font-weight: lighter;
+    color: #000000;
 }
 
 /* FORM ADD TO CART */

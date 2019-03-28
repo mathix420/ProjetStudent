@@ -19,7 +19,7 @@
     color: #2e3131;
  }
 .login-page {
-    width: 360px;
+    display: table;
     padding: 8% 0 0;
     margin: auto;
 }
@@ -78,4 +78,13 @@ a {
     outline: none;
     text-decoration: none;
     color: white;
+}
+footer {
+    position:fixed;
+    bottom:0;
+    font-size: .8em;
+    font-family: 'Abel', sans-serif;
+    width:100%;
+    display:block;
+    color: #CCCCCC;
 }
