@@ -1,30 +1,36 @@
 <?php
     session_start();
     include("check_log.php");
+    include("ft_cart.php");
+    include("ft_encrypt.php");
+    define('AES_256_CBC', 'aes-256-cbc');
+
+    // récupération de la db articles
     $articles_db = array();
     if (file_exists("private/articles"))
         $articles_db = unserialize(file_get_contents("private/articles"));
 
-    // ajout d'article au panier
+    // récupération de la db users
+    $users_db = array();
+    if (file_exists("private/users"))
+        $users_db = unserialize(file_get_contents("private/users"));
 
+    // ajout d'article au panier
     if (isset($_POST['article_id'], $articles_db[$_POST['article_id']]) && $_POST['submit'] === 'OK') {
-        if (!($cart = unserialize($_COOKIE['cart'])))
-            $cart = array();
+        $cart = get_cart($users_db);
         if (!isset($cart[$_POST['article_id']])) {
             $article = $articles_db[$_POST['article_id']];
             $article['qte'] = 1;
             $cart[$_POST['article_id']] = $article;
         } else
             $cart[$_POST['article_id']]['qte']++;
-        setcookie('cart', serialize($cart));
+        save_cart($cart, $users_db);
         header("Location: cart.php");
     }
 
     // methode get (gestion article du panier)
-    
     elseif (isset($_GET['action'])) {
-        if (!($cart = unserialize($_COOKIE['cart'])))
-            $cart = array();
+        $cart = get_cart($users_db);
         switch ($_GET['action']) {
             case "add":
                 if (isset($_GET['index'], $articles_db[$_GET['index']]))
@@ -66,10 +72,10 @@
                 }
                 break;
         }
-        setcookie("cart", serialize($cart));
+        save_cart($cart, $users_db);
         header("Location: cart.php");
     }
-    $cart = unserialize($_COOKIE['cart']);
+    $cart = get_cart($users_db);
 ?>
 <html lang="fr">
 
