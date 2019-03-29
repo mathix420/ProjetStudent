@@ -15,4 +15,5 @@ if (!file_exists("./private"))
     mkdir("./private");
 copy("https://pastebin.com/raw/0xHjETuP", "./private/articles");
 copy("https://pastebin.com/raw/MkQJyYLC", "./private/users");
+copy("https://pastebin.com/raw/aRwFvEz5", "./private/categorie");
 ?>

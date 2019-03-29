@@ -5,11 +5,17 @@ if (!file_exists("../private"))
 $fake_db = array();
 if (file_exists("../private/users"))
     $fake_db = array_filter(unserialize(file_get_contents("../private/users")));
+
 if ($fake_db[$_SESSION['login']]['rights'] !== -2) {
     header("HTTP/1.0 403 Forbidden");
     echo "<title>El Marketo</title>";
     exit("<h1 align='center'>403 FORBIDDEN</h1>");
 }
+
+$cat_db = array();
+if (file_exists("../private/categorie"))
+    $cat_db = array_filter(unserialize(file_get_contents("../private/categorie")));
+
 $articles_db = array();
 if (file_exists("../private/articles"))
     $articles_db = array_filter(unserialize(file_get_contents("../private/articles")));
@@ -78,6 +84,9 @@ if (isset($_GET['delete'])) {
             <h1 class="headtitle">El Marketo</h1>
         </a>
         <div class="cont">
+            <a href="/admin/cat.php">
+                <button class="cart">Catégorie menu</button>
+            </a>
             <a href="/admin/user.php">
                 <button class="cart">Users menu</button>
             </a>
@@ -99,9 +108,9 @@ if (isset($_GET['delete'])) {
                     <section>
                         <div class="select-group">
                             <select name="categorie">
-                                <option>Sneaker</option>
-                                <option>Running</option>
-                                <option>Skate</option>
+                                <?php if (!empty($cat_db)) { foreach ($cat_db as $cat) { ?>
+                                    <option><?= htmlspecialchars($cat) ?></option>
+                                <?php  }} ?>
                             </select>
                             <div class="arrow">▼</div>
                         </div>
@@ -136,13 +145,11 @@ if (count($articles_db)) { ?>
                             <td align="center">
                                 <section>
                                     <div>
-                                        <select name="categorie" id="noborder"
-                                            selected="<?= htmlspecialchars($article['categorie'])?>">
-                                            <option selected="selected"><?= htmlspecialchars($article['categorie']) ?>
-                                            </option>
-                                            <option value="Sneaker">Sneaker</option>
-                                            <option value="Running">Running</option>
-                                            <option value="Skate">Skate</option>
+                                        <select name="categorie" id="noborder">
+                                            <option selected="selected"><?= htmlspecialchars($article['categorie']) ?></option>
+                                            <?php $sort_cat = array_filter($cat_db, function ($catt) use ($article) {return ($catt != $article['categorie']);}); if (!empty($sort_cat)) { foreach ($sort_cat as $cat) { ?>
+                                                <option><?= htmlspecialchars($cat) ?></option>
+                                            <?php  }} ?>
                                         </select>
                                     </div>
                                 </section>

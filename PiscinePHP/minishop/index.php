@@ -4,6 +4,8 @@ include("check_log.php");
 $articles_db = array();
 if (file_exists("private/articles"))
     $articles_db = array_filter(unserialize(file_get_contents("private/articles")));
+if (file_exists("private/categorie"))
+    $cat_db = array_filter(unserialize(file_get_contents("private/categorie")));
 if (!empty($_POST))
     header("Location: index.php");
 ?>
@@ -28,9 +30,9 @@ if (!empty($_POST))
                 <button class="dropbtn">Catégories</button>
                 <div class="dropdown-content">
                     <a href="/index.php?categorie=all">All</a>
-                    <a href="/index.php?categorie=Sneaker">Sneaker</a>
-                    <a href="/index.php?categorie=Skate">Skate</a>
-                    <a href="/index.php?categorie=Running">Running</a>
+                    <?php if (!empty($cat_db)) { foreach ($cat_db as $cat) { ?>
+                        <a href="/index.php?categorie=<?=urlencode($cat)?>"><?= htmlspecialchars($cat) ?></a>
+                  <?php  }} ?>
                 </div>
             </div>
             <a href="/cart.php">
