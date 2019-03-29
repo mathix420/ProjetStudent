@@ -2,8 +2,6 @@
     session_start();
     include("check_log.php");
     include("ft_cart.php");
-    include("ft_encrypt.php");
-    define('AES_256_CBC', 'aes-256-cbc');
 
     // récupération de la db articles
     $articles_db = array();
@@ -93,7 +91,7 @@
     <div class="head">
         <a href="/index.php">
             <h1 class="headtitle">El Marketo</h1>
-            </ahref>
+            </a>
             <div class="cont">
             <?php if (check_log()) { ?>
                 <a href="/logout.php">

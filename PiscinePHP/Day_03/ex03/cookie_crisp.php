@@ -6,7 +6,8 @@
             setcookie($_GET['name'], $_GET['value']);
             break;
         case "get":
-            echo $_COOKIE[$_GET['name']];
+			if ($_COOKIE[$_GET['name']])
+				echo $_COOKIE[$_GET['name']]."\n";
             break;
         case "del":
             setcookie($_GET['name'], '');

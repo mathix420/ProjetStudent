@@ -6,11 +6,13 @@
         exit;
     } elseif ($_SERVER['PHP_AUTH_USER'] === "zaz" && $_SERVER['PHP_AUTH_PW'] === "jaimelespetitsponeys"){
         $encoded_data = base64_encode(file_get_contents("../img/42.png"));
-        echo "Bonjour Zaz<br>";
-        echo "<img src='data:image/png;base64,$encoded_data'>";
+		echo "<body><html>\n";
+        echo "Bonjour Zaz<br>\n";
+        echo "<img src='data:image/png;base64,$encoded_data'>\n";
+		echo "</body></html>\n";
     } else {
         $_SERVER['PHP_AUTH_USER'] = '';
         header('HTTP/1.0 401 Unauthorized');
-        echo "Cette zone est accessible uniquement aux membres du site";
+        echo "<body><html>Cette zone est accessible uniquement aux membres du site</body></html>\n";
     }
 ?>

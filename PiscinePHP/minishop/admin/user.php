@@ -11,16 +11,39 @@ if ($users_db[$_SESSION['login']]['rights'] != -2) {
     exit("<h1 align='center'>403 FORBIDDEN</h1>");
 }
 if (isset($_GET['delete'])) {
-    unset($users_db[$_GET['delete']]);
-    $f = fopen("../private/users", "w");
-    flock($f, LOCK_EX);
-    file_put_contents("../private/users", serialize(array_filter($users_db)));
-    flock($f, LOCK_UN);
-    fclose($f);
+    if ($users_db[$_GET['delete']]['rights'] != -2) {
+        unset($users_db[$_GET['delete']]);
+        file_put_contents("../private/users", serialize(array_filter($users_db)), LOCK_EX);
+    }
     header("Location: user.php");
 }
+else {
+    $error_image = "respond.jpg";
+    if (isset($_POST['login'], $_POST['passwd'], $_POST['rpasswd'], $_POST['submit'])) {
+        if ($_POST['rpasswd'] !== $_POST['passwd'] || $_POST['submit'] !== 'OK') {
+            $error_message = ($_POST['submit'] !== 'OK') ? "Mauvaise requette !" : "Mot de passes non identiques !";
+            $error_image = ($_POST['submit'] !== 'OK') ? "respond.jpg" : "brain_not_found.jpg";
+        } else if ($_POST['passwd'] === '' || $_POST['login'] === '') {
+            $error_message = "Le mot de passe et le login ne peuvent pas être vides !";
+            $error_image = "empty_pass.jpg";
+        } else {
+            if (!file_exists("../private"))
+                mkdir("../private");
+            if (isset($users_db[$_POST['login']])) {
+                $error_message = "Le pseudo existe déjà !";
+                $error_image = "Baby-Clone.jpg";
+            } elseif ($error_message == '') {
+                $user_credential['passwd'] = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+                $user_credential['rights'] = -1;
+                $users_db[$_POST['login']] = $user_credential;
+                file_put_contents("../private/users", serialize($users_db), LOCK_EX);
+                header("Location: /admin/user.php");
+            }
+        }
+    }
+}
 ?>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Admin/User</title>
@@ -42,6 +65,17 @@ if (isset($_GET['delete'])) {
         </a>
     </div>
 </div>
+<div class="admintab">
+    <form method="post" action="/admin/user.php">
+        <h2 class="texte">Créer un utilisateur</h2>
+        <input placeholder="Votre pseudo" type="text" name="login" size="27" class="info">
+        <input placeholder="Entrez le mot de passe" type="password" name="passwd" size="27" class="info">
+        <input placeholder="Entrez le mot de passe à nouveau" type="password" name="rpasswd" size="27"
+               class="info">
+        <button type="submit" value="OK" name="submit" class="post">Créer</button>
+
+    </form></div>
+<hr>
 <div class="admintab">
     <div>
             <h2 class="texte">Supprimez un utilisateurs</h2>

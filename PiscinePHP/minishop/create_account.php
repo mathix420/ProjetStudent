@@ -1,6 +1,5 @@
 <?php
     include('ft_log.php');
-    include("ft_cart.php");
     $error_image = "respond.jpg";
     if (isset($_POST['login'], $_POST['passwd'], $_POST['rpasswd'], $_POST['submit'])) {
         if ($_POST['rpasswd'] !== $_POST['passwd'] || $_POST['submit'] !== 'OK') {
@@ -23,7 +22,6 @@
             }elseif ($error_message == '') {
                 $user_credential['passwd'] = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
                 $user_credential['rights'] = -1;
-                $user_credential['cart'] = 
                 $fake_db[$_POST['login']] = $user_credential;
                 $f = fopen("private/users", "w");
                 flock($f, LOCK_EX);

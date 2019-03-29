@@ -7,21 +7,20 @@ if (file_exists("../private/users"))
     $fake_db = array_filter(unserialize(file_get_contents("../private/users")));
 if ($fake_db[$_SESSION['login']]['rights'] !== -2) {
     header("HTTP/1.0 403 Forbidden");
+    echo "<title>El Marketo</title>";
     exit("<h1 align='center'>403 FORBIDDEN</h1>");
 }
 $articles_db = array();
 if (file_exists("../private/articles"))
     $articles_db = array_filter(unserialize(file_get_contents("../private/articles")));
 if (isset($_GET['delete'])) {
-    unlink($articles_db[$_GET['delete']]['image']);
-    unset($articles_db[$_GET['delete']]);
-    array_push($articles_db, $tab);
-    $f = fopen("../private/articles", "w");
-    flock($f, LOCK_EX);
-    file_put_contents("../private/articles", serialize(array_filter($articles_db)));
-    flock($f, LOCK_UN);
-    fclose($f);
-    header("Location: index.php");
+    if (isset($articles_db[$_GET['delete']], $articles_db[$_GET['delete']]['image'])) {
+        unlink($articles_db[$_GET['delete']]['image']);
+        unset($articles_db[$_GET['delete']]);
+        array_push($articles_db, $tab);
+        file_put_contents("../private/articles", serialize(array_filter($articles_db)), LOCK_EX);
+    }
+    header("Location: /admin");
 } elseif (!empty($_FILES["image"]["tmp_name"]) && isset($_FILES['image'], $_POST['price'], $_POST['description'], $_POST['name'], $_POST['categorie'])
     && $_POST['submit'] == "OK" && $_POST['price'] >= 0) {
     $tab['name'] = substr($_POST['name'], 0, 30);
@@ -54,12 +53,8 @@ if (isset($_GET['delete'])) {
     }
     /////
     array_push($articles_db, $tab);
-    $f = fopen("../private/articles", "w");
-    flock($f, LOCK_EX);
-    file_put_contents("../private/articles", serialize($articles_db));
-    flock($f, LOCK_UN);
-    fclose($f);
-    header("Location: index.php");
+    file_put_contents("../private/articles", serialize($articles_db), LOCK_EX);
+    header("Location: /admin");
 } elseif (isset($_POST['submit'])) {
     $error_message = "Veuillez vérifier les champs !";
     $error_image = "respond.jpg";

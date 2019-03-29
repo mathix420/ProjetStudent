@@ -1,4 +1,5 @@
 <?php
+    define('AES_256_CBC', 'aes-256-cbc');
     // fonctions d'encryption
     function encrypt_data($clear_data) {
         $key_ = base64_decode("2ogigrp8fg6NhcJ8lOro92Ji+1Kx56ytcerinPce1K8=");

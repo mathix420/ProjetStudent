@@ -27,10 +27,10 @@ if (!empty($_POST))
             <div class="dropdown">
                 <button class="dropbtn">Catégories</button>
                 <div class="dropdown-content">
-                    <a href="#">All</a>
-                    <a href="#">Sneaker</a>
-                    <a href="#">Skate</a>
-                    <a href="#">Running</a>
+                    <a href="/index.php?categorie=all">All</a>
+                    <a href="/index.php?categorie=Sneaker">Sneaker</a>
+                    <a href="/index.php?categorie=Skate">Skate</a>
+                    <a href="/index.php?categorie=Running">Running</a>
                 </div>
             </div>
             <a href="/cart.php">
@@ -43,6 +43,9 @@ if (!empty($_POST))
                 <button class="logout">Se déconnecter</button>
             </a>
         <?php } else { ?>
+            <a href="/cart.php">
+                <button class="cart">Panier</button>
+            </a>
             <a href="/login.html">
                 <button class="logout">Se connecter</button>
             </a>
@@ -50,7 +53,13 @@ if (!empty($_POST))
     </div>
 </div>
 <div class="boutique">
-    <?php foreach ($articles_db as $index => $article) { ?>
+    <?php
+    if (isset($_GET['categorie']) && $_GET['categorie'] !== "all")
+        $articles_db = array_filter($articles_db, function ($value) {
+            return ($value['categorie'] == $_GET['categorie']);
+        });
+    foreach ($articles_db as $index => $article) {
+        ?>
         <div class="card">
             <div class="article-card price-div">
                 <h1><?= htmlspecialchars($article['price']) ?>€</h1>
