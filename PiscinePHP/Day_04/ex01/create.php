@@ -14,7 +14,7 @@
         $user_credential['login'] = $_POST['login'];
         $user_credential['passwd'] =  hash("sha512", $_POST['passwd']);
         array_push($fake_db, $user_credential);
-        file_put_contents("../private/passwd", serialize($fake_db));
+        file_put_contents("../private/passwd", serialize($fake_db), LOCK_EX);
         echo "OK\n";
     } else {
         echo "ERROR\n";

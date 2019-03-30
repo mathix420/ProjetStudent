@@ -14,7 +14,7 @@
                     return;
                 }
             }
-        file_put_contents("../private/passwd", serialize($fake_db));
+        file_put_contents("../private/passwd", serialize($fake_db), LOCK_EX);
         echo "OK\n";
     } else {
         echo "ERROR\n";
