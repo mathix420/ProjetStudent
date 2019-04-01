@@ -117,6 +117,7 @@
                 <tr>
                     <th style="text-align:left;">Nom</th>
                     <th style="text-align:left;">Description</th>
+                    <th style="text-align:right;" width="5%">Pointure</th>
                     <th style="text-align:right;" width="5%">Qte.</th>
                     <th style="text-align:right;" width="10%">Prix<br>( in €)</th>
                     <th style="text-align:right;" width="10%">Total<br>( in €)</th>
@@ -133,6 +134,14 @@
                     <td><img src="<?= $value['image'] ?>"
                             class="cart-item-image"><?= htmlspecialchars($value['name']) ?></td>
                     <td><?= htmlspecialchars($value['description']) ?></td>
+                    <td style="text-align:center;">
+                        <div id="pointure">
+                        <select id="hidsel">
+                            <?php $i = 35;
+                            while ($i <= 45 &&  $i++) { ?>
+                                <option><?= $i?></option>
+                                <?php }?>
+                        </select></div></td>
                     <td style="text-align:center;"><?= $value['qte'] ?></td>
                     <td style="text-align:right;"><?= number_format($value['price'], 2) ?></td>
                     <td style="text-align:right;"><?= number_format($value['price']*$value['qte'], 2) ?></td>
@@ -148,7 +157,7 @@
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="2" align="right">Total:</td>
+                    <td colspan="3" align="right">Total:</td>
                     <td align="center"><?= $total_qte ?></td>
                     <td align="right" colspan="2"><strong><?= number_format($total_price, 2) ?></strong></td>
                     <td colspan="3"></td>
@@ -161,5 +170,5 @@
         <?php } ?>
     </div>
 </body>
-<footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
+<footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </html>

@@ -8,7 +8,8 @@ $urls = array("https://i.ibb.co/D1YghNV/Adidas-etq.png", "https://i.ibb.co/cFdqS
 if (!file_exists("./img/article"))
     mkdir("./img/article");
 foreach ($urls as $url) {
-    $split = end(explode("/", $url));
+    $arr = explode("/", $url);
+    $split = end($arr);
     copy($url, "./img/article/".$split);
 }
 if (!file_exists("./private"))

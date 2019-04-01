@@ -1,7 +1,8 @@
 /* CONTAINER */
 .boutique {
     display: flex;
-    margin: 10px 0;
+    max-width: 1500px;
+    margin: auto;
     width: 100%;
     justify-content: space-evenly;
     flex-wrap: wrap;

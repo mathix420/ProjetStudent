@@ -39,13 +39,13 @@ if (isset($_POST['submit'], $_POST['oldpasswd'], $_POST['newpasswd']) && !empty(
     <link rel="stylesheet" type="text/css" media="screen" href="/css/log.css"/>
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-    <?php if ($_GET['error'] === 'pass') { ?>
+    <?php if (isset($_GET['error']) && $_GET['error'] === 'pass') { ?>
         <style>
             .pass {
                 border-color: red;
             }
         </style>
-    <?php } if ($_GET['error'] === 'login') { ?>
+    <?php } if (isset($_GET['error']) && $_GET['error'] === 'login') { ?>
         <style>
             .login {
                 border-color: red;
@@ -73,6 +73,6 @@ if (isset($_POST['submit'], $_POST['oldpasswd'], $_POST['newpasswd']) && !empty(
         </div>
     </div>
 </div>
-<footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
+<footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </body>
 </html>

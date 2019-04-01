@@ -38,12 +38,13 @@ if (!empty($_POST))
             <a href="/cart.php">
                 <button class="cart">Panier</button>
             </a>
-            <a href="/account_edit.php">
-                <button class="cart">Mon compte</button>
-            </a>
-            <a href="/logout.php">
-                <button class="logout">Se déconnecter</button>
-            </a>
+            <div class="dropdown">
+                <button class="dropbtn">Mon compte</button>
+                <div class="dropdown-content">
+                    <a href="/account_edit.php">Modifier</a>
+                    <a href="/logout.php">Se déconnecter</a>
+                </div>
+            </div>
         <?php } else { ?>
             <a href="/cart.php">
                 <button class="cart">Panier</button>
@@ -80,6 +81,6 @@ if (!empty($_POST))
         </div>
     <?php } ?>
 </div>
-<footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
+<footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </body>
 </html>

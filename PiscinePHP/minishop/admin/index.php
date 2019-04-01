@@ -158,10 +158,10 @@ if (isset($_GET['delete'])) {
                             </section>
                         </td>
                         <td align="center">
-                            <label for="imageedit">
+                            <label for="imageedit<?= $id ?>">
                                 <img src="<?= htmlspecialchars($article['image']) ?>" />
                             </label>
-                            <input style="display: none;" type="file" id="imageedit" name="image">
+                            <input style="display: none;" type="file" id="imageedit<?= $id ?>" name="image">
                         </td>
                         <td align="center">
                             <a href="/admin/index.php?delete=<?= urlencode($id) ?>">❌</a>
@@ -180,7 +180,7 @@ if (isset($_GET['delete'])) {
     <h1 align='center'><?= $error_message ?></h1>
     <p align='center'><img src='/img/<?= $error_image ?>' alt="error"></p>
     <?php } ?>
-    <footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
+    <footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </body>
 
 </html>

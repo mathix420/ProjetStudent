@@ -92,5 +92,6 @@ if (isset($_GET['delete'])) {
             </tbody>
         </table>
     </div>
+    <footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </body>
 </html>

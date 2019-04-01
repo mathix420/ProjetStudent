@@ -133,7 +133,7 @@ var myChart = new Chart(ctx, {
             </table>
         </div>
     <?php } ?>
-    <footer> © Copyright 2019 All rights reserved to agissing and kemartin.</footer>
+    <footer> © Copyright 2019 All rights reserved to ilarbi and kemartin.</footer>
 </body>
 
 </html>
