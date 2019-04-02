@@ -1,1 +1,1 @@
-SELECT CEILING(AVG(nb_seats)) AS `average` FROM cinema;
+SELECT ROUND(AVG(nb_seats)) AS `average` FROM cinema;
