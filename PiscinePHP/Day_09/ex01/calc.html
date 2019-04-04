@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Calc</title>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+        }
+        html {
+            height: 100%;
+        }
+    </style>
+    <script>
+        function calcul() {
+            var left = document.getElementById("left").value;
+            var op = document.getElementById("op").value;
+            var right = document.getElementById("right").value;
+            
+            if (left.match(/^(-|\+)?\d+$/gm) && right.match(/^(-|\+)?\d+$/gm) && op.match(/^[\+\-\*\/%]$/gm)) {
+                if (left >= 0 && right >= 0) {
+                    if (right == 0 && (op == '%' || op == '/'))
+                        var res = "It’s over 9000!";
+                    else
+                        var res = eval(left + op + right);
+                } else 
+                    var res = "Error :(";
+                alert(res);
+                console.log(res);
+            }
+        }
+        setInterval(() => {
+            alert("Please, use me...");
+        }, 30000);
+    </script>
+  </head>
+  <body>
+     <input type="text" id="left">
+     <select name="operators" id="op">
+         <option value="+">+</option>
+         <option value="-">-</option>
+         <option value="*">*</option>
+         <option value="/">/</option>
+         <option value="%">%</option>
+     </select>
+     <input type="text" id="right">
+     <input type="submit" value="Try me!" onclick="calcul();">
+  </body>
+</html>

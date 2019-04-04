@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <title>Balloon</title>
+    <style>
+        #balloon {
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            margin: auto;
+        }
+        body {
+            display: flex;
+            height: 100%;
+            margin: 0;
+        }
+        html {
+            height: 100%;
+        }
+    </style>
+    <script>
+        function click_btn() {
+            if ($("#balloon").css("background-color") === "rgb(255, 0, 0)")
+                $("#balloon").css("background-color", "rgb(0, 255, 0)");
+            else if ($("#balloon").css("background-color") === "rgb(0, 255, 0)")
+                $("#balloon").css("background-color", "rgb(0, 0, 255)");
+            else if ($("#balloon").css("background-color") === "rgb(0, 0, 255)")
+                $("#balloon").css("background-color", "rgb(255, 0, 0)");
+            $("#balloon").width((id, current_size) => {
+                if (current_size + 10 <= 420)
+                    return current_size + 10;
+                return 200
+            });
+            $("#balloon").height((id, current_size) => {
+                if (current_size + 10 <= 420)
+                    return current_size + 10;
+                return 200
+            });
+        }
+        function leave_mouse() {
+            if ($("#balloon").css("background-color") === "rgb(0, 255, 0)")
+                $("#balloon").css("background-color", "rgb(255, 0, 0)");
+            else if ($("#balloon").css("background-color") === "rgb(0, 0, 255)")
+                $("#balloon").css("background-color", "rgb(0, 255, 0)");
+            else if ($("#balloon").css("background-color") === "rgb(255, 0, 0)")
+                $("#balloon").css("background-color", "rgb(0, 0, 255)");
+
+            $("#balloon").width((id, current_size) => {
+                if (current_size - 10 >= 200)
+                    return current_size - 10;
+                return 200
+            });
+            $("#balloon").height((id, current_size) => {
+                if (current_size - 10 >= 200)
+                    return current_size - 10;
+                return 200
+            });
+        }
+    </script>
+  </head>
+  <body>
+      <div id="balloon" onclick="click_btn();" onmouseleave="leave_mouse()" style="background-color: red;"></div>
+  </body>
+</html>

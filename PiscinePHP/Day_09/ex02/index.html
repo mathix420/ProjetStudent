@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Todo</title>
+    <style>
+        #centerdiv {
+            height: 80%;
+            width: 800px;
+            margin: auto;
+        }
+        #ft_list {
+            height: 80%;
+            border: solid;
+            overflow: auto;
+            padding: 10px;
+        }
+        button {
+            width: 80px;
+            height: 25px;
+            border-radius: 5px;
+            float: right;
+        }
+        body {
+            height: 80%;
+            padding-top: 10%;
+            margin: 0;
+        }
+        html {
+            height: 100%;
+        }
+    </style>
+    <script src="todo.js"></script>
+  </head>
+  <body onload="startTodo();">
+    <div id='centerdiv'>
+        <div id="ft_list"></div>
+        <button onclick="addElement();">New</button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Balloon</title>
+    <style>
+        #balloon {
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            margin: auto;
+        }
+        body {
+            display: flex;
+            height: 100%;
+            margin: 0;
+        }
+        html {
+            height: 100%;
+        }
+    </style>
+    <script>
+        function click_btn() {
+            $elem = document.getElementById("balloon");
+            if ($elem.style.backgroundColor === "red")
+                $elem.style.backgroundColor = "green";
+            else if ($elem.style.backgroundColor === "green")
+                $elem.style.backgroundColor = "blue";
+            else if ($elem.style.backgroundColor === "blue")
+                $elem.style.backgroundColor = "red";
+
+            if ($elem.clientHeight + 10 <= 420) {
+                $elem.style.height = $elem.clientHeight + 10 + "px"
+                $elem.style.width = $elem.clientWidth + 10 + "px"
+            } else {
+                $elem.style.height = "200px";
+                $elem.style.width = "200px";
+            }
+        }
+        function leave_mouse() {
+            $elem = document.getElementById("balloon");
+            
+            if ($elem.style.backgroundColor === "green")
+                $elem.style.backgroundColor = "red";
+            else if ($elem.style.backgroundColor === "blue")
+                $elem.style.backgroundColor = "green";
+            else if ($elem.style.backgroundColor === "red")
+                $elem.style.backgroundColor = "blue";
+
+            if ($elem.clientHeight - 10 >= 200) {
+                $elem.style.height = $elem.clientHeight - 10 + "px"
+                $elem.style.width = $elem.clientWidth - 10 + "px"
+            }
+        }
+    </script>
+  </head>
+  <body>
+      <div id="balloon" onclick="click_btn();" onmouseleave="leave_mouse()" style="background-color: red;"></div>
+  </body>
+</html>
