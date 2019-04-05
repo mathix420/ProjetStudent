@@ -22,6 +22,7 @@ function add_todo() {
             cache: false,
             success: () => {
                 get_todo();
+                $("#todo").val('');
             }
         });
     }
@@ -40,5 +41,11 @@ function del_todo(id) {
                 get_todo();
             }
         });
+    }
+}
+
+function keydown(elem) {
+    if (event.code == "Enter") {
+        add_todo();
     }
 }

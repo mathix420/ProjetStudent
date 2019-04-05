@@ -5,26 +5,48 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <title>Todo</title>
     <style>
+        h1 {
+            text-align: center;
+        }
         #centerdiv {
-            height: 80%;
-            width: 800px;
+            height: 100%;
+            max-width: 800px;
+            max-height: 800px;
             margin: auto;
+        }
+        li {
+            user-select: none;
+            cursor: pointer;
+            color: rgb(48, 48, 48);
+            font-size: 1.2em;
+        }
+        li:nth-child(even) {
+            background: rgba(153, 153, 153, 0.2)
         }
         #ft_list {
             height: 80%;
-            border: solid;
+            border: solid rgb(48, 48, 48);
             overflow: auto;
             padding: 10px;
         }
-        form #button {
+        #todo {
+            width: 100%;
+            font-size: 1.2em;
+        }
+        #button {
             width: 80px;
-            height: 25px;
             border-radius: 5px;
             float: right;
+            font-size: 1.2em;
+        }
+        #form {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
         body {
             height: 80%;
-            padding-top: 10%;
+            padding-top: 8%;
             margin: 0;
         }
         html {
@@ -35,11 +57,12 @@
   </head>
   <body onload="get_todo();">
     <div id='centerdiv'>
+        <h1>To do or not to do</h1>
         <div id="ft_list"></div>
-        <form>
-            <input type="text" placeholder="todo" id="todo">
+        <div id="form">
+            <input type="text" placeholder="New reminder" id="todo" onkeydown="keydown(this);">
             <input type="button" id="button" value="New" onclick="add_todo();">
-        </form>
+        </div>
     </div>
     <p id="msg"></p>
   </body>
