@@ -5,3 +5,5 @@ ratpy.py
 quit.sh
 .valgrindrc
 .valgrindsupp
+.ssh
+flutter_projects
