@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/10 14:00:52 by agissing          #+#    #+#              #
-#    Updated: 2019/04/10 16:38:32 by agissing         ###   ########.fr        #
+#    Updated: 2019/04/10 19:31:17 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -28,6 +28,11 @@ WHIRLPOOL_INC = $(WHIRLPOOL_DIR)
 
 #global include
 INCLUDES = includes
+
+#includes
+#{{AUTO-SRC}path=includes;file=*.h;name=SRC_INCLUDES}
+
+#{END}
 
 #md5
 #{{AUTO-SRC}path=md5;file=*.c;name=SRC_MD5}
