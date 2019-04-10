@@ -138,3 +138,4 @@ alias norm='find . -type f -name "*.c" -or -name "*.h" | xargs norminette | grep
 alias mf-gen="/bin/sh ~/42-utilities/update.sh; python3 ~/42-utilities/mf-gen.py"
 alias proto-list="/bin/sh ~/42-utilities/update.sh; sh ~/42-utilities/proto-list.sh"
 alias mamp="open $HOME/MAMP/manager-osx.app"
+alias t=tree
