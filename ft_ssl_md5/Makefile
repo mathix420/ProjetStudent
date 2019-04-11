@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/10 14:00:52 by agissing          #+#    #+#              #
-#    Updated: 2019/04/10 19:31:17 by agissing         ###   ########.fr        #
+#    Updated: 2019/04/11 14:42:32 by agissing         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,6 +31,11 @@ INCLUDES = includes
 
 #includes
 #{{AUTO-SRC}path=includes;file=*.h;name=SRC_INCLUDES}
+
+#{END}
+
+#ssl
+#{{AUTO-SRC}path=ssl;file=*.c;name=SRC_WHIRLPOOL}
 
 #{END}
 
