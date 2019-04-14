@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 11:54:00 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/11 14:41:14 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:30:07 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static void		init_env(t_env *env)
 	env->algos = new;
 }
 
-
 int				main(int c, char **v)
 {
 	t_env	env;
 
+	env.argc = c;
 	put_help(c < 2, 0);
 	init_env(&env);
 	parse(c, v, &env);

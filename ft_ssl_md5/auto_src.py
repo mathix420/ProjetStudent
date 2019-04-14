@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/10 15:37:14 by agissing          #+#    #+#              #
-#    Updated: 2019/04/14 13:17:49 by agissing         ###   ########.fr        #
+#    Updated: 2019/04/14 18:34:29 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,9 @@ dd = re.compile(r"((?<=#{{AUTO-SRC})((?!#{END}).*\n)*(?=#{END}))").split(data)
 
 def callback_sub(elem):
     elem = elem.group(0)[12:]
-    print(elem)
     rule = elem.split('}')[0]
     original_rule = "#{{AUTO-SRC}" + rule + '}'
-
     infos = dict(item.split("=") for item in rule.split(";"))
-
-    print(infos)
-
     fin = []
     os.chdir(os.path.join(HOME, infos['path']))
     for file in glob.glob(infos['file']):
@@ -60,4 +55,3 @@ os.chdir(HOME)
 fp = open(file, "w+")
 fp.write(out)
 fp.close()
-

@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 11:53:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/11 15:05:05 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:37:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ static inline t_param	parse_param(int c, char **v, t_algos algo, t_env *env)
 
 void					parse(int c, char **v, t_env *env)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	while (env->algos[++i].name)
 		if (!ft_strcmp(env->algos[i].name, v[1]))
 		{
-			printf("%s\n", env->algos[i].name);
 			env->arg = parse_param(c, v, env->algos[i], env);
 			env->opt = v[2];
 			env->algos[i].exec(env);

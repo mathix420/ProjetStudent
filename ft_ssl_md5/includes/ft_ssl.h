@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 11:55:39 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/11 15:06:29 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:26:12 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # include <stdio.h>
 
 # ifndef FT_SSL_MD5_H
-#  include "ft_ssl_md5.h"
+#  include "../md5/includes/ft_ssl_md5.h"
 # endif
 
+struct s_env;
 typedef int		t_param;
-struct			s_env;
 
 typedef struct	s_algos
 {
@@ -36,6 +36,7 @@ typedef struct	s_env
 	t_param		arg;
 	char		*opt;
 	t_algos		*algos;
+	int			argc;
 }				t_env;
 
 /*

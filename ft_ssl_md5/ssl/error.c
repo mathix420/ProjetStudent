@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 13:49:21 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/11 14:55:47 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 14:56:55 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void		e_error(int cond, int error_code)
 {
-	if (!cond)
+	if (!cond || (!error_code && !errno))
 		return ;
 	(error_code) ? errno = error_code : 0;
 	perror("ft_ssl");
