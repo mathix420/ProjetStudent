@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/10 14:00:52 by agissing          #+#    #+#              #
-#    Updated: 2019/04/14 18:36:45 by agissing         ###   ########.fr        #
+#    Updated: 2019/04/14 19:04:29 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                                FT_SSL                                *** #
@@ -113,6 +113,8 @@ norm :
 
 update :
 	@python3 auto_src.py Makefile
+	@echo "\033[35m[SRC]\033[0m Sources added"
+	@make $(SSL)
 
 #creating asm objects
 $(MAIN_DIR_OBJ)%.o : %.c $(INCS) Makefile
@@ -138,7 +140,7 @@ clean :
 fclean :
 	@/bin/rm -rf $(MAIN_DIR_OBJ)
 	@/bin/rm -f $(SSL)
-	@echo "\033[33m[PRG]\033[0m Cleaning done"
+	@echo "\033[31m[PRG]\033[0m Cleaning done"
 
 #recompile all
 re : fclean all

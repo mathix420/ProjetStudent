@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:49:50 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/14 18:29:08 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:15:17 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			bit_len(t_list list)
 		list = *list.next;
 		i++;
 	}
-	i = i * 6400 + list.size;
+	i = i * BUF_SIZE + list.size;
 	return (i);
 }
 
@@ -47,7 +47,7 @@ void		padding(t_list *list)
 		list = list->next;
 	while (size++ % 64 != 56 || pad)
 	{
-		if (list->size + 1 >= 6400)
+		if (list->size + 1 >= BUF_SIZE)
 		{
 			push_text(&list, &pad, 1);
 			list = list->next;
@@ -60,14 +60,14 @@ void		padding(t_list *list)
 
 void		readfile(int fp, t_list **lst)
 {
-	char	tmp[6400];
+	char	tmp[BUF_SIZE];
 	int		count;
 
 	tmp[0] = 0;
-	while ((count = read(fp, tmp, 6400)))
+	while ((count = read(fp, tmp, BUF_SIZE)))
 		push_text(lst, tmp, count);
 	padding(*lst);
-	printf("%d\n", bit_len(**lst) / 4);
+//		pt(*lst);
 }
 
 void		md5(t_env *env)
@@ -82,4 +82,5 @@ void		md5(t_env *env)
 		e_error((fp = open(env->opt, O_RDONLY)), 0);
 	readfile(fp, lst);
 	close(fp);
+	do_the_work(*lst);
 }

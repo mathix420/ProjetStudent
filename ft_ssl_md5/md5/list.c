@@ -6,13 +6,13 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 15:20:14 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/14 17:30:15 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:34:50 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl_md5.h"
 
-void		copy_text(char out[6400], char *in, int count)
+void		copy_text(char out[BUF_SIZE], char *in, int count)
 {
 	int		i;
 
@@ -24,7 +24,7 @@ void		copy_text(char out[6400], char *in, int count)
 	}
 }
 
-void		push_text(t_list **list, char str[6400], int count)
+void		push_text(t_list **list, char str[BUF_SIZE], int count)
 {
 	t_list		*tmp;
 
