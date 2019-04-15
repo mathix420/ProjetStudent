@@ -6,7 +6,7 @@
 /*   By: agissing <agissing@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:43:29 by agissing          #+#    #+#             */
-/*   Updated: 2019/04/14 19:39:46 by agissing         ###   ########.fr       */
+/*   Updated: 2019/04/15 17:36:38 by agissing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,23 @@
 struct s_list;
 typedef struct s_env	t_env;
 
+typedef struct			s_md5
+{
+	char		*data;
+	char		*padding;
+	uint64_t	size;
+}						t_md5;
+
 typedef struct			s_list
 {
 	char			str[BUF_SIZE];
 	unsigned		size;
+	t_md5			md5;
 	struct s_list	*next;
 }						t_list;
 
 void					md5(t_env *env);
-int						bit_len(t_list list);
+uint64_t				bit_len(t_list list);
 
 void					push_text(t_list **list, char str[BUF_SIZE], int count);
 void					free_text(t_list *list);
