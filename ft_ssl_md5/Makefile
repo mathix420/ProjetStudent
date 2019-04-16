@@ -6,7 +6,7 @@
 #    By: agissing <agissing@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/10 14:00:52 by agissing          #+#    #+#              #
-#    Updated: 2019/04/14 19:04:29 by agissing         ###   ########.fr        #
+#    Updated: 2019/04/16 15:11:47 by agissing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # ***                                FT_SSL                                *** #
@@ -57,8 +57,8 @@ OBJ_SSL = $(addprefix $(SSL_DIR_OBJ),$(_SRC_SSL:.c=.o))
 
 #md5
 #{{AUTO-SRC}path=md5;file=*.c;name=_SRC_MD5}
-_SRC_MD5 = functions.c \
-list.c \
+_SRC_MD5 = data.c \
+libfct.c \
 main.c
 #{END}
 SRC_MD5 = $(addprefix $(MD5_DIR),$(_SRC_MD5))
@@ -98,7 +98,7 @@ INCS   = $(SSL_INC) $(MD5_INC) $(SHA256_INC) $(SHA512_INC) $(WHIRLPOOL_DIR)
 
 CC    = gcc
 FLAGS = -Wall -Wextra -Werror
-OPTS  = $(foreach d, $(INCS), -I$d)
+OPTS  = $(foreach d, $(INCS), -I$d) -g3
 
 ################################################################################
 #####                            MAKEFILE RULES                            #####
@@ -123,7 +123,7 @@ $(MAIN_DIR_OBJ)%.o : %.c $(INCS) Makefile
 		mkdir -p $(dir $@); \
 		printf "\e[94m[OBJ]\e[0m Directory created!\n"; \
 	fi
-	@$(CC) $(FLAGS) -c $< -o $@ -Iincludes -Ilibft
+	@$(CC) $(FLAGS) -c $< -o $@ $(OPTS)
 	@printf "\e[2K \e[32m[CC]\e[0m %-15s\r" "$<"
 
 #creating asm
