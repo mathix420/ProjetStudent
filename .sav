@@ -3,6 +3,8 @@
 Desktop
 ratpy.py
 quit.sh
+.emacs
+.emacs.d
 .valgrindrc
 .valgrindsupp
 .ssh
